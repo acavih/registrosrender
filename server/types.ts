@@ -1,10 +1,10 @@
-interface FeedbackMessage<T> {
+export interface FeedbackMessage<T> {
   result: boolean
   message: string
   statusCode: number
   payload: T
 }
 
-interface PayloadGoodResult {
+export interface PayloadGoodResult {
   token: string
 }

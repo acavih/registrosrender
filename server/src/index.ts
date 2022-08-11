@@ -3,13 +3,15 @@ import http from 'http'
 import express from 'express'
 import { PORT, URI_DB_MONGO } from './vars'
 import connectDB from './connectDB'
+import apiRouteV1 from './api/v1/apiRouteV1'
 
 connectDB(URI_DB_MONGO).then(() => {
   const app = express()
 
-  app.get('/', (_req, res) => {
-    res.end('Hola mundo')
-  })
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
+
+  app.use('/api/v1', apiRouteV1)
 
   const server = http.createServer(app)
 

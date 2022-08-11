@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import httpStatus from 'http-status'
 import jsonwebtoken from 'jsonwebtoken'
 import { jwtSignOptionsOf, JWT_SECRET_KEY } from '../../vars'
+import { FeedbackMessage, PayloadGoodResult } from '../../../types'
 import { IAuthUserService } from './IAuthUserService'
 import User, { IUser } from './User'
 
@@ -12,7 +13,7 @@ export class IAuthUserServiceMongoImpl implements IAuthUserService {
   }
 
   async userExists (email: string): Promise<IUser | null> {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ user: email })
     return user as IUser
   }
 
@@ -29,10 +30,10 @@ export class IAuthUserServiceMongoImpl implements IAuthUserService {
     user.password = await this.hashPassword(user.password)
     const userCreated = await User.create(user)
     return {
-      message: 'El usuario existe',
-      statusCode: httpStatus.CONFLICT,
+      message: 'El usuario se ha creado con éxito',
+      statusCode: httpStatus.CREATED,
       payload: userCreated,
-      result: false
+      result: true
     }
   }
 

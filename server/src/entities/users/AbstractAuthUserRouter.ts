@@ -2,7 +2,7 @@ import express, { Request, Response, Router } from 'express'
 import { IAuthUserService } from './IAuthUserService'
 
 export default abstract class AbstractAuthUserRouter {
-  prefixApiNS = '/auth'
+  static prefixApiNS = '/auth'
 
   service: IAuthUserService
   router: Router
