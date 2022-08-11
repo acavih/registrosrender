@@ -1,12 +1,21 @@
 import bcrypt from 'bcrypt'
 import httpStatus from 'http-status'
-import jsonwebtoken from 'jsonwebtoken'
+import jsonwebtoken, { JwtPayload } from 'jsonwebtoken'
 import { jwtSignOptionsOf, JWT_SECRET_KEY } from '../../vars'
 import { FeedbackMessage, PayloadGoodResult } from '../../../types'
 import { IAuthUserService } from './IAuthUserService'
 import User, { IUser } from './User'
 
 export class IAuthUserServiceMongoImpl implements IAuthUserService {
+  async getUserFromToken (token?: string | undefined): Promise<IUser | null> {
+    if (!token) {
+      return null
+    }
+    const decoded = jsonwebtoken.decode(token.replace('Bearer ', '')) as JwtPayload
+    const user = await this.userExists(decoded.iss!)
+    return user as IUser
+  }
+
   async hashPassword (password: string): Promise<string> {
     const hash = await bcrypt.hash(password, 8)
     return hash

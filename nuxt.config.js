@@ -57,19 +57,19 @@ const config = {
     strategies: {
       local: {
         token: {
-          property: 'token',
+          property: 'payload.token',
           global: true
           // required: true,
           // type: 'Bearer'
         },
         user: {
-          property: 'payload.token',
-          autoFetch: false
+          property: 'payload.user._doc'
+          // autoFetch: false
         },
         endpoints: {
-          login: { url: '/auth/signin', method: 'post' }
-          // logout: { url: '/api/auth/logout', method: 'post' },
-          // user: { url: '/api/auth/user', method: 'get' }
+          login: { url: '/auth/signin', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/profile', method: 'get' }
         }
       }
     }

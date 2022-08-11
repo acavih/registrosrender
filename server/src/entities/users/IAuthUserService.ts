@@ -11,4 +11,6 @@ export interface IAuthUserService {
   getToken(issuer: string, payload: any): string
 
   signinUser(email: string, password: string): Promise<FeedbackMessage<PayloadGoodResult | null>>
+
+  getUserFromToken(token?: string | undefined): Promise<IUser | null>
 }
