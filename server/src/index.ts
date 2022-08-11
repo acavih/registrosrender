@@ -1,17 +1,21 @@
 import 'dotenv/config'
 import http from 'http'
 import express from 'express'
+import { PORT, URI_DB_MONGO } from './vars'
+import connectDB from './connectDB'
 
-const app = express()
+connectDB(URI_DB_MONGO).then(() => {
+  const app = express()
 
-app.get('/', (_req, res) => {
-  res.end('Hola mundo')
-})
+  app.get('/', (_req, res) => {
+    res.end('Hola mundo')
+  })
 
-const server = http.createServer(app)
+  const server = http.createServer(app)
 
-const PORT = Number(process.env.PORT || 8080)
-
-server.listen(PORT, () => {
-  console.log('Aplicación escuchando en el puerto ' + PORT)
+  server.listen(PORT, () => {
+    console.log('Aplicación escuchando en el puerto ' + PORT)
+  })
+}).catch(() => {
+  console.log('La aplicación no pudo arrancar')
 })
