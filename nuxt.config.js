@@ -43,13 +43,36 @@ const config = {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/'
+    baseURL: 'http://localhost:9000/api/v1'
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: 'payload.token',
+          autoFetch: false
+        },
+        endpoints: {
+          login: { url: '/auth/signin', method: 'post' }
+          // logout: { url: '/api/auth/logout', method: 'post' },
+          // user: { url: '/api/auth/user', method: 'get' }
+        }
+      }
+    }
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

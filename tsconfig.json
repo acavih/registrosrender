@@ -27,12 +27,14 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@types/node",
-      "@types/express"
+      "@types/express",
+      "@nuxtjs/auth-next",
     ]
   },
   "exclude": [
     "node_modules",
     ".nuxt",
-    "dist"
+    "dist",
+    "server"
   ]
 }
