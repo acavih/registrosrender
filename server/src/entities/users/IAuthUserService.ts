@@ -4,10 +4,10 @@ export interface IAuthUserService {
   hashPassword(password: string): Promise<string>
   userExists(email: string): Promise<IUser | null>
 
-  signupUser(user: IUser): Promise<IUser | null>
+  signupUser(user: IUser): Promise<FeedbackMessage<any>>
 
   passwordsAreTheSame(password: string, hash: string): Promise<Boolean>
   getToken(issuer: string, payload: any): string
 
-  signinUser(email: string, password: string): Promise<PayloadGoodResult | FeedbackMessage>
+  signinUser(email: string, password: string): Promise<FeedbackMessage<PayloadGoodResult | null>>
 }

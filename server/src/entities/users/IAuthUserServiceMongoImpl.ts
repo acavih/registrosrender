@@ -3,7 +3,7 @@ import httpStatus from 'http-status'
 import jsonwebtoken from 'jsonwebtoken'
 import { jwtSignOptionsOf, JWT_SECRET_KEY } from '../../vars'
 import { IAuthUserService } from './IAuthUserService'
-import User, { IUser, IUserDocument } from './User'
+import User, { IUser } from './User'
 
 export class IAuthUserServiceMongoImpl implements IAuthUserService {
   async hashPassword (password: string): Promise<string> {
@@ -16,14 +16,24 @@ export class IAuthUserServiceMongoImpl implements IAuthUserService {
     return user as IUser
   }
 
-  async signupUser (user: IUser): Promise<IUserDocument | null> {
+  async signupUser (user: IUser): Promise<FeedbackMessage<any>> {
     const existingUser = await this.userExists(user.user)
     if (existingUser !== null) {
-      return null
+      return {
+        message: 'El usuario existe',
+        statusCode: httpStatus.CONFLICT,
+        payload: null,
+        result: false
+      }
     }
     user.password = await this.hashPassword(user.password)
     const userCreated = await User.create(user)
-    return userCreated as IUserDocument
+    return {
+      message: 'El usuario existe',
+      statusCode: httpStatus.CONFLICT,
+      payload: userCreated,
+      result: false
+    }
   }
 
   async passwordsAreTheSame (password: string, hash: string): Promise<Boolean> {
@@ -36,20 +46,27 @@ export class IAuthUserServiceMongoImpl implements IAuthUserService {
     return token
   }
 
-  async signinUser (email: string, password: string): Promise<PayloadGoodResult | FeedbackMessage> {
+  async signinUser (email: string, password: string): Promise<FeedbackMessage<PayloadGoodResult | null>> {
     const user = await this.userExists(email)
 
     if (!user || !this.passwordsAreTheSame(password, user.password)) {
       return {
         message: 'Las credenciales no son correctas',
-        statusCode: httpStatus.UNAUTHORIZED
-      } as FeedbackMessage
+        statusCode: httpStatus.UNAUTHORIZED,
+        result: false,
+        payload: null
+      }
     }
 
     return {
-      token: this.getToken(user.user, {
-        user: user.user!
-      })
+      result: true,
+      message: 'Acceso exitoso',
+      statusCode: httpStatus.CREATED,
+      payload: {
+        token: this.getToken(user.user, {
+          user: user.user!
+        })
+      }
     }
   }
 }
