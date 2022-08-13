@@ -32,7 +32,7 @@ export default abstract class AbstractAuthUserRouter {
 
   static async authUser (req: Request, res: Response, next: NextFunction) {
     try {
-      const token = req.headers.authorization
+      const token = req.headers.authorization?.replace('Bearer ', '')
       if (!token) {
         return res.status(httpStatus.FORBIDDEN).json({
           message: 'Tienes que estar autenticado para realizar esta acción'

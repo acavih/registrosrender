@@ -15,23 +15,23 @@ export default class AbstractResourceCrudRouterImpl extends AbstractResourceCrud
 
   async createOrFindResource (req: Request, res: Response) {
     const { name, type } = req.body
-    const resource = await this.service.findOrCreateResource(name, type)
+    const { status, resource } = await this.service.findOrCreateResource(name, type)
 
-    res.status(201).json({
-      message: 'Recurso creado',
+    res.status(status).json({
+      message: status === 201 ? 'Recurso creado' : 'Este recurso ya estaba creado',
       result: true,
-      statusCode: 201,
+      statusCode: status,
       payload: { resource }
     } as FeedbackMessage<any>)
   }
 
   async updateResource (req: Request, res: Response) {
-    const resource = await this.service.updateResource(req.params.id, req.body)
+    const { status, resource } = await this.service.updateResource(req.params.id, req.body)
 
-    res.status(201).json({
-      message: 'Recurso actualizado',
+    res.status(status).json({
+      message: status === 400 ? 'El recurso no se pudo actualizar debido a un conflicto' : 'Recurso actualizado correctamente',
       result: true,
-      statusCode: 200,
+      statusCode: status,
       payload: { resource }
     } as FeedbackMessage<any>)
   }

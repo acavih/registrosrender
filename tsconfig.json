@@ -29,6 +29,7 @@
       "@types/node",
       "@types/express",
       "@nuxtjs/auth-next",
+      "vuetify-dialog/types"
     ]
   },
   "exclude": [
