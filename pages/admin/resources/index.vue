@@ -65,11 +65,11 @@
 <script>
 import Vue from 'vue'
 import _ from 'lodash'
+import { mapGetters } from 'vuex'
 export default Vue.extend({
   name: 'ResourcesList',
   data () {
     return {
-      resourcesList: [],
       activeResourceType: '',
       txtQuery: '',
       iteratorOptions: {
@@ -88,15 +88,16 @@ export default Vue.extend({
     types () {
       return _.uniq(this.resourcesList.map(r => r.type))
     },
+    ...mapGetters('resources', { filterResources: 'resourcesFiltered' }),
+    resourcesList () {
+      return this.$store.state.resources.resourcesList
+    },
     filteredResources () {
-      return this.resourcesList
-        .filter(r => r.type === this.activeResourceType)
-        .filter(r => new RegExp(this.txtQuery, 'i').test(r.name))
+      return this.filterResources(this.activeResourceType, this.txtQuery)
     }
   },
   async mounted () {
-    const resources = await this.$axios.get('/resources')
-    this.resourcesList = resources.data.payload.resources
+    await this.$store.dispatch('resources/fetchResources')
     this.activeResourceType = this.resourcesList[0].type
   },
   methods: {
@@ -121,13 +122,7 @@ export default Vue.extend({
     },
     async updateResource (payload, resourceToEdit) {
       try {
-        const { status, data: { message, payload: { resource } } } = await this.$axios.put('/resources/' + resourceToEdit._id, payload)
-        if (status < 400) {
-          this.resourcesList = this.resourcesList.map((r) => {
-            if (r._id === resource._id) { return resource }
-            return r
-          })
-        }
+        const { message } = await this.$store.dispatch('resources/updateResource', { payload, resourceToEdit })
         this.$dialog.notify.info(message, {
           position: 'top-right',
           timeout: 5000
@@ -148,20 +143,22 @@ export default Vue.extend({
       const response = await this.$dialog.prompt({
         title: 'Nombre del nuevo recurso'
       })
-      const payload = {
+
+      if (!response) { return }
+
+      const { data: { message } } = await this.$store.dispatch('resources/createResource', {
         name: response,
         type: this.activeResourceType
-      }
-      const { status, data: { message, payload: { resource } } } = await this.$axios.post('/resources', payload)
+      })
 
       this.$dialog.notify.info(message, {
         position: 'top-right',
         timeout: 5000
       })
 
-      if (status === 201) {
+      /* if (status === 201) {
         this.resourcesList.push(resource)
-      }
+      } */
     }
   }
 })
