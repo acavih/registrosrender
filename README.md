@@ -1,9 +1,9 @@
 # registrosrender
 
 ## Horas
-
-Jueves 11 de Julio del 2022
-  - 9:50
+  - 9:50 - 13:00
+  - 14:00 - 14:30
+  - 11:30
 
 ## Build Setup
 

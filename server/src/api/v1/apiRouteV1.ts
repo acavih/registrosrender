@@ -7,6 +7,6 @@ import AbstractAuthUserRouter from '../../entities/users/AbstractAuthUserRouter'
 const apiRouteV1 = express.Router()
 
 apiRouteV1.use(AbstractAuthUserRouter.prefixApiNS, authUserRouterInstance.router)
-apiRouteV1.use(AbstractResourceCrudRouter.prefixApiNS, resouceCrudRouterImplInstance.router)
+apiRouteV1.use(AbstractResourceCrudRouter.prefixApiNS, AbstractAuthUserRouter.authUser, resouceCrudRouterImplInstance.router)
 
 export default apiRouteV1
