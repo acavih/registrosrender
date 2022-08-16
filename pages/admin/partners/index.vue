@@ -9,6 +9,7 @@
         </v-btn>
       </v-card-title>
       <v-card-text>
+        <v-text-field v-model="qUser" label="Buscar usuarios" />
         <v-data-table
           :loading="loading"
           :items="partners"
@@ -49,12 +50,14 @@ export default Vue.extend({
         { text: 'Tarjeta sip', value: 'sipcard' },
         { text: 'Correo electrónico', value: 'correoelectronico' },
         { text: 'Telefono', value: 'telefono' },
+        { text: 'Query', value: 'qUser' },
         { text: 'Acciones', value: 'actions' }
       ],
       options: {
         itemsPerPage: Number(itemsPerPage),
         page: Number(page)
       },
+      qUser: this.$route.query.qUser || '',
       loading: false,
       footerProps: {
         'items-per-page-options': [20, 40, 60, 80, 100]
@@ -72,10 +75,11 @@ export default Vue.extend({
         const { itemsPerPage, page } = this.options
         this.$router.push({
           path: this.$route.path,
-          query: { itemsPerPage, page }
+          query: { itemsPerPage, page, qUser: this.qUser }
         })
       }
     },
+    qUser: 'retrievePartners',
     '$route.query': {
       deep: true,
       handler: 'retrievePartners'
@@ -89,7 +93,10 @@ export default Vue.extend({
     async retrievePartners () {
       this.loading = true
       const data = await this.$axios.get('/partners', {
-        params: this.options
+        params: {
+          ...this.options,
+          qUser: this.qUser
+        }
       })
       this.setPartners(data.data.payload)
       this.loading = false

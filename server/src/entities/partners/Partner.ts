@@ -19,15 +19,15 @@ export interface IPartner {
 }
 
 const partnerSchema = new mongoose.Schema({
-  codigo: { type: String },
-  nombre: { type: String },
-  apellidos: { type: String },
+  codigo: { default: '', type: String },
+  nombre: { default: '', type: String },
+  apellidos: { default: '', type: String },
   fechanacimiento: { type: Date },
-  sipcard: { type: String },
-  correoelectronico: { type: String },
-  telefono: { type: String },
-  observaciones: { type: String },
-  cosaspendientes: { type: String },
+  sipcard: { default: '', type: String },
+  correoelectronico: { default: '', type: String },
+  telefono: { default: '', type: String },
+  observaciones: { default: '', type: String },
+  cosaspendientes: { default: '', type: String },
   sexo: { type: mongoose.Types.ObjectId, ref: 'resources' },
   socioono: { type: mongoose.Types.ObjectId, ref: 'resources' },
   nacionalidad: { type: mongoose.Types.ObjectId, ref: 'resources' },
@@ -45,3 +45,10 @@ partnerSchema.set('toJSON', { virtuals: true })
 export const Partner = mongoose.model('members', partnerSchema)
 
 export default Partner
+
+export const partnerQueryFields = [
+  // '$codigo', ' ',
+  '$nombre', ' ',
+  '$apellidos', ' '
+  // '$telefono', ' ', '$sipcard', ' ', '$correelectronico'
+]

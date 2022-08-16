@@ -6,7 +6,9 @@ import { IPartner } from './Partner'
 
 export default class AbstractPartnerCrudRouterImpl extends AbstractPartnerCrudRouter {
   async listPartners (req: Request, res: Response) {
-    const partnersList = await this.service.queryPartners(req)
+    const aa = await this.service.queryPartners(req)
+    const { totalDocs, partnersList } = aa
+    // console.log(aa)
     const status = httpStatus.OK
     res.status(status).json({
       message: 'Listado de socios',
@@ -14,7 +16,7 @@ export default class AbstractPartnerCrudRouterImpl extends AbstractPartnerCrudRo
       statusCode: status,
       payload: {
         list: partnersList,
-        totalDocs: await this.service.getTotalPartnersCount({})
+        totalDocs
       }
     } as FeedbackMessage<{
       list: IPartner[],

@@ -1,7 +1,8 @@
 import { Request } from 'express'
+import lookupResourceAggregation from '../../utils/lookupResourceAggregation'
 import { resourceCrudMongoServiceInstance } from '../resources'
 import IResourceCrudService from './IPartnerCrudService'
-import Partner, { IPartner } from './Partner'
+import Partner, { IPartner, partnerQueryFields } from './Partner'
 
 export default class IPartnerCrudServiceMongoImpl implements IResourceCrudService {
   async setDefaultsToPartnerIfNecessary (partner: IPartner): Promise<IPartner> {
@@ -33,14 +34,40 @@ export default class IPartnerCrudServiceMongoImpl implements IResourceCrudServic
     return totalDocs
   }
 
-  async queryPartners (req: Request): Promise<IPartner[]> {
-    console.log(req.query)
-    const { page = 1, itemsPerPage = 20 } = req.query
+  async queryPartners (req: Request): Promise<{ partnersList: IPartner[], totalDocs: number }> {
+    const { page = 1, itemsPerPage = 20, qUser = '' } = req.query
     const skip = (Number(page) - 1) * Number(itemsPerPage)
-    const partners = await Partner.find({})
-      .skip(skip).limit(Number(itemsPerPage))
-      .populate(['sexo', 'socioono', 'ciudadresidencia', 'nacionalidad'])
-    return partners as any[]
+
+    const [aggregatePartners] = await Partner.aggregate([
+      ...lookupResourceAggregation('sexo', true),
+      ...lookupResourceAggregation('socioono', true),
+      ...lookupResourceAggregation('ciudadresidencia', true),
+      ...lookupResourceAggregation('nacionalidad', true),
+      {
+        $addFields: {
+          qUser: {
+            $concat: partnerQueryFields
+          }
+        }
+      },
+      {
+        $match: {
+          qUser: { $regex: qUser }
+        }
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'total' }],
+          data: [{ $skip: skip }, { $limit: Number(itemsPerPage) }]
+        }
+      }
+    ])
+
+    const totalDocs = aggregatePartners.metadata[0]?.total || 0
+
+    const partnersList = aggregatePartners.data
+
+    return { totalDocs, partnersList }
   }
 
   async createPartner (partnerData: IPartner): Promise<IPartner> {

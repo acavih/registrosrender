@@ -11,7 +11,9 @@ export const getters: GetterTree<RootState, RootState> = {
 }
 
 export const mutations: MutationTree<RootState> = {
-  setPartners (state, { list, totalDocs }) {
+  setPartners (state, data) {
+    console.log(data)
+    const { list, totalDocs } = data
     state.partners = list
     state.totalDocs = totalDocs
   },
