@@ -1,3 +1,4 @@
+import { Request } from 'express'
 import IResourceCrudService from './IPartnerCrudService'
 import Partner, { IPartner } from './Partner'
 
@@ -7,8 +8,13 @@ export default class IPartnerCrudServiceMongoImpl implements IResourceCrudServic
     return totalDocs
   }
 
-  async queryPartners (): Promise<IPartner[]> {
-    const partners = await Partner.find({}).limit(20)
+  async queryPartners (req: Request): Promise<IPartner[]> {
+    console.log(req.query)
+    const { page = 1, itemsPerPage = 20 } = req.query
+    const skip = (Number(page) - 1) * Number(itemsPerPage)
+    const partners = await Partner.find({})
+      .skip(skip).limit(Number(itemsPerPage))
+      .populate(['sexo', 'socioono', 'ciudadresidencia', 'nacionalidad'])
     return partners as any[]
   }
 

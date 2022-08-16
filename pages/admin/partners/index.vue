@@ -5,17 +5,19 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
+        :loading="loading"
         :items="partners"
         :server-items-length="totalDocs"
         :headers="headersTable"
         :options.sync="options"
         :footer-props="footerProps"
       >
-        <template #item.actions="{ item }">
+        <template #[`item.actions`]="{ item }">
           <v-btn
             color="primary"
             elevation="0"
             small
+            :to="'/admin/partners/' + item._id"
           >
             Ver miembro
           </v-btn>
@@ -31,6 +33,7 @@ import { mapMutations, mapState } from 'vuex'
 export default Vue.extend({
   name: 'PartnersIndex',
   data () {
+    const { page = 1, itemsPerPage = 20 } = this.$route.query
     return {
       headersTable: [
         { text: 'Codigo', value: 'codigo' },
@@ -42,15 +45,34 @@ export default Vue.extend({
         { text: 'Acciones', value: 'actions' }
       ],
       options: {
-        itemsPerPage: 20
+        itemsPerPage: Number(itemsPerPage),
+        page: Number(page)
       },
+      loading: false,
       footerProps: {
         'items-per-page-options': [20, 40, 60, 80, 100]
       }
     }
   },
+
   computed: {
     ...mapState('partners', ['partners', 'totalDocs'])
+  },
+  watch: {
+    options: {
+      deep: true,
+      handler () {
+        const { itemsPerPage, page } = this.options
+        this.$router.push({
+          path: this.$route.path,
+          query: { itemsPerPage, page }
+        })
+      }
+    },
+    '$route.query': {
+      deep: true,
+      handler: 'retrievePartners'
+    }
   },
   mounted () {
     this.retrievePartners()
@@ -58,8 +80,12 @@ export default Vue.extend({
   methods: {
     ...mapMutations('partners', ['setPartners']),
     async retrievePartners () {
-      const data = await this.$axios.get('/partners')
+      this.loading = true
+      const data = await this.$axios.get('/partners', {
+        params: this.options
+      })
       this.setPartners(data.data.payload)
+      this.loading = false
     }
   }
 })

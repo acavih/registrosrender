@@ -5,14 +5,15 @@ import AbstractPartnerCrudRouter from './AbstractPartnerCrudRouter'
 import { IPartner } from './Partner'
 
 export default class AbstractPartnerCrudRouterImpl extends AbstractPartnerCrudRouter {
-  async listPartners (_req: Request, res: Response) {
+  async listPartners (req: Request, res: Response) {
+    const partnersList = await this.service.queryPartners(req)
     const status = httpStatus.OK
     res.status(status).json({
       message: 'Listado de socios',
       result: true,
       statusCode: status,
       payload: {
-        list: await this.service.queryPartners(),
+        list: partnersList,
         totalDocs: await this.service.getTotalPartnersCount({})
       }
     } as FeedbackMessage<{

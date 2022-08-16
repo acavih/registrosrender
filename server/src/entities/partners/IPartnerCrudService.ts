@@ -1,7 +1,8 @@
+import { Request } from 'express'
 import { IPartner } from './Partner'
 
 export default interface IResourceCrudService {
-  queryPartners(): Promise<IPartner[]>
+  queryPartners(req: Request): Promise<IPartner[]>
   createPartner(partnerData: IPartner): Promise<IPartner>
   updatePartner(id: string, partnerData: IPartner): Promise<any>
   deletePartner(id: string): Promise<any>
