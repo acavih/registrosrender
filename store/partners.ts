@@ -1,7 +1,7 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 
 export const state = () => ({
-  partners: [],
+  partners: [] as any[],
   totalDocs: 0
 })
 
@@ -14,6 +14,15 @@ export const mutations: MutationTree<RootState> = {
   setPartners (state, { list, totalDocs }) {
     state.partners = list
     state.totalDocs = totalDocs
+  },
+  replacePartner (state, { idPartner, update }) {
+    state.partners = (state.partners as any[]).map((p) => {
+      if (p._id === idPartner) {
+        console.log('remplazando')
+        return update
+      }
+      return p
+    })
   }
 }
 

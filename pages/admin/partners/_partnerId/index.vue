@@ -3,6 +3,10 @@
     <v-card>
       <v-card-title>
         {{ currentPartner?.nombre }} {{ currentPartner?.apellidos }}
+        <v-spacer />
+        <v-btn color="primary" elevation="0" :to="'/admin/partners/' + $route.params.partnerId + '/edit'">
+          Editar socio
+        </v-btn>
       </v-card-title>
       <v-card-text>
         <v-simple-table>
@@ -43,6 +47,7 @@
         </v-simple-table>
       </v-card-text>
     </v-card>
+    <nuxt />
   </v-sheet>
 </template>
 

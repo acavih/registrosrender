@@ -13,7 +13,7 @@ export default abstract class AbstractPartnerCrudRouter {
     router.get('/', this.listPartners.bind(this) as any)
     router.post('/', this.createPartner.bind(this) as any)
     router.put('/:id', this.updatePartner.bind(this) as any)
-    router.put('/:id', this.removePartner.bind(this) as any)
+    router.delete('/:id', this.removePartner.bind(this) as any)
 
     this.router = router
   }
