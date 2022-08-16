@@ -32,7 +32,7 @@ const partnerSchema = new mongoose.Schema({
   socioono: { type: mongoose.Types.ObjectId, ref: 'resources' },
   nacionalidad: { type: mongoose.Types.ObjectId, ref: 'resources' },
   ciudadresidencia: { type: mongoose.Types.ObjectId, ref: 'resources' }
-})
+}, { toJSON: { virtuals: true } })
 
 partnerSchema.virtual('edad')
   .get(function () {
@@ -42,6 +42,6 @@ partnerSchema.virtual('edad')
 partnerSchema.set('toObject', { virtuals: true })
 partnerSchema.set('toJSON', { virtuals: true })
 
-export const Partner = mongoose.model('resources', partnerSchema)
+export const Partner = mongoose.model('partners', partnerSchema)
 
 export default Partner
