@@ -2,6 +2,11 @@ import IResourceCrudService from './IPartnerCrudService'
 import Partner, { IPartner } from './Partner'
 
 export default class IPartnerCrudServiceMongoImpl implements IResourceCrudService {
+  async getTotalPartnersCount (filter: any): Promise<any> {
+    const totalDocs = await Partner.countDocuments()
+    return totalDocs
+  }
+
   async queryPartners (): Promise<IPartner[]> {
     const partners = await Partner.find({}).limit(20)
     return partners as any[]

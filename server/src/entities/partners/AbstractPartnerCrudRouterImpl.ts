@@ -11,8 +11,14 @@ export default class AbstractPartnerCrudRouterImpl extends AbstractPartnerCrudRo
       message: 'Listado de socios',
       result: true,
       statusCode: status,
-      payload: await this.service.queryPartners()
-    } as FeedbackMessage<IPartner[]>)
+      payload: {
+        list: await this.service.queryPartners(),
+        totalDocs: await this.service.getTotalPartnersCount({})
+      }
+    } as FeedbackMessage<{
+      list: IPartner[],
+      totalDocs: number
+    }>)
   }
 
   async createPartner (req: Request, res: Response) {
