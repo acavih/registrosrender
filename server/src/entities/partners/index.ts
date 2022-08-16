@@ -1,5 +1,5 @@
-import AbstractResourceCrudRouterImpl from './AbstractResourceCrudRouterImpl'
-import IResourceCrudServiceMongoImpl from './IResourceCrudServiceMongoImpl'
+import AbstractPartnerCrudImpl from './AbstractPartnerCrudRouterImpl'
+import IPartnerCrudImpl from './IPartnerCrudServiceMongoImpl'
 
-export const resourceCrudMongoServiceInstance = new IResourceCrudServiceMongoImpl()
-export const resouceCrudRouterImplInstance = new AbstractResourceCrudRouterImpl(resourceCrudMongoServiceInstance)
+export const partnerCrudMongoServiceInstance = new IPartnerCrudImpl()
+export const partnerCrudRouterImplInstance = new AbstractPartnerCrudImpl(partnerCrudMongoServiceInstance)
