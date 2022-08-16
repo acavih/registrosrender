@@ -7,4 +7,5 @@ export default interface IResourceCrudService {
   updatePartner(id: string, partnerData: IPartner): Promise<any>
   deletePartner(id: string): Promise<any>
   getTotalPartnersCount(filter: any): Promise<any>
+  setDefaultsToPartnerIfNecessary(partner: IPartner): Promise<IPartner>
 }

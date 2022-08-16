@@ -1,8 +1,33 @@
 import { Request } from 'express'
+import { resourceCrudMongoServiceInstance } from '../resources'
 import IResourceCrudService from './IPartnerCrudService'
 import Partner, { IPartner } from './Partner'
 
 export default class IPartnerCrudServiceMongoImpl implements IResourceCrudService {
+  async setDefaultsToPartnerIfNecessary (partner: IPartner): Promise<IPartner> {
+    if (!partner.sexo) {
+      const { resource } = await resourceCrudMongoServiceInstance.findOrCreateResource('NS/NC', 'sexos')
+      partner.sexo = resource
+    }
+
+    if (!partner.ciudadresidencia) {
+      const { resource } = await resourceCrudMongoServiceInstance.findOrCreateResource('NS/NC', 'residencias')
+      partner.ciudadresidencia = resource
+    }
+
+    if (!partner.nacionalidad) {
+      const { resource } = await resourceCrudMongoServiceInstance.findOrCreateResource('NS/NC', 'nacionalidads')
+      partner.nacionalidad = resource
+    }
+
+    if (!partner.socioono) {
+      const { resource } = await resourceCrudMongoServiceInstance.findOrCreateResource('NS/NC', 'socioonos')
+      partner.socioono = resource
+    }
+
+    return partner as any
+  }
+
   async getTotalPartnersCount (filter: any): Promise<any> {
     const totalDocs = await Partner.countDocuments()
     return totalDocs
@@ -19,7 +44,7 @@ export default class IPartnerCrudServiceMongoImpl implements IResourceCrudServic
   }
 
   async createPartner (partnerData: IPartner): Promise<IPartner> {
-    const partnerCreated = await Partner.create(partnerData)
+    const partnerCreated = await Partner.create(await this.setDefaultsToPartnerIfNecessary(partnerData))
     return partnerCreated as any
   }
 
