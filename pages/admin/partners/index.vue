@@ -1,30 +1,37 @@
 <template>
-  <v-card>
-    <v-card-title>
-      Lista de socios
-    </v-card-title>
-    <v-card-text>
-      <v-data-table
-        :loading="loading"
-        :items="partners"
-        :server-items-length="totalDocs"
-        :headers="headersTable"
-        :options.sync="options"
-        :footer-props="footerProps"
-      >
-        <template #[`item.actions`]="{ item }">
-          <v-btn
-            color="primary"
-            elevation="0"
-            small
-            :to="'/admin/partners/' + item._id"
-          >
-            Ver miembro
-          </v-btn>
-        </template>
-      </v-data-table>
-    </v-card-text>
-  </v-card>
+  <v-sheet>
+    <v-card>
+      <v-card-title>
+        Lista de socios
+        <v-spacer />
+        <v-btn to="/admin/partners/addPartner" color="primary" elevation="0">
+          Añadir miembro
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <v-data-table
+          :loading="loading"
+          :items="partners"
+          :server-items-length="totalDocs"
+          :headers="headersTable"
+          :options.sync="options"
+          :footer-props="footerProps"
+        >
+          <template #[`item.actions`]="{ item }">
+            <v-btn
+              color="primary"
+              elevation="0"
+              small
+              :to="'/admin/partners/' + item._id"
+            >
+              Ver miembro
+            </v-btn>
+          </template>
+        </v-data-table>
+      </v-card-text>
+    </v-card>
+    <nuxt />
+  </v-sheet>
 </template>
 
 <script>

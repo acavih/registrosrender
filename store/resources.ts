@@ -8,7 +8,8 @@ interface IResource {
 }
 
 export const state = () => ({
-  resourcesList: [] as IResource[]
+  resourcesList: [] as IResource[],
+  loaded: false
 })
 
 export type RootState = ReturnType<typeof state>
@@ -24,6 +25,7 @@ export const getters: GetterTree<RootState, RootState> = {
 export const mutations: MutationTree<RootState> = {
   setAllResources (state, resources) {
     state.resourcesList = resources
+    state.loaded = true
   },
   commitResourceUpdate (state, resource) {
     state.resourcesList = state.resourcesList.map((r) => {
