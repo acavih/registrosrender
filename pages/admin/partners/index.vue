@@ -50,6 +50,7 @@ export default Vue.extend({
         { text: 'Tarjeta sip', value: 'sipcard' },
         { text: 'Correo electrónico', value: 'correoelectronico' },
         { text: 'Telefono', value: 'telefono' },
+        { text: 'Query', value: 'qUser' },
         { text: 'Acciones', value: 'actions' }
       ],
       options: {

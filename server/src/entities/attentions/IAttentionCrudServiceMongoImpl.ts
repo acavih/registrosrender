@@ -6,6 +6,16 @@ export default class IAttentionCrudServiceMongoImpl implements IAttentionCrudSer
     const attentions = await Attention.find({
       user: partnerId
     }).sort('-fechaatencion')
+      .populate([
+        'tipoaenciones',
+        'Proyectos',
+        'motivosatencion',
+        'derivadoa',
+        'derivadode',
+        'formacion',
+        'voluntariado',
+        'lugaratencion'
+      ])
     return attentions as any
   }
 
