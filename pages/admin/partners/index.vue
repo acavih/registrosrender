@@ -9,7 +9,7 @@
         </v-btn>
       </v-card-title>
       <v-card-text>
-        <v-text-field v-model="qUser" label="Buscar usuarios" />
+        <v-text-field v-model="qUser" hint="Código · Nombre · Apellidos · Teléfono · Tarjeta SIP · Correo electronico" label="Buscar usuarios" />
         <v-data-table
           :loading="loading"
           :items="partners"
@@ -50,7 +50,6 @@ export default Vue.extend({
         { text: 'Tarjeta sip', value: 'sipcard' },
         { text: 'Correo electrónico', value: 'correoelectronico' },
         { text: 'Telefono', value: 'telefono' },
-        { text: 'Query', value: 'qUser' },
         { text: 'Acciones', value: 'actions' }
       ],
       options: {

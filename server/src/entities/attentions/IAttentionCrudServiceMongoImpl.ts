@@ -5,7 +5,7 @@ export default class IAttentionCrudServiceMongoImpl implements IAttentionCrudSer
   async listAttentionsFor (partnerId: string): Promise<IAttention[]> {
     const attentions = await Attention.find({
       user: partnerId
-    })
+    }).sort('-fechaatencion')
     return attentions as any
   }
 

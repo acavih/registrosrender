@@ -47,16 +47,55 @@
         </v-simple-table>
       </v-card-text>
     </v-card>
+    <v-card outlined class="mt-4">
+      <v-card-title>
+        Atenciones
+        <v-spacer />
+        <v-btn color="primary">
+          Crear atención
+        </v-btn>
+      </v-card-title>
+
+      <v-card-text>
+        <v-data-iterator :options.sync="iteratorOptions" :items="attentions">
+          <template #default="props">
+            <v-card v-for="attention in props.items" :key="attention._id" class="mb-4">
+              <v-card-title>
+                {{ attention.fechaatencion }}
+              </v-card-title>
+              <v-card-text>
+                {{ attention.comentario }}
+              </v-card-text>
+            </v-card>
+          </template>
+        </v-data-iterator>
+      </v-card-text>
+    </v-card>
     <nuxt />
   </v-sheet>
 </template>
 
 <script>
 import Vue from 'vue'
-import { mapMutations, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default Vue.extend({
   name: 'ShowPartner',
+  data () {
+    return {
+      attentions: [],
+      iteratorOptions: {
+        page: 1,
+        itemsPerPage: 20,
+        sortBy: [], // string[],
+        sortDesc: [], // boolean[],
+        groupBy: [], // string[],
+        groupDesc: [], // boolean[],
+        multiSort: false, // boolean,
+        mustSort: false // boolean
+      }
+    }
+  },
   computed: {
     ...mapState('partners', ['partners']),
     currentPartner () {
@@ -64,6 +103,10 @@ export default Vue.extend({
       const partner = this.partners.filter(p => p._id === this.$route.params.partnerId)
       return partner[0]
     }
+  },
+  async mounted () {
+    const attentions = await this.$axios.get('/attentions/' + this.$route.params.partnerId)
+    this.attentions = attentions.data.payload.attentions
   }
 })
 </script>

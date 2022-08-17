@@ -9,7 +9,7 @@ export default class AbstractAttentionCrudRouterImpl extends AbstractAttentionCr
       message: 'Listado de atenciones',
       result: true,
       statusCode: 200,
-      payload: { resources: attentions }
+      payload: { attentions }
     } as FeedbackMessage<any>)
   }
 

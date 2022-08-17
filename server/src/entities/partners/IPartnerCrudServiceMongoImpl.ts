@@ -29,16 +29,13 @@ export default class IPartnerCrudServiceMongoImpl implements IResourceCrudServic
     return partner as any
   }
 
-  async getTotalPartnersCount (filter: any): Promise<any> {
-    const totalDocs = await Partner.countDocuments()
-    return totalDocs
-  }
-
   async queryPartners (req: Request): Promise<{ partnersList: IPartner[], totalDocs: number }> {
     const { page = 1, itemsPerPage = 20, qUser = '' } = req.query
     const skip = (Number(page) - 1) * Number(itemsPerPage)
 
-    const [aggregatePartners] = await Partner.aggregate([
+    const pattern = (qUser as string).replace(/\s/g, '.*')
+
+    const aggregatesPipeline = [
       ...lookupResourceAggregation('sexo', true),
       ...lookupResourceAggregation('socioono', true),
       ...lookupResourceAggregation('ciudadresidencia', true),
@@ -49,19 +46,23 @@ export default class IPartnerCrudServiceMongoImpl implements IResourceCrudServic
             $concat: partnerQueryFields
           }
         }
-      },
-      {
-        $match: {
-          qUser: { $regex: qUser }
-        }
-      },
-      {
-        $facet: {
-          metadata: [{ $count: 'total' }],
-          data: [{ $skip: skip }, { $limit: Number(itemsPerPage) }]
-        }
       }
-    ])
+    ]
+
+    aggregatesPipeline.push({
+      $match: {
+        qUser: { $regex: new RegExp(pattern, 'i') }
+      }
+    })
+
+    aggregatesPipeline.push({
+      $facet: {
+        metadata: [{ $count: 'total' }],
+        data: [{ $skip: skip }, { $limit: Number(itemsPerPage) }]
+      }
+    })
+
+    const [aggregatePartners] = await Partner.aggregate(aggregatesPipeline)
 
     const totalDocs = aggregatePartners.metadata[0]?.total || 0
 

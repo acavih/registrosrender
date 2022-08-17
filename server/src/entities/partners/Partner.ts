@@ -47,8 +47,8 @@ export const Partner = mongoose.model('members', partnerSchema)
 export default Partner
 
 export const partnerQueryFields = [
-  // '$codigo', ' ',
+  '$codigo', ' ',
   '$nombre', ' ',
-  '$apellidos', ' '
-  // '$telefono', ' ', '$sipcard', ' ', '$correelectronico'
+  '$apellidos', ' ',
+  '$telefono', ' ', '$sipcard', ' ', '$correoelectronico'
 ]
