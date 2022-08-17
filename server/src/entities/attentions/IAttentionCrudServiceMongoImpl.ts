@@ -1,43 +1,29 @@
 import IAttentionCrudService from './IAttentionCrudService'
-import Resource, { IResource } from './Attention'
+import Attention, { IAttention } from './Attention'
 
 export default class IAttentionCrudServiceMongoImpl implements IAttentionCrudService {
-  async listAllResources (): Promise<IResource[]> {
-    return await Resource.find().sort('type name')
+  async listAttentionsFor (partnerId: string): Promise<IAttention[]> {
+    const attentions = await Attention.find({
+      user: partnerId
+    })
+    return attentions as any
   }
 
-  async findOrCreateResource (name: string, type: string): Promise<{status: number, resource: IResource}> {
-    let resourceQueried = await Resource.findOne({ name, type })
-    let status = 200
-
-    if (!resourceQueried) {
-      resourceQueried = await Resource.create({ name, type })
-      status = 201
-    }
-
-    return {
-      status,
-      resource: resourceQueried as IResource
-    }
+  async createAttentionFor (partnerId: string, attentionData: IAttention): Promise<IAttention> {
+    const attention = await Attention.create({
+      ...attentionData,
+      user: partnerId
+    })
+    return attention as any
   }
 
-  async updateResource (id: string, updateInfo: IResource): Promise<{ status: number, resource: IResource }> {
-    const { type, name } = updateInfo
+  async updateAttention (attentionId: string, update: IAttention): Promise<any> {
+    await Attention.findOneAndUpdate({
+      _id: attentionId
+    }, { $set: update })
+  }
 
-    const existingResource = await Resource.findOne({ name, type })
-    const isArchiving = existingResource !== null && updateInfo.archived !== (existingResource as any).archived
-    if (existingResource && !isArchiving) {
-      return {
-        status: 400,
-        resource: updateInfo
-      }
-    }
-
-    return {
-      status: 200,
-      resource: await Resource.findOneAndUpdate({
-        _id: id
-      }, { $set: updateInfo }, { new: true }) as IResource
-    }
+  async removeAttention (attentionId: string): Promise<any> {
+    await Attention.findOneAndRemove({ _id: attentionId })
   }
 }

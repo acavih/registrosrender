@@ -3,36 +3,52 @@ import { FeedbackMessage } from '../../../types'
 import AbstractAttentionCrudRouter from './AbstractAttentionCrudRouter'
 
 export default class AbstractAttentionCrudRouterImpl extends AbstractAttentionCrudRouter {
-  async listResources (_req: Request, res: Response) {
-    const resources = await this.service.listAllResources()
+  async listAttentionsFor (req: Request, res: Response) {
+    const attentions = await this.service.listAttentionsFor(req.params.userId)
     res.status(200).json({
-      message: 'Listado de recursos',
+      message: 'Listado de atenciones',
       result: true,
       statusCode: 200,
-      payload: { resources }
+      payload: { resources: attentions }
     } as FeedbackMessage<any>)
   }
 
-  async createOrFindResource (req: Request, res: Response) {
-    const { name, type } = req.body
-    const { status, resource } = await this.service.findOrCreateResource(name, type)
+  async createAttentionsFor (req: Request, res: Response) {
+    const update = req.body
+    const attention = await this.service.createAttentionFor(req.params.userId, update)
+    const status = 201
 
     res.status(status).json({
       message: status === 201 ? 'Recurso creado' : 'Este recurso ya estaba creado',
       result: true,
       statusCode: status,
-      payload: { resource }
+      payload: { attention }
     } as FeedbackMessage<any>)
   }
 
-  async updateResource (req: Request, res: Response) {
-    const { status, resource } = await this.service.updateResource(req.params.id, req.body)
+  async updateAttention (req: Request, res: Response) {
+    await this.service.updateAttention(req.params.id, req.body)
+
+    const status = 201
 
     res.status(status).json({
-      message: status === 400 ? 'El recurso no se pudo actualizar debido a un conflicto' : 'Recurso actualizado correctamente',
+      message: 'Atencion actualizada correctamente',
       result: true,
       statusCode: status,
-      payload: { resource }
+      payload: { }
+    } as FeedbackMessage<any>)
+  }
+
+  async removeAttention (req: Request, res: Response) {
+    await this.service.removeAttention(req.params.id)
+
+    const status = 201
+
+    res.status(status).json({
+      message: 'Atención eliminada correctamente',
+      result: true,
+      statusCode: status,
+      payload: {}
     } as FeedbackMessage<any>)
   }
 }

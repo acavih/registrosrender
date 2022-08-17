@@ -1,7 +1,8 @@
-import { IResource } from './Attention'
+import { IAttention } from './Attention'
 
 export default interface IAttentionCrudService {
-  listAllResources(): Promise<IResource[]>
-  findOrCreateResource(name: string, type: string): Promise<{ status: number, resource: IResource }>
-  updateResource(id: string, updateInfo: IResource): Promise<{ status: number, resource: IResource }>
+  listAttentionsFor(partnerId: string): Promise<IAttention[]>
+  createAttentionFor(partnerId: string, attentionData: IAttention): Promise<IAttention>
+  updateAttention(attentionId: string, update: IAttention): Promise<any>
+  removeAttention(attentionId: string): Promise<any>
 }

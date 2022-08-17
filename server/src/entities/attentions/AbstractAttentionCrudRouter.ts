@@ -2,7 +2,7 @@ import { Request, Response, Router } from 'express'
 import IAttentionCrudService from './IAttentionCrudService'
 
 export default abstract class AbstractAttentionCrudRouter {
-  static prefixApiNS = '/resources'
+  static prefixApiNS = '/attentions'
   router: Router
   service: IAttentionCrudService
 
@@ -10,14 +10,16 @@ export default abstract class AbstractAttentionCrudRouter {
     const router = Router()
     this.service = service
 
-    router.get('/', this.listResources.bind(this) as any)
-    router.post('/', this.createOrFindResource.bind(this) as any)
-    router.put('/:id', this.updateResource.bind(this) as any)
+    router.get('/:userId', this.listAttentionsFor.bind(this) as any)
+    router.post('/:userId', this.createAttentionsFor.bind(this) as any)
+    router.put('/:id', this.updateAttention.bind(this) as any)
+    router.delete('/:id', this.removeAttention.bind(this) as any)
 
     this.router = router
   }
 
-  abstract listResources(req: Request, res: Response): any
-  abstract createOrFindResource(req: Request, res: Response): any
-  abstract updateResource(req: Request, res: Response): any
+  abstract listAttentionsFor(req: Request, res: Response): any
+  abstract createAttentionsFor(req: Request, res: Response): any
+  abstract updateAttention(req: Request, res: Response): any
+  abstract removeAttention(req: Request, res: Response): any
 }

@@ -1,5 +1,5 @@
 import AbstractAttentionCrudRouterImpl from './AbstractAttentionCrudRouterImpl'
 import IAttentionCrudServiceMongoImpl from './IAttentionCrudServiceMongoImpl'
 
-export const resourceCrudMongoServiceInstance = new IAttentionCrudServiceMongoImpl()
-export const resouceCrudRouterImplInstance = new AbstractAttentionCrudRouterImpl(resourceCrudMongoServiceInstance)
+export const attentionCrudMongoServiceInstance = new IAttentionCrudServiceMongoImpl()
+export const attentionCrudRouterImplInstance = new AbstractAttentionCrudRouterImpl(attentionCrudMongoServiceInstance)
