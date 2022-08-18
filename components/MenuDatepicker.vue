@@ -26,7 +26,7 @@ export default {
     },
     $value: {
       type: Date,
-      default: null
+      required: false
     }
   },
   data () {

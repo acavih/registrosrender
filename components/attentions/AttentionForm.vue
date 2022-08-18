@@ -59,14 +59,14 @@ export default Vue.extend({
     attentionToEdit: {
       type: Object,
       required: false,
-      default: () => ({})
+      default: null
     }
   },
   data () {
     return {
       attention: {
         comentario: '',
-        fechaatencion: new Date(),
+        fechaatencion: null,
         tipoaenciones: [],
         Proyectos: [],
         motivosatencion: [],
@@ -76,12 +76,14 @@ export default Vue.extend({
         voluntariado: [],
         lugaratencion: null,
         cosaspendientes: '',
-        fechacosaspendientes: new Date()
+        fechacosaspendientes: null
       }
     }
   },
   created () {
+    debugger
     if (this.attentionToEdit) {
+      debugger
       this.attention.comentario = this.attentionToEdit.comentario
       this.attention.tipoaenciones = this.attentionToEdit.tipoaenciones
       this.attention.Proyectos = this.attentionToEdit.Proyectos
