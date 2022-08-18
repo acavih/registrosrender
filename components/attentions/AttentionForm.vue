@@ -65,6 +65,7 @@ export default Vue.extend({
   data () {
     return {
       attention: {
+        _id: '',
         comentario: '',
         fechaatencion: null,
         tipoaenciones: [],
@@ -81,9 +82,7 @@ export default Vue.extend({
     }
   },
   created () {
-    debugger
     if (this.attentionToEdit) {
-      debugger
       this.attention.comentario = this.attentionToEdit.comentario
       this.attention.tipoaenciones = this.attentionToEdit.tipoaenciones
       this.attention.Proyectos = this.attentionToEdit.Proyectos
@@ -96,6 +95,7 @@ export default Vue.extend({
       this.attention.lugaratencion = this.attentionToEdit.lugaratencion
       this.attention.cosaspendientes = this.attentionToEdit.cosaspendientes
       this.attention.fechacosaspendientes = this.attentionToEdit.fechacosaspendientes
+      this.attention._id = this.attentionToEdit._id
     }
   },
   methods: {

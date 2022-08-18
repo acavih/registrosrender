@@ -188,15 +188,24 @@ export default Vue.extend({
     }
   },
   async mounted () {
-    const attentions = await this.$axios.get('/attentions/' + this.$route.params.partnerId)
-    this.attentions = attentions.data.payload.attentions
+    await this.retrieveAttentions()
   },
   methods: {
-    addAttention (attention) {
-      console.log(attention)
+    async retrieveAttentions () {
+      const attentions = await this.$axios.get('/attentions/' + this.$route.params.partnerId)
+      this.attentions = attentions.data.payload.attentions
     },
-    updateAttention (attention) {
+    async addAttention (attention) {
+      const partnerId = this.$route.params.partnerId
+      await this.$axios.post('/attentions/' + partnerId, attention)
+      this.retrieveAttentions()
+      this.addingAttention = ''
+    },
+    async updateAttention (attention) {
       console.log(attention)
+      await this.$axios.put('/attentions/' + attention._id, attention)
+      this.retrieveAttentions()
+      this.attentionEditing = ''
     }
   }
 })
