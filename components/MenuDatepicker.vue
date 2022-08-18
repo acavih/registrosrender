@@ -1,66 +1,64 @@
 <template>
-  <v-menu
-    ref="menu1"
-    v-model="menu1"
-    :close-on-content-click="false"
-    transition="scale-transition"
-    offset-y
-    max-width="290px"
-    min-width="auto"
-  >
-    <template #activator="{ on, attrs }">
+  <v-menu v-model="menu" offset-y min-width="auto" :close-on-content-click="false" max-width="290px">
+    <template #activator="{on, attrs}">
       <v-text-field
-        v-model="dateFormatted"
-        label="Date"
-        hint="MM/DD/YYYY format"
-        persistent-hint
-        prepend-icon="mdi-calendar"
+        v-model="formattedDate"
+        :label="label"
         v-bind="attrs"
-        @blur="date = parseDate(dateFormatted)"
+        persistent-hint
+        hint="DD-MM-YYYY"
+        @input="menu=true"
+        @change="updateDate"
         v-on="on"
       />
     </template>
-    <v-date-picker
-      v-model="date"
-      no-title
-      @input="menu1 = false"
-    />
+    <v-date-picker v-model="date" no-title @change="updateTxt" />
   </v-menu>
 </template>
+
 <script>
+import dayjs from 'dayjs'
 export default {
-  data: vm => ({
-    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-    dateFormatted: vm.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)),
-    menu1: false,
-    menu2: false
-  }),
-
-  computed: {
-    computedDateFormatted () {
-      return this.formatDate(this.date)
-    }
-  },
-
-  watch: {
-    date () {
-      this.dateFormatted = this.formatDate(this.date)
-      this.$emit('input', this.date)
-    }
-  },
-
-  methods: {
-    formatDate (date) {
-      if (!date) { return null }
-
-      const [year, month, day] = date.split('-')
-      return `${month}/${day}/${year}`
+  props: {
+    label: {
+      type: String,
+      default: 'Introduzca una fecha'
     },
-    parseDate (date) {
-      if (!date) { return null }
-
-      const [month, day, year] = date.split('/')
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    $value: {
+      type: Date,
+      default: null
+    }
+  },
+  data () {
+    return {
+      date: null, // string YYYY-MM-DD
+      formattedDate: '',
+      menu: false
+    }
+  },
+  watch: {
+    date (newv) {
+      console.log(newv)
+    }
+  },
+  created () {
+    const date = this.$attrs.value
+    if (date !== null) {
+      this.date = dayjs(date).format('YYYY-MM-DD')
+      this.updateTxt()
+    }
+  },
+  methods: {
+    updateTxt () {
+      this.formattedDate = dayjs(new Date(this.date)).format('DD-MM-YYYY')
+      this.$emit('input', new Date(this.date))
+    },
+    updateDate () {
+      const [day, month, year] = this.formattedDate.split('-')
+      const newDate = new Date([year, month, day].join('/'))
+      this.date = dayjs(newDate).format('YYYY-MM-DD')
+      this.menu = false
+      this.$emit('input', newDate)
     }
   }
 }

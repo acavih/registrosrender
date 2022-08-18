@@ -28,6 +28,13 @@
               <td>{{ currentPartner.telefono || 'n/a' }}</td>
             </tr>
             <tr>
+              <td>Fecha de nacimiento</td>
+              <td>
+                {{ currentPartner.fechanacimiento && currentPartner.fechanacimiento | date }}
+                ({{ edadSocio }} años)
+              </td>
+            </tr>
+            <tr>
               <td>Sexo</td>
               <td>{{ currentPartner.sexo?.name || 'n/a' }}</td>
             </tr>
@@ -51,7 +58,7 @@
       <v-card-title>
         Atenciones
         <v-spacer />
-        <v-btn color="primary">
+        <v-btn color="primary" @click="addingAttention = true">
           Crear atención
         </v-btn>
       </v-card-title>
@@ -62,6 +69,10 @@
             <v-card v-for="attention in props.items" :key="attention._id" class="mb-4">
               <v-card-title>
                 {{ attention.fechaatencion | date }}
+                <v-spacer />
+                <v-btn small elevation="0" color="primary" @click="attentionEditing = attention._id">
+                  Editar atencion
+                </v-btn>
               </v-card-title>
               <v-card-text>
                 <v-alert v-if="attention.lugaratencion" type="warning" colored-border border="bottom">
@@ -95,6 +106,12 @@
         </v-data-iterator>
       </v-card-text>
     </v-card>
+    <v-dialog v-model="addingAttention">
+      <attention-form v-if="addingAttention" @submit-attention="addAttention" />
+    </v-dialog>
+    <v-dialog v-if="isEditingAttention" :value="true" @click:outside="attentionEditing = ''">
+      <attention-form v-if="isEditingAttention" :attention-to-edit="currentAttention" @submit-attention="updateAttention" />
+    </v-dialog>
     <nuxt />
   </v-sheet>
 </template>
@@ -103,16 +120,24 @@
 import Vue from 'vue'
 import { mapState } from 'vuex'
 import dayjs from 'dayjs'
+import AttentionForm from '@/components/attentions/AttentionForm.vue'
 
 export default Vue.extend({
   name: 'ShowPartner',
+  components: { AttentionForm },
   filters: {
     date (d) {
-      return dayjs(d).format('DD/MM/YYYY')
+      try {
+        return dayjs(d).format('DD/MM/YYYY')
+      } catch (error) {
+        return 'n/a'
+      }
     }
   },
   data () {
     return {
+      addingAttention: false,
+      attentionEditing: '',
       attentions: [],
       iteratorOptions: {
         page: 1,
@@ -130,22 +155,49 @@ export default Vue.extend({
         { value: 'derivadode', text: 'Derivado de' },
         { value: 'Proyectos', text: 'Proyectos' },
         { value: 'formacion', text: 'Formacion' },
-        { value: 'motivosatencion', text: 'Motivos de atencion' },
-        { value: 'tipoaenciones', text: 'Tipo de atenciones' }
+        { value: 'motivosatencion', text: 'Motivos de atencion' }
       ]
     }
   },
   computed: {
     ...mapState('partners', ['partners']),
+    currentAttention () {
+      if (!this.attentionEditing) { return null }
+      return this.attentions.filter(a => a._id === this.attentionEditing)[0]
+    },
+    isEditingAttention () {
+      return this.currentAttention !== null
+    },
     currentPartner () {
       console.log('PARTNEEEER ID', this.$route.params)
       const partner = this.partners.filter(p => p._id === this.$route.params.partnerId)
       return partner[0]
+    },
+    edadSocio () {
+      if (!this.currentPartner.fechanacimiento) { return '' }
+      const hoy = new Date()
+      const cumpleanos = new Date(this.currentPartner.fechanacimiento)
+      let edad = hoy.getFullYear() - cumpleanos.getFullYear()
+      const m = hoy.getMonth() - cumpleanos.getMonth()
+
+      if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--
+      }
+
+      return edad
     }
   },
   async mounted () {
     const attentions = await this.$axios.get('/attentions/' + this.$route.params.partnerId)
     this.attentions = attentions.data.payload.attentions
+  },
+  methods: {
+    addAttention (attention) {
+      console.log(attention)
+    },
+    updateAttention (attention) {
+      console.log(attention)
+    }
   }
 })
 </script>

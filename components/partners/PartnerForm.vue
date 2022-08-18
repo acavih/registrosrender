@@ -94,8 +94,16 @@ export default Vue.extend({
   },
   data () {
     return {
-      partnerData: this.partnerToEdit === null ? { ...defaultMemberData } : { ...this.partnerToEdit }
+      partnerData: {}
     }
+  },
+  created () {
+    this.partnerData = this.partnerToEdit === null
+      ? { ...defaultMemberData }
+      : {
+          ...this.partnerToEdit,
+          fechanacimiento: new Date(this.partnerToEdit.fechanacimiento)
+        }
   },
   methods: {
     submitData () {
