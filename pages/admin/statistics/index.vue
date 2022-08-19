@@ -16,7 +16,19 @@
             </v-alert>
             <v-row>
               <v-col :cols="4">
+                <partners-by-sex />
+              </v-col>
+              <v-col :cols="4">
                 <partners-by-age />
+              </v-col>
+              <v-col :cols="4">
+                <partners-by-socioono />
+              </v-col>
+              <v-col :cols="6">
+                <partners-by-nationality />
+              </v-col>
+              <v-col :cols="6">
+                <partners-by-residency />
               </v-col>
             </v-row>
           </v-card-text>
@@ -44,9 +56,13 @@ import Vue from 'vue'
 import { mapMutations, mapState, mapGetters } from 'vuex'
 import statisticsDataset from '@/components/statistics/dataset.vue'
 import PartnersByAge from '@/components/statistics/charts/PartnersByAge.vue'
+import PartnersBySex from '~/components/statistics/charts/PartnersBySex.vue'
+import PartnersBySocioono from '~/components/statistics/charts/PartnersBySocioono.vue'
+import PartnersByNationality from '~/components/statistics/charts/PartnersByNationality.vue'
+import PartnersByResidency from '~/components/statistics/charts/PartnersByResidency.vue'
 export default Vue.extend({
   name: 'StatisticsIndex',
-  components: { statisticsDataset, PartnersByAge },
+  components: { statisticsDataset, PartnersByAge, PartnersBySex, PartnersBySocioono, PartnersByNationality, PartnersByResidency },
   data () {
     return {
       showingDatasets: false,

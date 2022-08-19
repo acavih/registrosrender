@@ -1,7 +1,11 @@
 <template>
   <v-card outlined>
     <v-card-text>
-      <highchart :options="chartOptions" :modules="['exporting']" />
+      <highchart
+        :options="chartOptions"
+        :update="['options.series']"
+        :modules="['exporting']"
+      />
     </v-card-text>
   </v-card>
 </template>
@@ -9,6 +13,7 @@
 <script>
 import Vue from 'vue'
 import datasetStatsMixins from '@/mixins/datasetsStatsMixins'
+import { createChartOptions } from '@/utils/chartsOptions/pie'
 
 const ranges = [
   [0, 20],
@@ -23,7 +28,6 @@ export default Vue.extend({
   mixins: [datasetStatsMixins],
   computed: {
     groupedByAge () {
-      const data = []
       const grouped = this.distinctUsers.reduce((result, current) => {
         for (let index = 0; index < ranges.length; index++) {
           const range = ranges[index]
@@ -36,48 +40,14 @@ export default Vue.extend({
         }
         return result
       }, { })
-      const keys = Object.keys(grouped)
-      for (let index = 0; index < keys.length; index++) {
-        const key = keys[index]
-        data.push({ name: key, y: grouped[key] })
-      }
-      return data
+      return this.transformToArray(grouped)
     },
     chartOptions () {
-      return {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: 'Socios agrupados por edad'
-        },
-        tooltip: {
-          pointFormat: '{point.percentage:.1f}%</b>'
-        },
-        /* accessibility: {
-          point: {
-            valueSuffix: '%'
-          }
-        }, */
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
-            }
-          }
-        },
-        series: [{
-          name: 'Socios',
-          colorByPoint: true,
-          data: this.groupedByAge
-        }]
-      }
+      return createChartOptions({
+        seriesName: 'Socios',
+        titleText: 'Socios agrupados por edad',
+        data: this.groupedByAge
+      })
     }
   }
 })

@@ -8,7 +8,10 @@ export default class IAttentionCrudServiceMongoImpl implements IAttentionCrudSer
         $gte: startDate,
         $lte: endDate
       }
-    }).populate(['user'])
+    }).populate({
+      path: 'user',
+      populate: ['sexo', 'nacionalidad', 'ciudadresidencia', 'socioono']
+    })
 
     return attentions as any
   }
