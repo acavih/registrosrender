@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import httpStatus from 'http-status'
-import { FeedbackMessage } from '../../../types'
+import { FeedbackMessage } from '../../types'
 import AbstractPartnerCrudRouter from './AbstractPartnerCrudRouter'
 import { IPartner } from './Partner'
 

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { FeedbackMessage } from '../../../types'
+import { FeedbackMessage } from '../../types'
 import AbstractAttentionCrudRouter from './AbstractAttentionCrudRouter'
 
 export default class AbstractAttentionCrudRouterImpl extends AbstractAttentionCrudRouter {

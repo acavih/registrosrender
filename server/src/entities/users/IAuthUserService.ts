@@ -1,4 +1,4 @@
-import { FeedbackMessage, PayloadGoodResult } from '../../../types'
+import { FeedbackMessage, PayloadGoodResult } from '../../types'
 import { IUser } from './User'
 
 export interface IAuthUserService {

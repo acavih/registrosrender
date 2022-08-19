@@ -1,6 +1,9 @@
-import 'highcharts/modules/exporting'
-import 'highcharts/modules/export-data'
+import path from 'path'
 import colors from 'vuetify/es5/util/colors'
+
+const isProd = process.env.NODE_ENV === 'production'
+
+console.log(isProd ? 'Modo producción' : 'Modo desarrollo')
 
 /**
  * @type {import('@nuxt/types').NuxtConfig}
@@ -19,6 +22,10 @@ const config = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
+  },
+
+  generate: {
+    dir: path.resolve(__dirname, 'server', 'public')
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -57,7 +64,7 @@ const config = {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://localhost:9000/api/v1'
+    baseURL: isProd ? '/api/v1' : 'http://localhost:9000/api/v1'
   },
 
   auth: {

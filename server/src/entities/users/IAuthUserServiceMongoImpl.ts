@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import httpStatus from 'http-status'
 import jsonwebtoken, { JwtPayload } from 'jsonwebtoken'
 import { jwtSignOptionsOf, JWT_SECRET_KEY } from '../../vars'
-import { FeedbackMessage, PayloadGoodResult } from '../../../types'
+import { FeedbackMessage, PayloadGoodResult } from '../../types'
 import { IAuthUserService } from './IAuthUserService'
 import User, { IUser } from './User'
 
