@@ -3,6 +3,17 @@ import { FeedbackMessage } from '../../../types'
 import AbstractAttentionCrudRouter from './AbstractAttentionCrudRouter'
 
 export default class AbstractAttentionCrudRouterImpl extends AbstractAttentionCrudRouter {
+  async listAttentionsDataset (req: Request, res: Response) {
+    const { startDate, endDate } = req.query
+    const attentions = await this.service.listAttentionsInRangeDate(startDate as string, endDate as string)
+    res.status(200).json({
+      message: 'Listado de atneciones',
+      result: true,
+      statusCode: 200,
+      payload: { attentions }
+    } as FeedbackMessage<any>)
+  }
+
   async listAttentionsFor (req: Request, res: Response) {
     const attentions = await this.service.listAttentionsFor(req.params.userId)
     res.status(200).json({

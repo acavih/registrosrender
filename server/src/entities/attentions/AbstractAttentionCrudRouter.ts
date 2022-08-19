@@ -10,6 +10,7 @@ export default abstract class AbstractAttentionCrudRouter {
     const router = Router()
     this.service = service
 
+    router.get('/dataset', this.listAttentionsDataset.bind(this) as any)
     router.get('/:userId', this.listAttentionsFor.bind(this) as any)
     router.post('/:userId', this.createAttentionsFor.bind(this) as any)
     router.put('/:id', this.updateAttention.bind(this) as any)
@@ -22,4 +23,5 @@ export default abstract class AbstractAttentionCrudRouter {
   abstract createAttentionsFor(req: Request, res: Response): any
   abstract updateAttention(req: Request, res: Response): any
   abstract removeAttention(req: Request, res: Response): any
+  abstract listAttentionsDataset(req: Request, res: Response): any
 }

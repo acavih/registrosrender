@@ -2,6 +2,17 @@ import IAttentionCrudService from './IAttentionCrudService'
 import Attention, { IAttention } from './Attention'
 
 export default class IAttentionCrudServiceMongoImpl implements IAttentionCrudService {
+  async listAttentionsInRangeDate (startDate: string, endDate: string): Promise<IAttention[]> {
+    const attentions = await Attention.find({
+      fechaatencion: {
+        $gte: startDate,
+        $lte: endDate
+      }
+    }).populate(['user'])
+
+    return attentions as any
+  }
+
   async listAttentionsFor (partnerId: string): Promise<IAttention[]> {
     const attentions = await Attention.find({
       user: partnerId

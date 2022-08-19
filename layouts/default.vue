@@ -18,6 +18,15 @@
           </v-list-item-content>
         </v-list-item>
         <v-list-item
+          :to="'/admin/statistics'"
+          router
+          exact
+        >
+          <v-list-item-content>
+            <v-list-item-title v-text="'Atenciones'" />
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
           :to="'/admin/resources'"
           router
           exact

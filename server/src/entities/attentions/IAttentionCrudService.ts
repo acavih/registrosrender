@@ -5,4 +5,5 @@ export default interface IAttentionCrudService {
   createAttentionFor(partnerId: string, attentionData: IAttention): Promise<IAttention>
   updateAttention(attentionId: string, update: IAttention): Promise<any>
   removeAttention(attentionId: string): Promise<any>
+  listAttentionsInRangeDate(startDate: string, endDate: string): Promise<IAttention[]>
 }
