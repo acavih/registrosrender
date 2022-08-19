@@ -11,9 +11,14 @@
             </v-btn>
           </v-card-title>
           <v-card-text>
-            <v-alert>
+            <v-alert color="primary" dark>
               Viendo resultados de {{ attentionsDataset.length }} atenciones y {{ distinctUsers.length }} usuarios
             </v-alert>
+            <v-row>
+              <v-col :cols="4">
+                <partners-by-age />
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
@@ -38,13 +43,17 @@
 import Vue from 'vue'
 import { mapMutations, mapState, mapGetters } from 'vuex'
 import statisticsDataset from '@/components/statistics/dataset.vue'
+import PartnersByAge from '@/components/statistics/charts/PartnersByAge.vue'
 export default Vue.extend({
   name: 'StatisticsIndex',
-  components: { statisticsDataset },
+  components: { statisticsDataset, PartnersByAge },
   data () {
     return {
       showingDatasets: false,
-      rangeDate: [],
+      rangeDate: [
+        '2022-06-01',
+        '2022-08-30'
+      ],
       loading: false
     }
   },

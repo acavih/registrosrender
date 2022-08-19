@@ -1,3 +1,5 @@
+import 'highcharts/modules/exporting'
+import 'highcharts/modules/export-data'
 import colors from 'vuetify/es5/util/colors'
 
 /**
@@ -45,8 +47,12 @@ const config = {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
-    'vuetify-dialog/nuxt'
+    'vuetify-dialog/nuxt',
+    'nuxt-highcharts'
   ],
+  highcharts: {
+    exporting: true
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
