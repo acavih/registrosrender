@@ -66,7 +66,7 @@
       <v-card-text>
         <v-data-iterator :options.sync="iteratorOptions" :items="attentions">
           <template #default="props">
-            <v-card v-for="attention in props.items" :key="attention._id" class="mb-4">
+            <v-card v-for="attention in props.items" :key="attention._id" outlined class="mb-4">
               <v-card-title>
                 {{ attention.fechaatencion | date }}
                 <v-spacer />
