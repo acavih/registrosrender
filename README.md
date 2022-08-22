@@ -1,5 +1,7 @@
 # registrosrender
 
+print date Get-Date -Format "yyyy_MM_dd"
+
 ## Horas
   - 9:50 - 13:00
   - 14:00 - 14:30
