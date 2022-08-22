@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import httpStatus from 'http-status'
 import { FeedbackMessage } from '../../types'
 import AbstractPartnerCrudRouter from './AbstractPartnerCrudRouter'
-import { IPartner } from './Partner'
+import { IPartner } from 'registros-types'
 
 export default class AbstractPartnerCrudRouterImpl extends AbstractPartnerCrudRouter {
   async listPartners (req: Request, res: Response) {

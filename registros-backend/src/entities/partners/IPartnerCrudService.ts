@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import { IPartner } from './Partner'
+import { IPartner } from 'registros-types'
 
 export default interface IResourceCrudService {
   queryPartners(req: Request): Promise<{partnersList: IPartner[], totalDocs: number}>

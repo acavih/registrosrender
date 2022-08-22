@@ -1,24 +1,8 @@
 import mongoose from 'mongoose'
 import calcularEdad from '../../utils/calcularEdad'
-import { IResource } from '../resources/Resource'
+import { IPartner } from "registros-types";
 
-export interface IPartner {
-  codigo: String,
-  nombre: String,
-  apellidos: String,
-  fechanacimiento: Date,
-  sipcard: String,
-  correoelectronico: String,
-  telefono: String,
-  observaciones: String,
-  cosaspendientes: String,
-  sexo: IResource,
-  socioono: IResource,
-  nacionalidad: IResource,
-  ciudadresidencia: IResource
-}
-
-const partnerSchema = new mongoose.Schema({
+const partnerSchema = new mongoose.Schema<IPartner>({
   codigo: { default: '', type: String },
   nombre: { default: '', type: String },
   apellidos: { default: '', type: String },

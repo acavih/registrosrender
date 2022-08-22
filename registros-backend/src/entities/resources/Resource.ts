@@ -1,12 +1,7 @@
 import mongoose from 'mongoose'
+import { IResource } from "registros-types";
 
-export interface IResource {
-  type: String,
-  name: String,
-  archived: Boolean
-}
-
-const resourceSchema = new mongoose.Schema({
+const resourceSchema = new mongoose.Schema<IResource>({
   type: { type: String, required: true },
   name: { type: String, default: '' },
   archived: { type: Boolean, default: false }

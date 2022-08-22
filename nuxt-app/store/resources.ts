@@ -1,11 +1,5 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
-
-interface IResource {
-  _id: string
-  type: string,
-  name: string,
-  archived: boolean
-}
+import { IResource } from 'registros-types'
 
 export const state = () => ({
   resourcesList: [] as IResource[],

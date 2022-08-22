@@ -14,7 +14,6 @@
 import Vue from 'vue'
 import datasetStatsMixins from '@/mixins/datasetsStatsMixins'
 import { createChartOptions } from '@/utils/chartsOptions/pie'
-
 const ranges = [
   [0, 20],
   [21, 40],
@@ -28,7 +27,11 @@ export default Vue.extend({
   mixins: [datasetStatsMixins],
   computed: {
     groupedByAge () {
-      const grouped = this.distinctUsers.reduce((result, current) => {
+      /**
+       * @type {import('registros-types').IPartner[]}
+       */
+      const distinctUsers = this.distinctUsers
+      const grouped = distinctUsers.reduce((result, current) => {
         for (let index = 0; index < ranges.length; index++) {
           const range = ranges[index]
           const [min, max] = range

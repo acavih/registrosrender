@@ -1,4 +1,4 @@
-import { IAttention } from './Attention'
+import { IAttention } from 'registros-types'
 
 export default interface IAttentionCrudService {
   listAttentionsFor(partnerId: string): Promise<IAttention[]>

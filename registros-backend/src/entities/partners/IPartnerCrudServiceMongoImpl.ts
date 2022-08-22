@@ -2,7 +2,8 @@ import { Request } from 'express'
 import lookupResourceAggregation from '../../utils/lookupResourceAggregation'
 import { resourceCrudMongoServiceInstance } from '../resources'
 import IResourceCrudService from './IPartnerCrudService'
-import Partner, { IPartner, partnerQueryFields } from './Partner'
+import Partner, { partnerQueryFields } from './Partner'
+import { IPartner } from "registros-types";
 
 export default class IPartnerCrudServiceMongoImpl implements IResourceCrudService {
   async setDefaultsToPartnerIfNecessary (partner: IPartner): Promise<IPartner> {

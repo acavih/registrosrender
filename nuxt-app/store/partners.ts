@@ -1,7 +1,8 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
+import { IPartner } from 'registros-types'
 
 export const state = () => ({
-  partners: [] as any[],
+  partners: [] as IPartner[],
   totalDocs: 0
 })
 

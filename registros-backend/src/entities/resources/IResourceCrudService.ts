@@ -1,4 +1,4 @@
-import { IResource } from './Resource'
+import { IResource } from 'registros-types'
 
 export default interface IResourceCrudService {
   listAllResources(): Promise<IResource[]>

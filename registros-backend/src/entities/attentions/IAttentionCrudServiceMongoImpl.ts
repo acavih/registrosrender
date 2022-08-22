@@ -1,5 +1,6 @@
 import IAttentionCrudService from './IAttentionCrudService'
-import Attention, { IAttention } from './Attention'
+import Attention from './Attention'
+import { IAttention } from 'registros-types'
 
 export default class IAttentionCrudServiceMongoImpl implements IAttentionCrudService {
   async listAttentionsInRangeDate (startDate: string, endDate: string): Promise<IAttention[]> {

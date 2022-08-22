@@ -1,26 +1,6 @@
 import mongoose from 'mongoose'
-import { IPartner } from '../partners/Partner'
-import { IResource } from '../resources/Resource'
-
-export interface IAttention {
-  comentario: String,
-  fechaatencion: Date,
-  tipoaenciones: IResource[],
-  Proyectos: IResource[],
-  motivosatencion: IResource[],
-  derivadoa: IResource[],
-  derivadode: IResource[],
-  formacion: IResource[],
-  voluntariado: IResource[],
-  diagnosticos: IResource[],
-  lugaratencion: IResource | null,
-  cosaspendientes: String,
-  fechacosaspendientes: Date,
-  user: IPartner,
-  archived: Boolean
-}
-
-const attentionSchema = new mongoose.Schema({
+import { IAttention } from 'registros-types'
+const attentionSchema = new mongoose.Schema<IAttention>({
   comentario: { type: String },
   fechaatencion: { type: Date },
   tipoaenciones: [{ type: mongoose.Types.ObjectId, ref: 'resources' }],

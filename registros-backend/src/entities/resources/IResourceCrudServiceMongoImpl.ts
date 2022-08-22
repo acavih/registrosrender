@@ -1,5 +1,6 @@
 import IResourceCrudService from './IResourceCrudService'
-import Resource, { IResource } from './Resource'
+import Resource from './Resource'
+import { IResource } from "registros-types";
 
 export default class IResourceCrudServiceMongoImpl implements IResourceCrudService {
   async listAllResources (): Promise<IResource[]> {

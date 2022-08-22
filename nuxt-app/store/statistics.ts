@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
+import { IAttention } from 'registros-types'
 
 export const state = () => ({
-  attentionsDataset: [],
+  attentionsDataset: [] as IAttention[],
   loaded: false
 })
 
