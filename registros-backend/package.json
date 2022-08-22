@@ -1,7 +1,6 @@
 {
   "name": "registros-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
@@ -27,5 +26,6 @@
     "http-status": "^1.5.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.2"
-  }
+  },
+  "description": ""
 }
