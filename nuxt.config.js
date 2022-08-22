@@ -24,6 +24,8 @@ const config = {
     ]
   },
 
+  rootDir: './nuxt-app',
+
   generate: {
     dir: path.resolve(__dirname, 'server', 'public')
   },
