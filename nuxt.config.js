@@ -27,7 +27,7 @@ const config = {
   rootDir: './nuxt-app',
 
   generate: {
-    dir: path.resolve(__dirname, 'server', 'public')
+    dir: path.resolve(__dirname, 'registros-backend', 'public')
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
