@@ -30,17 +30,18 @@
     "@types/lodash": "^4.14.182",
     "core-js": "^3.19.3",
     "dayjs": "^1.11.5",
+    "gulp": "^4.0.2",
     "highcharts": "^10.2.0",
     "lodash": "^4.17.21",
     "nuxt": "^2.15.8",
     "nuxt-highcharts": "^2.0.4",
+    "registros-types": "1.0.0",
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
     "vuetify": "^2.6.1",
     "vuetify-dialog": "^2.0.17",
-    "webpack": "^4.46.0",
-    "registros-types": "1.0.0"
+    "webpack": "^4.46.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3",
@@ -55,6 +56,7 @@
     "eslint-plugin-nuxt": "^3.1.0",
     "eslint-plugin-vue": "^8.2.0",
     "nodemon": "^2.0.19",
+    "npm-commands": "^1.1.0",
     "ts-node": "^10.9.1"
   }
 }
