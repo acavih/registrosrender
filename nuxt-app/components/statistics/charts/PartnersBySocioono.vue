@@ -29,7 +29,7 @@ export default Vue.extend({
     chartOptions () {
       return createChartOptions({
         seriesName: 'Socios',
-        titleText: 'Socios agrupados por sexo',
+        titleText: 'Socios agrupados por socio o no',
         data: this.groupedByAge
       })
     }

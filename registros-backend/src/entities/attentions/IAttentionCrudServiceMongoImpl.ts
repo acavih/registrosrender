@@ -12,7 +12,16 @@ export default class IAttentionCrudServiceMongoImpl implements IAttentionCrudSer
     }).populate({
       path: 'user',
       populate: ['sexo', 'nacionalidad', 'ciudadresidencia', 'socioono']
-    })
+    }).populate([
+      'tipoaenciones',
+      'Proyectos',
+      'motivosatencion',
+      'derivadoa',
+      'derivadode',
+      'formacion',
+      'voluntariado',
+      'lugaratencion'
+    ])
 
     return attentions as any
   }

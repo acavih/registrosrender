@@ -64,46 +64,7 @@
       </v-card-title>
 
       <v-card-text>
-        <v-data-iterator :options.sync="iteratorOptions" :items="attentions">
-          <template #default="props">
-            <v-card v-for="attention in props.items" :key="attention._id" outlined class="mb-4">
-              <v-card-title>
-                {{ attention.fechaatencion | date }}
-                <v-spacer />
-                <v-btn small elevation="0" color="primary" @click="attentionEditing = attention._id">
-                  Editar atencion
-                </v-btn>
-              </v-card-title>
-              <v-card-text>
-                <v-alert v-if="attention.lugaratencion" type="warning" colored-border border="bottom">
-                  <strong>Lugar de atencion</strong>: {{ attention.lugaratencion?.name }}
-                </v-alert>
-                <v-list>
-                  <template v-for="{value, text} in resourcesKeys">
-                    <v-list-item v-if="attention[value].length > 0" :key="value + attention._id">
-                      <v-list-item-content>
-                        <v-list-item-title>{{ text }}</v-list-item-title>
-                        <v-list-item-subtitle>
-                          <v-chip-group>
-                            <v-chip v-for="resource in attention[value]" :key="resource._id" dark color="indigo">
-                              {{ resource.name }}
-                            </v-chip>
-                          </v-chip-group>
-                        </v-list-item-subtitle>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </template>
-                </v-list>
-                <v-alert color="#2A3B4D" dark>
-                  {{ attention.comentario }}
-                </v-alert>
-                <v-alert v-if="attention.cosaspendientes" type="warning" colored-border border="bottom">
-                  <strong>{{ attention.fechacosaspendientes | date }}</strong> {{ attention.cosaspendientes }}
-                </v-alert>
-              </v-card-text>
-            </v-card>
-          </template>
-        </v-data-iterator>
+        <attentions-iterator :options.sync="iteratorOptions" :attentions="attentions" />
       </v-card-text>
     </v-card>
     <v-dialog v-model="addingAttention">
@@ -120,11 +81,12 @@
 import Vue from 'vue'
 import { mapState } from 'vuex'
 import dayjs from 'dayjs'
+import AttentionsIterator from '../../../../components/attentions/AttentionsIterator.vue'
 import AttentionForm from '@/components/attentions/AttentionForm.vue'
 
 export default Vue.extend({
   name: 'ShowPartner',
-  components: { AttentionForm },
+  components: { AttentionForm, AttentionsIterator },
   filters: {
     date (d) {
       try {

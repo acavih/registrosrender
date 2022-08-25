@@ -46,7 +46,7 @@
       </v-col>
     </v-row>
     <v-dialog v-model="showingDatasets">
-      <statistics-dataset />
+      <statistics-dataset :partners="distinctUsers" :attentions="attentionsDataset" />
     </v-dialog>
   </v-sheet>
 </template>

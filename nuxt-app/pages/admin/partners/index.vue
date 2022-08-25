@@ -10,25 +10,12 @@
       </v-card-title>
       <v-card-text>
         <v-text-field v-model="qUser" hint="Código · Nombre · Apellidos · Teléfono · Tarjeta SIP · Correo electronico" label="Buscar usuarios" />
-        <v-data-table
+        <partners-table
+          :options-table="options"
+          :partners="partners"
           :loading="loading"
-          :items="partners"
-          :server-items-length="totalDocs"
-          :headers="headersTable"
-          :options.sync="options"
-          :footer-props="footerProps"
-        >
-          <template #[`item.actions`]="{ item }">
-            <v-btn
-              color="primary"
-              elevation="0"
-              small
-              :to="'/admin/partners/' + item._id"
-            >
-              Ver miembro
-            </v-btn>
-          </template>
-        </v-data-table>
+          :total-docs="totalDocs"
+        />
       </v-card-text>
     </v-card>
     <nuxt />
@@ -38,29 +25,18 @@
 <script>
 import Vue from 'vue'
 import { mapMutations, mapState } from 'vuex'
+import PartnersTable from '../../../components/partners/PartnersTable.vue'
 export default Vue.extend({
   name: 'PartnersIndex',
+  components: { PartnersTable },
   data () {
     const { page = 1, itemsPerPage = 20 } = this.$route.query
     return {
-      headersTable: [
-        { text: 'Codigo', value: 'codigo' },
-        { text: 'Nombre', value: 'nombre' },
-        { text: 'Apellidos', value: 'apellidos' },
-        { text: 'Tarjeta sip', value: 'sipcard' },
-        { text: 'Correo electrónico', value: 'correoelectronico' },
-        { text: 'Telefono', value: 'telefono' },
-        { text: 'Query', value: 'qUser' },
-        { text: 'Acciones', value: 'actions' }
-      ],
+      qUser: this.$route.query.qUser || '',
+      loading: false,
       options: {
         itemsPerPage: Number(itemsPerPage),
         page: Number(page)
-      },
-      qUser: this.$route.query.qUser || '',
-      loading: false,
-      footerProps: {
-        'items-per-page-options': [20, 40, 60, 80, 100]
       }
     }
   },
