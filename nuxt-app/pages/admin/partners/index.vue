@@ -11,7 +11,7 @@
       <v-card-text>
         <v-text-field v-model="qUser" hint="Código · Nombre · Apellidos · Teléfono · Tarjeta SIP · Correo electronico" label="Buscar usuarios" />
         <partners-table
-          :options-table="options"
+          :options-table.sync="options"
           :partners="partners"
           :loading="loading"
           :total-docs="totalDocs"

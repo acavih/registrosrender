@@ -10,6 +10,8 @@ yarn-error.log*
 dump
 copydb
 
+scripts
+
 public
 
 # Runtime data

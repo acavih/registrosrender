@@ -6,7 +6,18 @@
     :headers="headersTable"
     :options.sync="options"
     :footer-props="footerProps"
+    :item-key="'_id'"
+    :expanded.sync="expandedItems"
+    show-expand
   >
+    <template #top>
+      <v-toolbar elevation="0">
+        <v-spacer />
+        <v-btn small elevation="0" @click="expandedItems = allExpanded ? [] : partners">
+          {{ allExpanded ? 'Contraer todo' : 'Expandir todo' }}
+        </v-btn>
+      </v-toolbar>
+    </template>
     <template #[`item.actions`]="{ item }">
       <v-btn
         color="primary"
@@ -16,6 +27,43 @@
       >
         Ver miembro
       </v-btn>
+    </template>
+    <template #[`item.data-table-expand`]="{ item, expand, isExpanded }">
+      <template v-if="item.cosaspendientes || item.comentario">
+        <v-badge dot overlap>
+          <v-btn icon elevation="0" @click="expand(!isExpanded)">
+            <v-icon>
+              {{ isExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+            </v-icon>
+          </v-btn>
+        </v-badge>
+      </template>
+      <template v-else>
+        <v-btn icon elevation="0" @click="expand(!isExpanded)">
+          <v-icon>
+            {{ isExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
+          </v-icon>
+        </v-btn>
+      </template>
+    </template>
+    <template #expanded-item="{ headers, item }">
+      <td :colspan="headers.length">
+        <v-sheet class="pa-5" color="transparent">
+          <v-card outlined>
+            <v-card-text>
+              <v-alert v-if="item.qUser" color="grey darken-3" dark>
+                {{ item.qUser }}
+              </v-alert>
+              <v-alert v-if="item.comentario" color="blue" dark>
+                {{ item.comentario }}
+              </v-alert>
+              <v-alert v-if="item.cosaspendientes" type="warning">
+                {{ item.cosaspendientes }}
+              </v-alert>
+            </v-card-text>
+          </v-card>
+        </v-sheet>
+      </td>
     </template>
   </v-data-table>
 </template>
@@ -48,19 +96,25 @@ export default Vue.extend({
   data () {
     return {
       headersTable: [
+        { text: '', value: 'data-table-expand' },
         { text: 'Codigo', value: 'codigo' },
         { text: 'Nombre', value: 'nombre' },
         { text: 'Apellidos', value: 'apellidos' },
         { text: 'Tarjeta sip', value: 'sipcard' },
         { text: 'Correo electrónico', value: 'correoelectronico' },
         { text: 'Telefono', value: 'telefono' },
-        { text: 'Query', value: 'qUser' },
         { text: 'Acciones', value: 'actions' }
       ],
+      expandedItems: [],
       options: this.optionsTable,
       footerProps: {
         'items-per-page-options': [20, 40, 60, 80, 100]
       }
+    }
+  },
+  computed: {
+    allExpanded () {
+      return this.expandedItems.length === this.partners.length
     }
   },
   watch: {
