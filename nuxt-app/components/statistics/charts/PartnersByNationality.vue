@@ -3,7 +3,6 @@
     <v-card-text>
       <highchart
         :options="chartOptions"
-        :update="['options.series']"
         :modules="['exporting']"
       />
     </v-card-text>
