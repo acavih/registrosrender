@@ -6,7 +6,7 @@ export default abstract class AbstractPartnerCrudRouter {
   router: Router
   service: IPartnerCrudService
 
-  constructor (service: IPartnerCrudService) {
+  constructor(service: IPartnerCrudService) {
     const router = Router()
     this.service = service
 

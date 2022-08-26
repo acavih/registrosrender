@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { IAttention } from 'registros-types'
+
 const attentionSchema = new mongoose.Schema<IAttention>({
   comentario: { type: String },
   fechaatencion: { type: Date },
@@ -15,7 +16,8 @@ const attentionSchema = new mongoose.Schema<IAttention>({
   cosaspendientes: { type: String, default: '' },
   fechacosaspendientes: { type: Date },
   user: { type: mongoose.Types.ObjectId, ref: 'members' },
-  archived: { type: Boolean, default: false }
+  archived: { type: Boolean, default: false },
+  tests: [{type: mongoose.Types.ObjectId, ref: 'tests'}]
 })
 
 export const Attention = mongoose.model('attentions', attentionSchema)

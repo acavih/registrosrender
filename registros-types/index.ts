@@ -3,6 +3,13 @@ export type RegistrosUser = {
   password: string
 }
 
+export interface ITest {
+  enfermedad: IResource
+  dateTest: Date
+  result: boolean
+  attention: IAttention
+}
+
 export interface IResource {
   _id: string
   type: string
@@ -45,4 +52,5 @@ export interface IAttention {
   fechacosaspendientes: Date
   user: IPartner
   archived: Boolean
+  tests: ITest[]
 }

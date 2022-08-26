@@ -1,7 +1,7 @@
 import { Request } from 'express'
 import { IPartner } from 'registros-types'
 
-export default interface IResourceCrudService {
+export default interface IPartnerCrudService {
   queryPartners(req: Request): Promise<{partnersList: IPartner[], totalDocs: number}>
   createPartner(partnerData: IPartner): Promise<IPartner>
   updatePartner(id: string, partnerData: IPartner): Promise<any>
