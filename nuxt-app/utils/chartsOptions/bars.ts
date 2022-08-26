@@ -1,8 +1,9 @@
 export const createChartOptions = ({
-  seriesName, titleText, data
+  seriesName, titleText, data, chartType = 'column'
 }: any) => ({
   chart: {
-    type: 'column'
+    type: chartType
+    // height: '1500px'
   },
   title: {
     align: 'left',
@@ -15,12 +16,6 @@ export const createChartOptions = ({
   },
   xAxis: {
     type: 'category'
-  },
-  yAxis: {
-    title: {
-      text: 'Total percent market share'
-    }
-
   },
   legend: {
     enabled: false

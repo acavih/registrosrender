@@ -14,9 +14,9 @@
             <v-alert color="primary" dark>
               Viendo resultados de {{ attentionsDataset.length }} atenciones y {{ distinctUsers.length }} usuarios
             </v-alert>
-            <v-tabs v-model="currentTab">
+            <v-tabs v-model="currentTab" class="mb-5">
               <v-tab>Socios</v-tab>
-              <v-tab>Atenciones</v-tab>
+              <v-tab>Actividad de socios</v-tab>
             </v-tabs>
             <v-tabs-items v-model="currentTab">
               <v-tab-item>
@@ -30,10 +30,10 @@
                   <v-col :cols="4">
                     <partners-by-socioono />
                   </v-col>
-                  <v-col :cols="6">
+                  <v-col :cols="12">
                     <partners-by-nationality />
                   </v-col>
-                  <v-col :cols="6">
+                  <v-col :cols="12">
                     <partners-by-residency />
                   </v-col>
                 </v-row>
@@ -41,7 +41,25 @@
               <v-tab-item>
                 <v-row>
                   <v-col :cols="6">
+                    <attentions-derivadoa />
+                  </v-col>
+                  <v-col :cols="6">
+                    <attentions-derivadode />
+                  </v-col>
+                  <v-col :cols="6">
+                    <attentions-type-attention />
+                  </v-col>
+                  <v-col :cols="6">
+                    <attentions-proyectos />
+                  </v-col>
+                  <v-col :cols="12">
+                    <attentions-place-attention />
+                  </v-col>
+                  <v-col :cols="12">
                     <attentions-formation />
+                  </v-col>
+                  <v-col :cols="12">
+                    <attentions-voluntariado />
                   </v-col>
                 </v-row>
               </v-tab-item>
@@ -70,6 +88,13 @@
 import Vue from 'vue'
 import { mapMutations, mapState, mapGetters } from 'vuex'
 import AttentionsFormation from '../../../components/statistics/charts/AttentionsFormation.vue'
+import AttentionsTypeAttention from '../../../components/statistics/charts/AttentionsTypeAttention.vue'
+import AttentionsDerivadoa from '../../../components/statistics/charts/AttentionsDerivadoa.vue'
+import AttentionsDerivadode from '../../../components/statistics/charts/AttentionsDerivadode.vue'
+import AttentionsProyectos from '../../../components/statistics/charts/AttentionsProyectos.vue'
+import AttentionsVoluntariado from '../../../components/statistics/charts/AttentionsVoluntariado.vue'
+import AttentionsPlaceAttention from '../../../components/statistics/charts/AttentionsPlaceAttention.vue'
+import PartnersByResidency from '../../../components/statistics/charts/PartnersByResidency.vue'
 import statisticsDataset from '@/components/statistics/dataset.vue'
 import PartnersByAge from '@/components/statistics/charts/PartnersByAge.vue'
 import PartnersBySex from '~/components/statistics/charts/PartnersBySex.vue'
@@ -77,7 +102,21 @@ import PartnersBySocioono from '~/components/statistics/charts/PartnersBySocioon
 import PartnersByNationality from '~/components/statistics/charts/PartnersByNationality.vue'
 export default Vue.extend({
   name: 'StatisticsIndex',
-  components: { statisticsDataset, PartnersByAge, PartnersBySex, PartnersBySocioono, PartnersByNationality, AttentionsFormation },
+  components: {
+    statisticsDataset,
+    AttentionsDerivadoa,
+    PartnersByAge,
+    PartnersBySex,
+    PartnersBySocioono,
+    PartnersByNationality,
+    AttentionsFormation,
+    AttentionsTypeAttention,
+    AttentionsDerivadode,
+    AttentionsProyectos,
+    AttentionsVoluntariado,
+    AttentionsPlaceAttention,
+    PartnersByResidency
+  },
   layout: 'stats',
   data () {
     return {

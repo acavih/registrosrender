@@ -17,7 +17,9 @@
     </v-app-bar>
     <v-main>
       <template v-if="$auth.loggedIn">
-        <Nuxt />
+        <v-sheet class="ma-5">
+          <Nuxt />
+        </v-sheet>
       </template>
       <template v-else>
         <v-container>

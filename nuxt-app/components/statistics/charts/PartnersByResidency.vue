@@ -29,7 +29,8 @@ export default Vue.extend({
       return createChartOptions({
         seriesName: 'Socios',
         titleText: 'Socios agrupados por residencia',
-        data: this.groupedByNacionalidad
+        data: this.groupedByNacionalidad,
+        chartType: 'bar'
       })
     }
   }

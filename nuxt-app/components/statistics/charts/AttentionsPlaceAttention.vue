@@ -25,19 +25,17 @@ export default Vue.extend({
      * tranformarlo a array
      */
     data () {
-      const attentionAttr = 'formacion'
+      const attentionAttr = 'lugaratencion'
       /**
        * @type {import('registros-types').IAttention[]}
        */
-      const attentions = this.attentionsDataset.filter(a => a[attentionAttr].length > 0)
+      const attentions = this.attentionsDataset.filter(a => a[attentionAttr] !== null)
       const grouped = attentions.reduce((acc, current) => {
-        for (let index = 0; index < current[attentionAttr].length; index++) {
-          const attentionElem = current[attentionAttr][index]
-          if (typeof acc[attentionElem.name] !== 'undefined') {
-            acc[attentionElem.name].push(current.user)
-          } else {
-            acc[attentionElem.name] = [current.user]
-          }
+        const attentionElem = current[attentionAttr]
+        if (typeof acc[attentionElem.name] !== 'undefined') {
+          acc[attentionElem.name].push(current.user)
+        } else {
+          acc[attentionElem.name] = [current.user]
         }
         return acc
       }, { })
@@ -50,8 +48,8 @@ export default Vue.extend({
     },
     chartOptions () {
       return createChartOptions({
-        seriesName: 'Formacion',
-        titleText: 'Atenciones por formacion',
+        seriesName: 'Lugar de atencion',
+        titleText: 'Atenciones por lugar de atencion',
         data: this.data,
         chartType: 'bar'
       })

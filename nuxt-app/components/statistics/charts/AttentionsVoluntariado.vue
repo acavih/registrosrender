@@ -25,7 +25,7 @@ export default Vue.extend({
      * tranformarlo a array
      */
     data () {
-      const attentionAttr = 'formacion'
+      const attentionAttr = 'voluntariado'
       /**
        * @type {import('registros-types').IAttention[]}
        */
@@ -50,10 +50,11 @@ export default Vue.extend({
     },
     chartOptions () {
       return createChartOptions({
-        seriesName: 'Formacion',
-        titleText: 'Atenciones por formacion',
+        seriesName: 'Voluntariado',
+        titleText: 'Atenciones por voluntariado',
         data: this.data,
         chartType: 'bar'
+
       })
     }
   }
