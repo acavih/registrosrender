@@ -7,16 +7,21 @@
       fixed
       app
     >
+      <v-btn icon to="/admin/partners">
+        <v-icon>
+          mdi-arrow-left
+        </v-icon>
+      </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
     </v-app-bar>
     <v-main>
       <template v-if="$auth.loggedIn">
-        <redirect-component :url="'/admin/partners'" />
+        <Nuxt />
       </template>
       <template v-else>
         <v-container>
-          <Nuxt />
+          <redirect-component :url="'/admin'" />
         </v-container>
       </template>
     </v-main>
