@@ -9,12 +9,12 @@
     :items="items"
     :small-chips="multiple"
     :search-input.sync="userQuery"
-    @keydown.enter="createResource"
+    @keydown.enter="doCreateResource"
   >
     <template #[`no-data`]>
       <v-card :ref="refCreatorContainer">
         <v-card-text>
-          <v-chip small @click="createResource">
+          <v-chip small @click="doCreateResource">
             Crear {{ userQuery }}
           </v-chip>
         </v-card-text>
@@ -66,7 +66,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions('resources', ['createResource', 'fetchResources']),
-    async createResource () {
+    async doCreateResource () {
       if (!this.$refs[this.refCreatorContainer]) {
         return
       }

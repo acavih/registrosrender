@@ -58,7 +58,7 @@
       <v-card-title>
         Atenciones
         <v-spacer />
-        <v-btn color="primary" @click="addingAttention = true">
+        <v-btn color="primary" elevation="0" @click="addingAttention = true">
           Crear atención
         </v-btn>
       </v-card-title>

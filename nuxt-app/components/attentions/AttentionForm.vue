@@ -5,7 +5,6 @@
     </v-card-title>
     <v-card-text>
       <menu-datepicker v-model="attention.fechaatencion" label="Fecha atencion" />
-
       <v-row>
         <v-col>
           <input-resource v-model="attention.tipoaenciones" :label="'Tipo de atenciones'" :type-resource="'tipoatenciones'" :multiple="true" />
@@ -41,6 +40,7 @@
       <v-textarea v-model="attention.cosaspendientes" label="Cosas pendientes">
         {{ attention.cosaspendientes }}
       </v-textarea>
+      <test-table-editor v-if="attentionToEdit" :attention-id="attentionToEdit._id" :enfermedades.sync="attention.tests" />
     </v-card-text>
     <v-card-actions>
       <v-btn color="primary" elevation="0" type="submit">
@@ -53,8 +53,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import InputResource from '../resources/InputResource.vue'
+import TestTableEditor from '../tests/TestsTableEditor.vue'
 export default Vue.extend({
-  components: { InputResource },
+  components: { InputResource, TestTableEditor },
   props: {
     attentionToEdit: {
       type: Object,
@@ -77,7 +78,8 @@ export default Vue.extend({
         voluntariado: [],
         lugaratencion: null,
         cosaspendientes: '',
-        fechacosaspendientes: null
+        fechacosaspendientes: null,
+        tests: []
       }
     }
   },
@@ -95,6 +97,7 @@ export default Vue.extend({
       this.attention.lugaratencion = this.attentionToEdit.lugaratencion
       this.attention.cosaspendientes = this.attentionToEdit.cosaspendientes
       this.attention.fechacosaspendientes = this.attentionToEdit.fechacosaspendientes
+      this.attention.tests = this.attentionToEdit.tests
       this.attention._id = this.attentionToEdit._id
     }
   },

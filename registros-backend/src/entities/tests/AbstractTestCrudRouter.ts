@@ -2,7 +2,7 @@ import { Router, Request, Response} from 'express'
 import ITestCrudService from './ITestCrudService'
 
 export default abstract class AbstractTestCrudRouter {
-  static prefixApiNS = '/partners'
+  static prefixApiNS = '/enfermedades'
   router: Router
   service: ITestCrudService
 
