@@ -28,6 +28,12 @@ export const getters: GetterTree<RootState, RootState> = {
       return false
     }
 
+    const attentionLugaratencionFilter = (a: IAttention) => {
+      if (!state.chartsFilters.attentions.lugaratencion) { return true }
+      if (a.lugaratencion === null) { return false }
+      return a.lugaratencion!.name === (state.chartsFilters.attentions.lugaratencion as any).name
+    }
+
     const attentionResourceFilter = (key: any) => (a: IAttention) => {
       const arrayResource = state.chartsFilters.attentions[key]
       if (!arrayResource || arrayResource.length === 0) { return true }
@@ -39,8 +45,6 @@ export const getters: GetterTree<RootState, RootState> = {
         finalValue.push((a as any)[key].filter((r: IResource) => r.name === element.name).length > 0)
       }
 
-      console.log('filtrando por ', key, arrayResource, finalValue)
-
       return !finalValue.includes(false)
     }
 
@@ -50,6 +54,13 @@ export const getters: GetterTree<RootState, RootState> = {
       .filter(memberResourceFilter('nacionalidad'))
       .filter(memberResourceFilter('ciudadresidencia'))
       .filter(attentionResourceFilter('tipoaenciones'))
+      .filter(attentionResourceFilter('derivadoa'))
+      .filter(attentionResourceFilter('derivadode'))
+      .filter(attentionResourceFilter('Proyectos'))
+      .filter(attentionResourceFilter('motivosatencion'))
+      .filter(attentionResourceFilter('formacion'))
+      .filter(attentionResourceFilter('voluntariado'))
+      .filter(attentionLugaratencionFilter)
   },
   distinctUsers (_state, getters) {
     const users = [...getters.filteredAttentions].map((r: any) => r.user)

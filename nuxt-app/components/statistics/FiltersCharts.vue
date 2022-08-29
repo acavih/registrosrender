@@ -17,6 +17,27 @@
     <v-col :cols="12">
       <input-resource v-model="filters.attentions.tipoaenciones" removable :multiple="true" :type-resource="'tipoatenciones'" :label="'Filtro tipo atencion'" />
     </v-col>
+    <v-col :cols="12">
+      <input-resource v-model="filters.attentions.derivadoa" removable :multiple="true" :type-resource="'derivaciones'" :label="'Filtro por derviado a'" />
+    </v-col>
+    <v-col :cols="12">
+      <input-resource v-model="filters.attentions.derivadode" removable :multiple="true" :type-resource="'derivaciones'" :label="'Filtro por derviado de'" />
+    </v-col>
+    <v-col :cols="12">
+      <input-resource v-model="filters.attentions.formacion" removable :multiple="true" :type-resource="'formacions'" :label="'Filtro por formacion'" />
+    </v-col>
+    <v-col :cols="12">
+      <input-resource v-model="filters.attentions.motivosatencion" removable :multiple="true" :type-resource="'motivosatencions'" :label="'Filtro por motivo de atencion'" />
+    </v-col>
+    <v-col :cols="12">
+      <input-resource v-model="filters.attentions.Proyectos" removable :multiple="true" :type-resource="'proyectos'" :label="'Filtro por proyectos'" />
+    </v-col>
+    <v-col :cols="12">
+      <input-resource v-model="filters.attentions.voluntariado" removable :multiple="true" :type-resource="'voluntariados'" :label="'Filtro por voluntariado'" />
+    </v-col>
+    <v-col :cols="12">
+      <input-resource v-model="filters.attentions.lugaratencion" removable :type-resource="'lugaratencions'" :label="'Lugar de atencion'" />
+    </v-col>
   </v-row>
 </template>
 
