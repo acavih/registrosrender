@@ -4,6 +4,7 @@
     :loading="loading"
     :multiple="multiple"
     item-text="name"
+    dense
     return-object
     :label="label"
     :items="items"

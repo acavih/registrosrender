@@ -83,7 +83,7 @@ export default Vue.extend({
     ])
     const lastMonth = getRange(1, 'month')
     return {
-      currentTab: 1,
+      currentTab: 0,
       showingDatasets: false,
       rangeDate: lastMonth,
       rangePredefinedDates: [
