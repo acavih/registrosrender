@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
-import { getField, updateField } from 'vuex-map-fields'
 import { IAttention, IResource } from 'registros-types'
 
 export const state = () => ({
@@ -15,7 +14,6 @@ export const state = () => ({
 export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
-  getField,
   filteredAttentions (state) {
     const memberResourceFilter = (key: any) => (a: IAttention) => {
       if (!state.chartsFilters.partners[key] || state.chartsFilters.partners[key].length === 0) { return true }
@@ -69,7 +67,6 @@ export const getters: GetterTree<RootState, RootState> = {
 }
 
 export const mutations: MutationTree<RootState> = {
-  updateField,
   chartsFilters (state, filters) {
     state.chartsFilters = filters
   },
