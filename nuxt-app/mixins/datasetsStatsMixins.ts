@@ -1,9 +1,12 @@
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export const datasetStatsMixin = {
   computed: {
-    ...mapState('statistics', ['attentionsDataset']),
-    ...mapGetters('statistics', ['distinctUsers'])
+    // ...mapState('statistics', ['attentionsDataset']),
+    ...mapGetters('statistics', ['distinctUsers']),
+    ...mapGetters('statistics', {
+      attentionsDataset: 'filteredAttentions'
+    })
   },
   methods: {
     transformToArray (obj: any) {

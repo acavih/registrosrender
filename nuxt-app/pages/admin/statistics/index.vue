@@ -9,24 +9,29 @@
             <v-btn color="primary" elevation="0" @click="showingDatasets = true">
               Ver datasets
             </v-btn>
+            <v-btn color="primary" elevation="0" @click="showCharts = false">
+              Actualizar
+            </v-btn>
           </v-card-title>
           <v-card-text>
             <v-alert color="primary" dark>
               Viendo resultados de <strong>{{ rangeDate[0] }}</strong> a <strong>{{ rangeDate[1] }}</strong>
               ({{ filteredAttentions.length }} atenciones y {{ distinctUsers.length }} usuarios)
             </v-alert>
-            <v-tabs v-model="currentTab" class="mb-5">
-              <v-tab>Socios</v-tab>
-              <v-tab>Actividad de socios</v-tab>
-            </v-tabs>
-            <v-tabs-items v-model="currentTab">
-              <v-tab-item>
-                <charts-partner />
-              </v-tab-item>
-              <v-tab-item>
-                <charts-partner-activities />
-              </v-tab-item>
-            </v-tabs-items>
+            <template v-if="showCharts">
+              <v-tabs v-model="currentTab" class="mb-5">
+                <v-tab>Socios</v-tab>
+                <v-tab>Actividad de socios</v-tab>
+              </v-tabs>
+              <v-tabs-items v-model="currentTab">
+                <v-tab-item>
+                  <charts-partner />
+                </v-tab-item>
+                <v-tab-item>
+                  <charts-partner-activities />
+                </v-tab-item>
+              </v-tabs-items>
+            </template>
           </v-card-text>
         </v-card>
       </v-col>
@@ -78,7 +83,7 @@ export default Vue.extend({
     ])
     const lastMonth = getRange(1, 'month')
     return {
-      currentTab: 0,
+      currentTab: 1,
       showingDatasets: false,
       rangeDate: lastMonth,
       rangePredefinedDates: [
@@ -87,6 +92,7 @@ export default Vue.extend({
         { val: getRange(3, 'month'), text: 'Último trimestre' },
         { val: getRange(1, 'year'), text: 'Último año' }
       ],
+      showCharts: true,
       statsFilters: {},
       loading: false
     }
@@ -96,7 +102,14 @@ export default Vue.extend({
     ...mapGetters('statistics', ['distinctUsers', 'filteredAttentions'])
   },
   watch: {
-    rangeDate: 'refreshDataset'
+    rangeDate: 'refreshDataset',
+    showCharts () {
+      if (!this.showCharts) {
+        setTimeout(() => {
+          this.showCharts = true
+        }, 500)
+      }
+    }
   },
   async mounted () {
     await this.refreshDataset()

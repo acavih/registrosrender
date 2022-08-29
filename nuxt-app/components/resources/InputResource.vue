@@ -21,7 +21,7 @@
       </v-card>
     </template>
     <template #prepend-inner>
-      <v-btn color="red" icon @click="value=null">
+      <v-btn v-if="removable" color="red" icon @click="value=null">
         <v-icon>
           mdi-close
         </v-icon>
@@ -46,6 +46,10 @@ export default Vue.extend({
     label: {
       type: String,
       required: true
+    },
+    removable: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
