@@ -2,16 +2,16 @@
   <v-sheet>
     <v-card>
       <v-card-title>
-        Listado de recursos (<strong>{{ activeResourceType }}</strong>)
+        Listado de recursos
       </v-card-title>
       <v-card-text>
         <v-card outlined>
           <v-card-text>
-            <v-chip-group>
+            <v-chip-group v-model="activeResourceType" active-class="grey darken-3 white--text">
               <v-chip
                 v-for="type in types"
                 :key="type"
-                :dark="activeResourceType === type"
+                :value="type"
                 @click="activeResourceType = type"
               >
                 {{ type }}
