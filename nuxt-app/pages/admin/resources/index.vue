@@ -20,44 +20,46 @@
           </v-card-text>
         </v-card>
         <v-list>
-          <v-data-iterator :options.sync="iteratorOptions" :items="filteredResources">
-            <template #header>
-              <v-toolbar flat>
-                <v-text-field v-model="txtQuery" :placeholder="'Buscar elementos'" />
-                <v-btn icon style="margin-left: 10px" @click="addingResource = true">
-                  <v-icon>
-                    mdi-plus
-                  </v-icon>
-                </v-btn>
-              </v-toolbar>
-            </template>
-            <template #default="props">
-              <v-list-item v-for="resource in props.items" :key="resource._id">
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ resource.name }}
-                  </v-list-item-title>
-                  <v-list-item-subtitle>
-                    {{ resource.archived ? 'Archivado' : 'No archivado' }}
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-action>
-                  <v-btn icon @click="editResource(resource)">
+          <v-list-item-group>
+            <v-data-iterator :options.sync="iteratorOptions" :items="filteredResources">
+              <template #header>
+                <v-toolbar flat>
+                  <v-text-field v-model="txtQuery" :placeholder="'Buscar elementos'" />
+                  <v-btn icon style="margin-left: 10px" @click="addingResource = true">
                     <v-icon>
-                      mdi-pencil
+                      mdi-plus
                     </v-icon>
                   </v-btn>
-                </v-list-item-action>
-                <v-list-item-action>
-                  <v-btn icon @click="archiveResource(resource)">
-                    <v-icon>
-                      mdi-archive{{ resource.archived ? '-remove' : '' }}
-                    </v-icon>
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
-            </template>
-          </v-data-iterator>
+                </v-toolbar>
+              </template>
+              <template #default="props">
+                <v-list-item v-for="resource in props.items" :key="resource._id">
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      {{ resource.name }}
+                    </v-list-item-title>
+                    <v-list-item-subtitle>
+                      {{ resource.archived ? 'Archivado' : 'No archivado' }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                  <v-list-item-action>
+                    <v-btn icon @click="editResource(resource)">
+                      <v-icon>
+                        mdi-pencil
+                      </v-icon>
+                    </v-btn>
+                  </v-list-item-action>
+                  <v-list-item-action>
+                    <v-btn icon @click="archiveResource(resource)">
+                      <v-icon>
+                        mdi-archive{{ resource.archived ? '-remove' : '' }}
+                      </v-icon>
+                    </v-btn>
+                  </v-list-item-action>
+                </v-list-item>
+              </template>
+            </v-data-iterator>
+          </v-list-item-group>
         </v-list>
       </v-card-text>
     </v-card>
