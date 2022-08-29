@@ -20,48 +20,10 @@
             </v-tabs>
             <v-tabs-items v-model="currentTab">
               <v-tab-item>
-                <v-row>
-                  <v-col :cols="4">
-                    <partners-by-sex />
-                  </v-col>
-                  <v-col :cols="4">
-                    <partners-by-age />
-                  </v-col>
-                  <v-col :cols="4">
-                    <partners-by-socioono />
-                  </v-col>
-                  <v-col :cols="12">
-                    <partners-by-nationality />
-                  </v-col>
-                  <v-col :cols="12">
-                    <partners-by-residency />
-                  </v-col>
-                </v-row>
+                <charts-partner />
               </v-tab-item>
               <v-tab-item>
-                <v-row>
-                  <v-col :cols="6">
-                    <attentions-derivadoa />
-                  </v-col>
-                  <v-col :cols="6">
-                    <attentions-derivadode />
-                  </v-col>
-                  <v-col :cols="6">
-                    <attentions-type-attention />
-                  </v-col>
-                  <v-col :cols="6">
-                    <attentions-proyectos />
-                  </v-col>
-                  <v-col :cols="12">
-                    <attentions-place-attention />
-                  </v-col>
-                  <v-col :cols="12">
-                    <attentions-formation />
-                  </v-col>
-                  <v-col :cols="12">
-                    <attentions-voluntariado />
-                  </v-col>
-                </v-row>
+                <charts-partner-activities />
               </v-tab-item>
             </v-tabs-items>
           </v-card-text>
@@ -73,7 +35,7 @@
             Filtros
           </v-card-title>
           <v-card-text>
-            <v-date-picker v-model="rangeDate" range />
+            <v-date-picker v-model="rangeDate" full-width range />
           </v-card-text>
         </v-card>
       </v-col>
@@ -87,35 +49,15 @@
 <script>
 import Vue from 'vue'
 import { mapMutations, mapState, mapGetters } from 'vuex'
-import AttentionsFormation from '../../../components/statistics/charts/AttentionsFormation.vue'
-import AttentionsTypeAttention from '../../../components/statistics/charts/AttentionsTypeAttention.vue'
-import AttentionsDerivadoa from '../../../components/statistics/charts/AttentionsDerivadoa.vue'
-import AttentionsDerivadode from '../../../components/statistics/charts/AttentionsDerivadode.vue'
-import AttentionsProyectos from '../../../components/statistics/charts/AttentionsProyectos.vue'
-import AttentionsVoluntariado from '../../../components/statistics/charts/AttentionsVoluntariado.vue'
-import AttentionsPlaceAttention from '../../../components/statistics/charts/AttentionsPlaceAttention.vue'
-import PartnersByResidency from '../../../components/statistics/charts/PartnersByResidency.vue'
+import ChartsPartner from '../../../components/statistics/ChartsPartner.vue'
+import ChartsPartnerActivities from '../../../components/statistics/ChartsPartnerActivities.vue'
 import statisticsDataset from '@/components/statistics/dataset.vue'
-import PartnersByAge from '@/components/statistics/charts/PartnersByAge.vue'
-import PartnersBySex from '~/components/statistics/charts/PartnersBySex.vue'
-import PartnersBySocioono from '~/components/statistics/charts/PartnersBySocioono.vue'
-import PartnersByNationality from '~/components/statistics/charts/PartnersByNationality.vue'
 export default Vue.extend({
   name: 'StatisticsIndex',
   components: {
     statisticsDataset,
-    AttentionsDerivadoa,
-    PartnersByAge,
-    PartnersBySex,
-    PartnersBySocioono,
-    PartnersByNationality,
-    AttentionsFormation,
-    AttentionsTypeAttention,
-    AttentionsDerivadode,
-    AttentionsProyectos,
-    AttentionsVoluntariado,
-    AttentionsPlaceAttention,
-    PartnersByResidency
+    ChartsPartner,
+    ChartsPartnerActivities
   },
   layout: 'stats',
   data () {
