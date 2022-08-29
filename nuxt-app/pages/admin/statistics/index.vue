@@ -12,7 +12,8 @@
           </v-card-title>
           <v-card-text>
             <v-alert color="primary" dark>
-              Viendo resultados de {{ attentionsDataset.length }} atenciones y {{ distinctUsers.length }} usuarios
+              Viendo resultados de <strong>{{ rangeDate[0] }}</strong> a <strong>{{ rangeDate[1] }}</strong>
+              ({{ attentionsDataset.length }} atenciones y {{ distinctUsers.length }} usuarios)
             </v-alert>
             <v-tabs v-model="currentTab" class="mb-5">
               <v-tab>Socios</v-tab>
@@ -35,6 +36,11 @@
             Filtros
           </v-card-title>
           <v-card-text>
+            <v-chip-group column>
+              <v-chip v-for="range in rangePredefinedDates" :key="range.text" small @click="rangeDate = range.val">
+                {{ range.text }}
+              </v-chip>
+            </v-chip-group>
             <v-date-picker v-model="rangeDate" full-width range />
           </v-card-text>
         </v-card>
@@ -49,6 +55,7 @@
 <script>
 import Vue from 'vue'
 import { mapMutations, mapState, mapGetters } from 'vuex'
+import dayjs from 'dayjs'
 import ChartsPartner from '../../../components/statistics/ChartsPartner.vue'
 import ChartsPartnerActivities from '../../../components/statistics/ChartsPartnerActivities.vue'
 import statisticsDataset from '@/components/statistics/dataset.vue'
@@ -61,12 +68,20 @@ export default Vue.extend({
   },
   layout: 'stats',
   data () {
+    const getRange = (ammount, unit) => ([
+      dayjs().subtract(ammount, unit).format('YYYY-MM-DD'),
+      dayjs().format('YYYY-MM-DD')
+    ])
+    const lastMonth = getRange(1, 'month')
     return {
-      currentTab: 1,
+      currentTab: 0,
       showingDatasets: false,
-      rangeDate: [
-        '2021-06-01',
-        '2022-08-30'
+      rangeDate: lastMonth,
+      rangePredefinedDates: [
+        { val: getRange(1, 'week'), text: 'Último semana' },
+        { val: lastMonth, text: 'Último mes' },
+        { val: getRange(3, 'month'), text: 'Último trimestre' },
+        { val: getRange(1, 'year'), text: 'Último año' }
       ],
       loading: false
     }
