@@ -13,3 +13,5 @@ export const mutations: MutationTree<RootState> = {
 
 export const actions: ActionTree<RootState, RootState> = {
 }
+
+export const strict = false

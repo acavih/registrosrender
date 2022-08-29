@@ -13,7 +13,7 @@
           <v-card-text>
             <v-alert color="primary" dark>
               Viendo resultados de <strong>{{ rangeDate[0] }}</strong> a <strong>{{ rangeDate[1] }}</strong>
-              ({{ attentionsDataset.length }} atenciones y {{ distinctUsers.length }} usuarios)
+              ({{ filteredAttentions.length }} atenciones y {{ distinctUsers.length }} usuarios)
             </v-alert>
             <v-tabs v-model="currentTab" class="mb-5">
               <v-tab>Socios</v-tab>
@@ -42,6 +42,7 @@
               </v-chip>
             </v-chip-group>
             <v-date-picker v-model="rangeDate" full-width range />
+            <filters-charts v-model="statsFilters" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -58,13 +59,16 @@ import { mapMutations, mapState, mapGetters } from 'vuex'
 import dayjs from 'dayjs'
 import ChartsPartner from '../../../components/statistics/ChartsPartner.vue'
 import ChartsPartnerActivities from '../../../components/statistics/ChartsPartnerActivities.vue'
+import FiltersCharts from '../../../components/statistics/FiltersCharts.vue'
 import statisticsDataset from '@/components/statistics/dataset.vue'
+
 export default Vue.extend({
   name: 'StatisticsIndex',
   components: {
     statisticsDataset,
     ChartsPartner,
-    ChartsPartnerActivities
+    ChartsPartnerActivities,
+    FiltersCharts
   },
   layout: 'stats',
   data () {
@@ -83,12 +87,13 @@ export default Vue.extend({
         { val: getRange(3, 'month'), text: 'Último trimestre' },
         { val: getRange(1, 'year'), text: 'Último año' }
       ],
+      statsFilters: {},
       loading: false
     }
   },
   computed: {
     ...mapState('statistics', ['attentionsDataset']),
-    ...mapGetters('statistics', ['distinctUsers'])
+    ...mapGetters('statistics', ['distinctUsers', 'filteredAttentions'])
   },
   watch: {
     rangeDate: 'refreshDataset'

@@ -20,6 +20,13 @@
         </v-card-text>
       </v-card>
     </template>
+    <template #prepend-inner>
+      <v-btn color="red" icon @click="value=null">
+        <v-icon>
+          mdi-close
+        </v-icon>
+      </v-btn>
+    </template>
   </v-autocomplete>
 </template>
 
