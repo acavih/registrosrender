@@ -6,15 +6,15 @@
           <v-card-title>
             Graficos
             <v-spacer />
+            <v-btn color="secondary" class="mr-5" elevation="0" @click="showCharts = false">
+              Actualizar
+            </v-btn>
             <v-btn color="primary" elevation="0" @click="showingDatasets = true">
               Ver datasets
             </v-btn>
-            <v-btn color="primary" elevation="0" @click="showCharts = false">
-              Actualizar
-            </v-btn>
           </v-card-title>
           <v-card-text>
-            <v-alert color="primary" dark>
+            <v-alert class="statsDescription" color="primary" dark>
               Viendo resultados de <strong>{{ rangeDate[0] }}</strong> a <strong>{{ rangeDate[1] }}</strong>
               ({{ filteredAttentions.length }} atenciones y {{ distinctUsers.length }} usuarios)
             </v-alert>
@@ -130,3 +130,11 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+.statsDescription {
+  position: sticky;
+  top: 63px;
+  z-index: 200;
+}
+</style>

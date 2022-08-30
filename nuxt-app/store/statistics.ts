@@ -1,6 +1,7 @@
-import _ from 'lodash'
+import _, { filter } from 'lodash'
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { IAttention, IResource } from 'registros-types'
+import { chartsFilters } from '~/utils/chartsFilter'
 
 export const state = () => ({
   attentionsDataset: [] as IAttention[],
@@ -13,41 +14,30 @@ export const state = () => ({
 
 export type RootState = ReturnType<typeof state>
 
+const membersFilters = ['sexo', 'socioono', 'nacionalidad', 'ciudadresidencia']
+const attentionsFilters = [
+  'tipoaenciones',
+  'derivadoa',
+  'derivadode',
+  'Proyectos',
+  'motivosatencion',
+  'formacion',
+  'voluntariado'
+]
+
 export const getters: GetterTree<RootState, RootState> = {
   filteredAttentions (state) {
-    const memberResourceFilter = (key: any) => (a: IAttention) => {
-      if (!state.chartsFilters.partners[key] || state.chartsFilters.partners[key].length === 0) { return true }
-      for (let index = 0; index < state.chartsFilters.partners[key].length; index++) {
-        const resource = state.chartsFilters.partners[key][index]
-        if ((a as any).user[key].name === resource.name) {
-          return true
-        }
-      }
-      return false
-    }
+    const { memberResourceFilter, attentionLugaratencionFilter, attentionResourceFilter } = chartsFilters(state)
 
-    const attentionLugaratencionFilter = (a: IAttention) => {
-      if (!state.chartsFilters.attentions.lugaratencion) { return true }
-      if (a.lugaratencion === null) { return false }
-      return a.lugaratencion!.name === (state.chartsFilters.attentions.lugaratencion as any).name
-    }
+    let filteredAttentions = [...state.attentionsDataset]
 
-    const attentionResourceFilter = (key: any) => (a: IAttention) => {
-      const arrayResource = state.chartsFilters.attentions[key]
-      if (!arrayResource || arrayResource.length === 0) { return true }
+    for (const i of membersFilters) { filteredAttentions = filteredAttentions.filter(memberResourceFilter(i)) }
+    for (const i of attentionsFilters) { filteredAttentions = filteredAttentions.filter(attentionResourceFilter(i)) }
 
-      const finalValue: boolean[] = []
+    return filteredAttentions
 
-      for (let index = 0; index < arrayResource.length; index++) {
-        const element = arrayResource[index]
-        finalValue.push((a as any)[key].filter((r: IResource) => r.name === element.name).length > 0)
-      }
-
-      return !finalValue.includes(false)
-    }
-
-    return [...state.attentionsDataset]
-      .filter(memberResourceFilter('sexo'))
+    /* return [...state.attentionsDataset]
+      /* .filter(memberResourceFilter('sexo'))
       .filter(memberResourceFilter('socioono'))
       .filter(memberResourceFilter('nacionalidad'))
       .filter(memberResourceFilter('ciudadresidencia'))
@@ -58,7 +48,7 @@ export const getters: GetterTree<RootState, RootState> = {
       .filter(attentionResourceFilter('motivosatencion'))
       .filter(attentionResourceFilter('formacion'))
       .filter(attentionResourceFilter('voluntariado'))
-      .filter(attentionLugaratencionFilter)
+      .filter(attentionLugaratencionFilter) */
   },
   distinctUsers (_state, getters) {
     const users = [...getters.filteredAttentions].map((r: any) => r.user)
