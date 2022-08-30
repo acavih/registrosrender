@@ -6,7 +6,7 @@
           <v-card-title>
             {{ attention.fechaatencion | date }}
             <v-spacer />
-            <v-btn small elevation="0" color="primary" @click="attentionEditing = attention._id">
+            <v-btn small elevation="0" color="secondary" @click="attentionEditing = attention._id">
               Editar atencion
             </v-btn>
           </v-card-title>

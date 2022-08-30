@@ -111,6 +111,15 @@ const config = {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
+        },
+        light: {
+          primary: '#5d5199', // colors.blue.darken2,
+          accent: '#7e7a2f', // colors.grey.darken3,
+          secondary: '#7b94a7', // '#fff454', // colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
         }
       }
     }

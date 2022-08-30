@@ -13,14 +13,14 @@
     <template #top>
       <v-toolbar elevation="0">
         <v-spacer />
-        <v-btn small elevation="0" @click="expandedItems = allExpanded ? [] : partners">
+        <v-btn color="secondary" small elevation="0" @click="expandedItems = allExpanded ? [] : partners">
           {{ allExpanded ? 'Contraer todo' : 'Expandir todo' }}
         </v-btn>
       </v-toolbar>
     </template>
     <template #[`item.actions`]="{ item }">
       <v-btn
-        color="primary"
+        color="secondary"
         elevation="0"
         small
         :to="'/admin/partners/' + item._id"

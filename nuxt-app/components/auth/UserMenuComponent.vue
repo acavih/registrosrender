@@ -9,8 +9,8 @@
       <template #activator="{ on, attrs }">
         <v-btn
           elevation="0"
-          color="indigo"
-          dark
+          color="accent"
+          light
           v-bind="attrs"
           v-on="on"
         >
@@ -30,6 +30,11 @@
         <v-divider />
 
         <v-card-actions>
+          <v-btn icon color="secondary" @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+            <v-icon>
+              {{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
+            </v-icon>
+          </v-btn>
           <v-spacer />
           <v-btn
             color="error"
@@ -54,6 +59,12 @@ export default {
     message: false,
     hints: true
   }),
+  mounted () {
+    const hours = new Date().getHours()
+    if (!(hours > 8 && hours < 20)) {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    }
+  },
   methods: {
     async logout () {
       await this.$auth.logout()

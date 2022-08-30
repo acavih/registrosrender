@@ -53,7 +53,7 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer />
-      <v-btn elevation="0" @click="$emit('go-back')">
+      <v-btn elevation="0" color="secondary" @click="$emit('go-back')">
         Volver
       </v-btn>
       <v-btn color="primary" type="submit" elevation="0">
