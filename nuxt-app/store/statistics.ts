@@ -1,10 +1,11 @@
-import _, { filter } from 'lodash'
+import _ from 'lodash'
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { IAttention, IResource } from 'registros-types'
 import { chartsFilters } from '~/utils/chartsFilter'
 
 export const state = () => ({
   attentionsDataset: [] as IAttention[],
+  rangeDates: [],
   loaded: false,
   chartsFilters: {
     partners: {} as {[key: string]: IResource[]},
@@ -33,22 +34,9 @@ export const getters: GetterTree<RootState, RootState> = {
 
     for (const i of membersFilters) { filteredAttentions = filteredAttentions.filter(memberResourceFilter(i)) }
     for (const i of attentionsFilters) { filteredAttentions = filteredAttentions.filter(attentionResourceFilter(i)) }
+    filteredAttentions = filteredAttentions.filter(attentionLugaratencionFilter)
 
     return filteredAttentions
-
-    /* return [...state.attentionsDataset]
-      /* .filter(memberResourceFilter('sexo'))
-      .filter(memberResourceFilter('socioono'))
-      .filter(memberResourceFilter('nacionalidad'))
-      .filter(memberResourceFilter('ciudadresidencia'))
-      .filter(attentionResourceFilter('tipoaenciones'))
-      .filter(attentionResourceFilter('derivadoa'))
-      .filter(attentionResourceFilter('derivadode'))
-      .filter(attentionResourceFilter('Proyectos'))
-      .filter(attentionResourceFilter('motivosatencion'))
-      .filter(attentionResourceFilter('formacion'))
-      .filter(attentionResourceFilter('voluntariado'))
-      .filter(attentionLugaratencionFilter) */
   },
   distinctUsers (_state, getters) {
     const users = [...getters.filteredAttentions].map((r: any) => r.user)
@@ -63,6 +51,9 @@ export const mutations: MutationTree<RootState> = {
   setAttentions (state, list) {
     state.attentionsDataset = list
     state.loaded = true
+  },
+  setRangeDate (state, range) {
+    state.rangeDates = range
   }
 }
 

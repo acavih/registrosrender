@@ -1,8 +1,11 @@
 <template>
   <v-app>
+    <v-navigation-drawer v-model="drawer" right width="380px" app :clipped="clipped">
+      <stats-sidebar />
+    </v-navigation-drawer>
     <v-app-bar
       color="primary"
-      :clipped-left="clipped"
+      :clipped-right="clipped"
       dark
       fixed
       app
@@ -14,6 +17,7 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
     </v-app-bar>
     <v-main>
       <template v-if="$auth.loggedIn">
@@ -31,14 +35,15 @@
 </template>
 
 <script>
+import StatsSidebar from '../components/statistics/StatsSidebar.vue'
 import RedirectComponent from '~/components/RedirectComponent.vue'
 export default {
   name: 'DefaultLayout',
-  components: { RedirectComponent },
+  components: { RedirectComponent, StatsSidebar },
   data () {
     return {
       clipped: true,
-      drawer: false,
+      drawer: true,
       fixed: false,
       items: [
         {

@@ -1,56 +1,37 @@
 <template>
   <v-sheet>
-    <v-row>
-      <v-col>
-        <v-card :loading="loading" :disabled="loading">
-          <v-card-title>
-            Graficos
-            <v-spacer />
-            <v-btn color="secondary" class="mr-5" elevation="0" @click="showCharts = false">
-              Actualizar
-            </v-btn>
-            <v-btn color="primary" elevation="0" @click="showingDatasets = true">
-              Ver datasets
-            </v-btn>
-          </v-card-title>
-          <v-card-text>
-            <v-alert class="statsDescription" color="primary" dark>
-              Viendo resultados de <strong>{{ rangeDate[0] }}</strong> a <strong>{{ rangeDate[1] }}</strong>
-              ({{ filteredAttentions.length }} atenciones y {{ distinctUsers.length }} usuarios)
-            </v-alert>
-            <template v-if="showCharts">
-              <v-tabs v-model="currentTab" class="mb-5">
-                <v-tab>Socios</v-tab>
-                <v-tab>Actividad de socios</v-tab>
-              </v-tabs>
-              <v-tabs-items v-model="currentTab">
-                <v-tab-item>
-                  <charts-partner />
-                </v-tab-item>
-                <v-tab-item>
-                  <charts-partner-activities />
-                </v-tab-item>
-              </v-tabs-items>
-            </template>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col cols="3">
-        <v-card :loading="loading">
-          <v-card-title>
-            Filtros
-          </v-card-title>
-          <v-card-text>
-            <v-chip-group column>
-              <v-chip v-for="range in rangePredefinedDates" :key="range.text" small @click="rangeDate = range.val">
-                {{ range.text }}
-              </v-chip>
-            </v-chip-group>
-            <v-date-picker v-model="rangeDate" full-width range />
-            <filters-charts v-model="statsFilters" />
-          </v-card-text>
-        </v-card>
-      </v-col>
+    <v-card :loading="loading" :disabled="loading">
+      <v-card-title>
+        Graficos
+        <v-spacer />
+        <v-btn color="secondary" class="mr-5" elevation="0" @click="showCharts = false">
+          Actualizar
+        </v-btn>
+        <v-btn color="primary" elevation="0" @click="showingDatasets = true">
+          Ver datasets
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <v-alert class="statsDescription" color="primary" dark>
+          Viendo resultados de <strong>{{ rangeDates[0] }}</strong> a <strong>{{ rangeDates[1] }}</strong>
+          ({{ filteredAttentions.length }} atenciones y {{ distinctUsers.length }} usuarios)
+        </v-alert>
+        <template v-if="showCharts">
+          <v-tabs v-model="currentTab" class="mb-5">
+            <v-tab>Socios</v-tab>
+            <v-tab>Actividad de socios</v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="currentTab">
+            <v-tab-item>
+              <charts-partner />
+            </v-tab-item>
+            <v-tab-item>
+              <charts-partner-activities />
+            </v-tab-item>
+          </v-tabs-items>
+        </template>
+      </v-card-text>
+    </v-card>
     </v-row>
     <v-dialog v-model="showingDatasets">
       <statistics-dataset :partners="distinctUsers" :attentions="attentionsDataset" />
@@ -64,7 +45,6 @@ import { mapMutations, mapState, mapGetters } from 'vuex'
 import dayjs from 'dayjs'
 import ChartsPartner from '../../../components/statistics/ChartsPartner.vue'
 import ChartsPartnerActivities from '../../../components/statistics/ChartsPartnerActivities.vue'
-import FiltersCharts from '../../../components/statistics/FiltersCharts.vue'
 import statisticsDataset from '@/components/statistics/dataset.vue'
 
 export default Vue.extend({
@@ -72,8 +52,7 @@ export default Vue.extend({
   components: {
     statisticsDataset,
     ChartsPartner,
-    ChartsPartnerActivities,
-    FiltersCharts
+    ChartsPartnerActivities
   },
   layout: 'stats',
   data () {
@@ -85,7 +64,7 @@ export default Vue.extend({
     return {
       currentTab: 0,
       showingDatasets: false,
-      rangeDate: lastMonth,
+      // rangeDate: lastMonth,
       rangePredefinedDates: [
         { val: getRange(1, 'week'), text: 'Último semana' },
         { val: lastMonth, text: 'Último mes' },
@@ -93,16 +72,15 @@ export default Vue.extend({
         { val: getRange(1, 'year'), text: 'Último año' }
       ],
       showCharts: true,
-      statsFilters: {},
       loading: false
     }
   },
   computed: {
-    ...mapState('statistics', ['attentionsDataset']),
+    ...mapState('statistics', ['attentionsDataset', 'rangeDates']),
     ...mapGetters('statistics', ['distinctUsers', 'filteredAttentions'])
   },
   watch: {
-    rangeDate: 'refreshDataset',
+    rangeDates: 'refreshDataset',
     showCharts () {
       if (!this.showCharts) {
         setTimeout(() => {
@@ -117,9 +95,9 @@ export default Vue.extend({
   methods: {
     ...mapMutations('statistics', ['setAttentions']),
     async refreshDataset () {
-      if (this.rangeDate.length !== 2) { return }
+      if (this.rangeDates.length !== 2) { return }
       this.loading = true
-      const [startDate, endDate] = this.rangeDate
+      const [startDate, endDate] = this.rangeDates
       const attentions = await this.$axios.get('/attentions/dataset', {
         params: { startDate, endDate }
       })
