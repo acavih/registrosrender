@@ -59,13 +59,21 @@ export class IAuthUserServiceMongoImpl implements IAuthUserService {
   async signinUser (email: string, password: string): Promise<FeedbackMessage<PayloadGoodResult | null>> {
     const user = await this.userExists(email)
 
-    if (!user || !this.passwordsAreTheSame(password, user.password)) {
-      return {
-        message: 'Las credenciales no son correctas',
-        statusCode: httpStatus.UNAUTHORIZED,
-        result: false,
-        payload: null
-      }
+    const badResponse = {
+      message: 'Las credenciales no son correctas',
+      statusCode: httpStatus.UNAUTHORIZED,
+      result: false,
+      payload: null
+    }
+
+    if (!user) {
+      return badResponse
+    }
+
+    const passwordsAreTheSame = await this.passwordsAreTheSame(password, user.password)
+
+    if (!passwordsAreTheSame) {
+      return badResponse
     }
 
     return {
