@@ -71,7 +71,7 @@ const defaultMemberData = {
   codigo: '',
   nombre: '',
   apellidos: '',
-  fechanacimiento: '',
+  fechanacimiento: null,
   sipcard: '',
   correoelectronico: '',
   telefono: '',
