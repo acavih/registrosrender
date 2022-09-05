@@ -158,8 +158,9 @@ export default Vue.extend({
       this.attentions = attentions.data.payload.attentions
     },
     async addAttention (attention) {
+      const { _id, ...payload } = attention
       const partnerId = this.$route.params.partnerId
-      await this.$axios.post('/attentions/' + partnerId, attention)
+      await this.$axios.post('/attentions/' + partnerId, payload)
       this.retrieveAttentions()
       this.addingAttention = ''
     },

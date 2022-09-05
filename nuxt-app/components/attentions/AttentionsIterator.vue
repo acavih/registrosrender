@@ -30,7 +30,7 @@
                 </v-list-item>
               </template>
             </v-list>
-            <v-alert color="#2A3B4D" dark>
+            <v-alert v-if="attention.comentario" color="#2A3B4D" dark>
               {{ attention.comentario }}
             </v-alert>
             <v-alert v-if="attention.cosaspendientes" type="warning" colored-border border="bottom">
