@@ -64,7 +64,7 @@
       </v-card-title>
 
       <v-card-text>
-        <attentions-iterator :options.sync="iteratorOptions" :attentions="attentions" />
+        <attentions-iterator :options.sync="iteratorOptions" :attentions="attentions" @retrieve-attentions="retrieveAttentions" />
       </v-card-text>
     </v-card>
     <v-dialog v-model="addingAttention">

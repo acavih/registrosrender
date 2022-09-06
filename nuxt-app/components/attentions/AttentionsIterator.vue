@@ -41,7 +41,7 @@
       </template>
     </v-data-iterator>
     <v-dialog :value="attentionEditing.length > 1" @click:outside="attentionEditing = ''">
-      <attention-form v-if="attentionEditing" :attention-to-edit="attentionActive" />
+      <attention-form v-if="attentionEditing" :attention-to-edit="attentionActive" @submit-attention="updateAttention" />
     </v-dialog>
   </v-sheet>
 </template>
@@ -96,6 +96,14 @@ export default Vue.extend({
   watch: {
     optionsIterator () {
       this.$emit('update:options', this.optionsIterator)
+    }
+  },
+  methods: {
+    async updateAttention (attention) {
+      console.log(attention)
+      await this.$axios.put('/attentions/' + attention._id, attention)
+      this.$emit('retrieve-attentions')
+      this.attentionEditing = ''
     }
   }
 })

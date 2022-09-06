@@ -1,14 +1,6 @@
 # registrosrender
 
-print date Get-Date -Format "yyyy_MM_dd"
-
-## Horas
-  - 9:50 - 13:00
-  - 14:00 - 14:30
-  - 11:30 - 13:47
-  - 10:20 - 13:45
-  - 09:51 - 12:17 / 13:03 - 13:21 / 20:58 - 21:07
-  - 09:42 - 12:36
+entrar en la consola de heroku: `heroku run bash -a registrosrender`
 
 ## Build Setup
 
