@@ -3,6 +3,7 @@ import httpStatus from 'http-status'
 import { FeedbackMessage } from '../../types'
 import AbstractPartnerCrudRouter from './AbstractPartnerCrudRouter'
 import { IPartner } from 'registros-types'
+import { attentionCrudMongoServiceInstance } from '../attentions'
 
 export default class AbstractPartnerCrudRouterImpl extends AbstractPartnerCrudRouter {
   async listPartners (req: Request, res: Response) {
@@ -45,7 +46,19 @@ export default class AbstractPartnerCrudRouterImpl extends AbstractPartnerCrudRo
   }
 
   async removePartner (req: Request, res: Response) {
-    const status = httpStatus.OK
+    let status = httpStatus.OK
+    const attentions = await attentionCrudMongoServiceInstance.listAttentionsFor(req.params.id)
+    console.log(attentions.length)
+
+    if (attentions.length > 0) {
+      status = httpStatus.BAD_REQUEST
+      return res.status(status).json({
+        message: 'El socio tiene atenciones y por tanto no se puede eliminar',
+        result: true,
+        statusCode: status,
+        payload: {}
+      } as FeedbackMessage<IPartner>)
+    }
     res.status(status).json({
       message: 'Socio eliminado',
       result: true,

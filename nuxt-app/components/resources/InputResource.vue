@@ -56,7 +56,7 @@ export default Vue.extend({
   data () {
     return {
       loading: false,
-      value: null,
+      value: this.multiple ? [] : {},
       userQuery: '',
       refCreatorContainer: 'sexosCreatorContainer'
     }
@@ -90,7 +90,7 @@ export default Vue.extend({
       const { data: { payload: { resource } } } = newResource
       this.loading = false
 
-      if (typeof this.value.length === 'number') {
+      if (typeof this.value.length === 'number' && typeof this.value !== 'string') {
         this.value.push(resource)
       } else {
         this.value = resource

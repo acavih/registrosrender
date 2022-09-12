@@ -4,6 +4,9 @@
       <v-card-title>
         {{ currentPartner?.nombre }} {{ currentPartner?.apellidos }}
         <v-spacer />
+        <v-btn color="error" class="mr-5" elevation="0" @click="removePartner">
+          Eliminar socio
+        </v-btn>
         <v-btn color="primary" elevation="0" :to="'/admin/partners/' + $route.params.partnerId + '/edit'">
           Editar socio
         </v-btn>
@@ -156,6 +159,22 @@ export default Vue.extend({
     async retrieveAttentions () {
       const attentions = await this.$axios.get('/attentions/' + this.$route.params.partnerId)
       this.attentions = attentions.data.payload.attentions
+    },
+    async removePartner () {
+      try {
+        await this.$axios.delete('/partners/' + this.$route.params.partnerId)
+        this.$router.push('/admin/partners')
+      } catch (error) {
+        if (error.isAxiosError) {
+          return this.$dialog.notify.error(
+            error.response.status === 400 ? error.response.data.message : 'Hubo un error durante la peticion'
+          )
+        }
+        console.dir(error)
+        return this.$dialog.notify.error(
+          'Hubo un error interno'
+        )
+      }
     },
     async addAttention (attention) {
       const { _id, ...payload } = attention

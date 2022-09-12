@@ -6,6 +6,9 @@
           <v-card-title>
             {{ attention.fechaatencion | date }}
             <v-spacer />
+            <v-btn small elevation="0" class="mr-5" color="error" @click="removeAttention(attention)">
+              Eliminar atencion
+            </v-btn>
             <v-btn small elevation="0" color="secondary" @click="attentionEditing = attention._id">
               Editar atencion
             </v-btn>
@@ -100,10 +103,17 @@ export default Vue.extend({
   },
   methods: {
     async updateAttention (attention) {
-      console.log(attention)
       await this.$axios.put('/attentions/' + attention._id, attention)
       this.$emit('retrieve-attentions')
       this.attentionEditing = ''
+    },
+    async removeAttention (attention) {
+      const res = await this.$dialog.confirm({
+        text: '¿Realmente quieres eliminar la atencion?'
+      })
+      if (!res) { return }
+      await this.$axios.delete('/attentions/' + attention._id, attention)
+      this.$emit('retrieve-attentions')
     }
   }
 })
