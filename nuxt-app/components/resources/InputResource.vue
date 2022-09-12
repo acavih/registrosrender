@@ -10,7 +10,7 @@
     :items="items"
     :small-chips="multiple"
     :search-input.sync="userQuery"
-    @keydown.enter="doCreateResource"
+    @keydown.enter.prevent="doCreateResource"
   >
     <template #[`no-data`]>
       <v-card :ref="refCreatorContainer">
@@ -87,9 +87,15 @@ export default Vue.extend({
         name: this.userQuery,
         type: this.typeResource
       })
+      const { data: { payload: { resource } } } = newResource
       this.loading = false
 
-      this.value = newResource
+      if (typeof this.value.length === 'number') {
+        this.value.push(resource)
+      } else {
+        this.value = resource
+      }
+      this.userQuery = ''
     }
   },
   watch: {

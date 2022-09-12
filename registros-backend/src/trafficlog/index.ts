@@ -21,7 +21,7 @@ export default async function logInDB(req: Request, _res: Response, next: NextFu
     json: req.path.includes('signin') ? null : JSON.stringify(req.body || {}),
     tokenDecoded: req.headers.authorization ? jsonwebtoken.decode(req.headers.authorization) : null
   }
-  console.log(data)
+  // console.log(data)
   await LogDBSchema.create(data)
   next()
 }
