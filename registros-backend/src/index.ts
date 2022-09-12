@@ -6,6 +6,7 @@ import cors from 'cors'
 import { PORT, URI_DB_MONGO } from './vars'
 import connectDB from './connectDB'
 import apiRouteV1 from './api/v1/apiRouteV1'
+import logInDB from './trafficlog'
 
 connectDB(URI_DB_MONGO).then(() => {
   const app = express()
@@ -15,6 +16,7 @@ connectDB(URI_DB_MONGO).then(() => {
   app.use(express.static(path.resolve(__dirname, '..', 'public')))
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
+  app.use(logInDB)
 
   app.use('/api/v1', apiRouteV1)
 
