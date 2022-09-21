@@ -34,7 +34,11 @@ export default class IPartnerCrudServiceMongoImpl implements IPartnerCrudService
     const { page = 1, itemsPerPage = 20, qUser = '' } = req.query
     const skip = (Number(page) - 1) * Number(itemsPerPage)
 
-    const pattern = (qUser as string).replace(/\s/g, '.*')
+    let pattern = (qUser as string).replace(/\s/g, '.*')
+    const specialCharacters = ['+', '/', '(', '[', ']', ')', '.', '^', '{', '}', '$']
+    specialCharacters.forEach(char => {
+      pattern = pattern.replace(new RegExp('\\' + char, 'g'), '\\' + char);
+    })
 
     const aggregatesPipeline = [
       ...lookupResourceAggregation('sexo', true),
