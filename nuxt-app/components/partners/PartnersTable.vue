@@ -11,12 +11,7 @@
     show-expand
   >
     <template #top>
-      <v-toolbar elevation="0">
-        <v-spacer />
-        <v-btn color="secondary" small elevation="0" @click="expandedItems = allExpanded ? [] : partners">
-          {{ allExpanded ? 'Contraer todo' : 'Expandir todo' }}
-        </v-btn>
-      </v-toolbar>
+      <v-toolbar elevation="0" />
     </template>
     <template #[`item.actions`]="{ item }">
       <v-btn
@@ -77,6 +72,10 @@ export default Vue.extend({
       default: () => ([]),
       type: Array
     },
+    allExpanded: {
+      type: Boolean,
+      default: false
+    },
     totalDocs: {
       required: true,
       default: null,
@@ -113,13 +112,20 @@ export default Vue.extend({
     }
   },
   computed: {
-    allExpanded () {
+    isAllItemsExpanded () {
       return this.expandedItems.length === this.partners.length
     }
   },
   watch: {
     options () {
       this.$emit('update:optionsTable', this.options)
+    },
+    allExpanded () {
+      this.expandedItems = this.isAllItemsExpanded ? [] : this.partners
+    },
+    expandedItems () {
+      console.log('CHANGED EXPANDED ITEMS')
+      this.$emit('update:isAllItemsExpanded', this.isAllItemsExpanded)
     }
   }
 })

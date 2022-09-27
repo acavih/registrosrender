@@ -4,6 +4,9 @@
       <v-card-title>
         Lista de socios
         <v-spacer />
+        <v-btn color="secondary" style="margin-right: 10px;" elevation="0" @click="allExpanded = !allExpanded">
+          {{ isAllItemsExpanded ? 'Contraer todo' : 'Expandir todo' }}
+        </v-btn>
         <v-btn to="/admin/partners/addPartner" color="primary" elevation="0">
           Añadir miembro
         </v-btn>
@@ -11,6 +14,8 @@
       <v-card-text>
         <v-text-field v-model="qUser" hint="Código · Nombre · Apellidos · Teléfono · Tarjeta SIP · Correo electronico" label="Buscar usuarios" />
         <partners-table
+          :is-all-items-expanded.sync="isAllItemsExpanded"
+          :all-expanded="allExpanded"
           :options-table.sync="options"
           :partners="partners"
           :loading="loading"
@@ -34,6 +39,8 @@ export default Vue.extend({
     return {
       qUser: this.$route.query.qUser || '',
       loading: false,
+      allExpanded: false,
+      isAllItemsExpanded: false,
       options: {
         itemsPerPage: Number(itemsPerPage),
         page: Number(page)
