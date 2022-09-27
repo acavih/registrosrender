@@ -35,7 +35,7 @@ export default class IPartnerCrudServiceMongoImpl implements IPartnerCrudService
     const skip = (Number(page) - 1) * Number(itemsPerPage)
 
     let pattern = (qUser as string).replace(/\s/g, '.*')
-    const specialCharacters = ['+', '/', '(', '[', ']', ')', '.', '^', '{', '}', '$']
+    const specialCharacters = ['+', '/', '(', '[', ']', ')', '^', '{', '}', '$']
     specialCharacters.forEach(char => {
       pattern = pattern.replace(new RegExp('\\' + char, 'g'), '\\' + char);
     })
