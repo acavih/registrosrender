@@ -33,8 +33,13 @@
             <tr>
               <td>Fecha de nacimiento</td>
               <td>
-                {{ currentPartner.fechanacimiento && currentPartner.fechanacimiento | date }}
-                ({{ edadSocio }} años)
+                <template v-if="currentPartner.fechanacimiento">
+                  {{ currentPartner.fechanacimiento && currentPartner.fechanacimiento | date }}
+                  ({{ edadSocio }} años)
+                </template>
+                <template v-else>
+                  N/A
+                </template>
               </td>
             </tr>
             <tr>

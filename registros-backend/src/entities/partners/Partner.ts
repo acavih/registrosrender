@@ -34,5 +34,7 @@ export const partnerQueryFields = [
   '$codigo', ' ',
   '$nombre', ' ',
   '$apellidos', ' ',
-  '$telefono', ' ', '$sipcard', ' ', '$correoelectronico'
+  '$telefono', ' ',
+  '$sipcard', ' ',
+  '$correoelectronico'
 ]

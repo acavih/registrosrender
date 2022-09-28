@@ -102,7 +102,7 @@ export default Vue.extend({
       ? { ...defaultMemberData }
       : {
           ...this.partnerToEdit,
-          fechanacimiento: new Date(this.partnerToEdit.fechanacimiento)
+          fechanacimiento: this.partnerToEdit.fechanacimiento === null ? null : new Date(this.partnerToEdit.fechanacimiento)
         }
   },
   methods: {
