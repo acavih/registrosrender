@@ -27,14 +27,6 @@
 </template>
 
 <script>
-function sleep (ms) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(null)
-    }, ms)
-  })
-}
-
 export default {
   name: 'UsersList',
   data () {
@@ -58,7 +50,7 @@ export default {
     async retrieveData () {
       try {
         this.loading = true
-        const users = await this.$axios.get('/auth/')
+        const users = await this.$axios.get('/users/')
         this.data = users.data.payload
         this.loading = false
       } catch (error) {

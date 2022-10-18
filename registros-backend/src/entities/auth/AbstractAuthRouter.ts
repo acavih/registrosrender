@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response, Router } from 'express'
 import httpStatus from 'http-status'
 import jsonwebtoken, { JwtPayload } from 'jsonwebtoken'
 import { JWT_SECRET_KEY, JWT_SUBJECT } from '../../vars'
-import { IAuthUserService } from './IAuthUserService'
+import { IAuthUserService } from './IAuthService'
 import User from './User'
 
 export default abstract class AbstractAuthUserRouter {
@@ -15,7 +15,6 @@ export default abstract class AbstractAuthUserRouter {
     this.service = service
     const router = express.Router()
 
-    router.get('/', AbstractAuthUserRouter.authUser, this.listUsers.bind(this) as any)
     router.post('/signin', this.signin.bind(this) as any)
     router.post('/signup', AbstractAuthUserRouter.authUser, this.signup.bind(this) as any)
     router.get('/profile', AbstractAuthUserRouter.authUser, this.profile.bind(this) as any)
@@ -24,7 +23,6 @@ export default abstract class AbstractAuthUserRouter {
     this.router = router
   }
 
-  abstract listUsers(req: Request, res: Response): any
   abstract signin(req: Request, res: Response): any
   abstract signup(req: Request, res: Response): any
   abstract profile(req: Request, res: Response): any

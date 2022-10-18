@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
 import httpStatus from 'http-status'
 import { ParsedQs } from 'qs'
-import AbstractAuthUserRouter from './AbstractAuthUserRouter'
+import AbstractAuthUserRouter from './AbstractAuthRouter'
 import { IUser } from './User'
 
 export default class AbstractAuthUserRouterImpl extends AbstractAuthUserRouter {
@@ -36,13 +36,5 @@ export default class AbstractAuthUserRouterImpl extends AbstractAuthUserRouter {
       message: 'Usuario recuperado',
       payload: { user: userInfo }
     })
-  }
-
-  async listUsers(req: Request, res: Response) {
-      const users = await this.service.getAllusers()
-      res.status(httpStatus.OK).json({
-        message: 'Listado de usuarios',
-        payload: users
-      })
   }
 }

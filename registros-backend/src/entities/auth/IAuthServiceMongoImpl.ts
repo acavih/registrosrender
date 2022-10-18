@@ -3,15 +3,10 @@ import httpStatus from 'http-status'
 import jsonwebtoken, { JwtPayload } from 'jsonwebtoken'
 import { jwtSignOptionsOf, JWT_SECRET_KEY } from '../../vars'
 import { FeedbackMessage, PayloadGoodResult } from '../../types'
-import { IAuthUserService } from './IAuthUserService'
+import { IAuthUserService } from './IAuthService'
 import User, { IUser } from './User'
 
 export class IAuthUserServiceMongoImpl implements IAuthUserService {
-  async getAllusers(): Promise<IUser[]> {
-      const users = await User.find({})
-      return users as IUser[]
-  }
-
   async getUserFromToken (token?: string | undefined): Promise<IUser | null> {
     if (!token) {
       return null
