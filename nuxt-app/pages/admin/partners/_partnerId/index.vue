@@ -162,7 +162,8 @@ export default Vue.extend({
   },
   async mounted () {
     if (!this.currentPartner) {
-      console.log('retrieving partner...')
+      const data = await this.$axios.get('/partners/' + this.$route.params.partnerId)
+      this.$store.commit('partners/addPartner', data.data.payload)
     }
     await this.retrieveAttentions()
   },

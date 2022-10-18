@@ -7,4 +7,5 @@ export default interface IPartnerCrudService {
   updatePartner(id: string, partnerData: IPartner): Promise<any>
   deletePartner(id: string): Promise<any>
   setDefaultsToPartnerIfNecessary(partner: IPartner): Promise<IPartner>
+  retrievePartner(id: string): Promise<any>
 }

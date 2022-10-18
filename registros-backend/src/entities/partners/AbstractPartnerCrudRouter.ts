@@ -14,6 +14,7 @@ export default abstract class AbstractPartnerCrudRouter {
     router.post('/', this.createPartner.bind(this) as any)
     router.put('/:id', this.updatePartner.bind(this) as any)
     router.delete('/:id', this.removePartner.bind(this) as any)
+    router.get('/:id', this.retrievePartner.bind(this) as any)
 
     this.router = router
   }
@@ -22,4 +23,5 @@ export default abstract class AbstractPartnerCrudRouter {
   abstract createPartner(req: Request, res: Response): any
   abstract updatePartner(req: Request, res: Response): any
   abstract removePartner(req: Request, res: Response): any
+  abstract retrievePartner(req: Request, res: Response): any
 }

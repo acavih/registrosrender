@@ -4,8 +4,18 @@ import { FeedbackMessage } from '../../types'
 import AbstractPartnerCrudRouter from './AbstractPartnerCrudRouter'
 import { IPartner } from 'registros-types'
 import { attentionCrudMongoServiceInstance } from '../attentions'
+import { ParamsDictionary } from 'express-serve-static-core'
+import { ParsedQs } from 'qs'
 
 export default class AbstractPartnerCrudRouterImpl extends AbstractPartnerCrudRouter {
+  async retrievePartner(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) {
+    const partner = await this.service.retrievePartner(req.params.id)
+    res.status(httpStatus.OK).json({
+      payload: partner,
+      message: 'Socio'
+    })
+  }
+
   async listPartners (req: Request, res: Response) {
     const aa = await this.service.queryPartners(req)
     const { totalDocs, partnersList } = aa

@@ -6,6 +6,12 @@ import Partner, { partnerQueryFields } from './Partner'
 import { IPartner } from "registros-types";
 
 export default class IPartnerCrudServiceMongoImpl implements IPartnerCrudService {
+  async retrievePartner(id: string): Promise<any> {
+    const partner = await Partner.findOne({ _id: id })
+      .populate(['sexo', 'socioono', 'ciudadresidencia', 'nacionalidad'])
+    return partner
+  }
+
   async setDefaultsToPartnerIfNecessary (partner: IPartner): Promise<IPartner> {
     if (!partner.sexo) {
       const { resource } = await resourceCrudMongoServiceInstance.findOrCreateResource('NS/NC', 'sexos')
