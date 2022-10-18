@@ -3,6 +3,18 @@ import Attention from './Attention'
 import { IAttention } from 'registros-types'
 
 export default class IAttentionCrudServiceMongoImpl implements IAttentionCrudService {
+  async listLastAttentions({ limit = 50, page = 1 }: any) : Promise<any> {
+    const skip = (page - 1) * limit
+    const attentions = await Attention.find({})
+      .limit(50).skip(skip)
+      .populate('user')
+    const totalCountAttentions = await Attention.countDocuments()
+    return {
+      total: totalCountAttentions,
+      attentions
+    }
+  }
+
   async listAttentionsInRangeDate (startDate: string, endDate: string): Promise<IAttention[]> {
     const attentions = await Attention.find({
       fechaatencion: {

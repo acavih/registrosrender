@@ -25,6 +25,11 @@
             <v-list-item-title v-text="'Socios'" />
           </v-list-item-content>
         </v-list-item>
+        <v-list-item :to="'/admin/attentions'" router>
+          <v-list-item-content>
+            <v-list-item-title v-text="'Ultimas atenciones'" />
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item
           :to="'/admin/statistics'"
           router

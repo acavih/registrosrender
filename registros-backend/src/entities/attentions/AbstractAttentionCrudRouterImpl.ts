@@ -1,8 +1,19 @@
+import httpStatus from 'http-status';
 import { Request, Response } from 'express'
+import { ParamsDictionary } from 'express-serve-static-core'
+import { ParsedQs } from 'qs'
 import { FeedbackMessage } from '../../types'
 import AbstractAttentionCrudRouter from './AbstractAttentionCrudRouter'
 
 export default class AbstractAttentionCrudRouterImpl extends AbstractAttentionCrudRouter {
+  async listLastAttentions(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) {
+    const attentions = await this.service.listLastAttentions(req.query)
+    res.status(httpStatus.OK).json({
+      payload: attentions,
+      message: 'Últimas atenciones'
+    })
+  }
+
   async listAttentionsDataset (req: Request, res: Response) {
     const { startDate, endDate } = req.query
     const attentions = await this.service.listAttentionsInRangeDate(startDate as string, endDate as string)

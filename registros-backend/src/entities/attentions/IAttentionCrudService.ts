@@ -6,4 +6,5 @@ export default interface IAttentionCrudService {
   updateAttention(attentionId: string, update: IAttention): Promise<any>
   removeAttention(attentionId: string): Promise<any>
   listAttentionsInRangeDate(startDate: string, endDate: string): Promise<IAttention[]>
+  listLastAttentions(params: any): Promise<any>
 }
