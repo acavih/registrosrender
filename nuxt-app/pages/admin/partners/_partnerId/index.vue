@@ -16,25 +16,25 @@
           <tbody>
             <tr>
               <td>Tarjeta sip</td>
-              <td>{{ currentPartner.sipCard || 'n/a' }}</td>
+              <td>{{ currentPartner?.sipCard || 'n/a' }}</td>
             </tr>
             <tr>
               <td>Codigo</td>
-              <td>{{ currentPartner.codigo || 'n/a' }}</td>
+              <td>{{ currentPartner?.codigo || 'n/a' }}</td>
             </tr>
             <tr>
               <td>Correo electrónico</td>
-              <td>{{ currentPartner.correoelectronico || 'n/a' }}</td>
+              <td>{{ currentPartner?.correoelectronico || 'n/a' }}</td>
             </tr>
             <tr>
               <td>Telefono</td>
-              <td>{{ currentPartner.telefono || 'n/a' }}</td>
+              <td>{{ currentPartner?.telefono || 'n/a' }}</td>
             </tr>
             <tr>
               <td>Fecha de nacimiento</td>
               <td>
-                <template v-if="currentPartner.fechanacimiento">
-                  {{ currentPartner.fechanacimiento && currentPartner.fechanacimiento | date }}
+                <template v-if="currentPartner?.fechanacimiento">
+                  {{ currentPartner?.fechanacimiento && currentPartner?.fechanacimiento | date }}
                   ({{ edadSocio }} años)
                 </template>
                 <template v-else>
@@ -44,19 +44,19 @@
             </tr>
             <tr>
               <td>Sexo</td>
-              <td>{{ currentPartner.sexo?.name || 'n/a' }}</td>
+              <td>{{ currentPartner?.sexo?.name || 'n/a' }}</td>
             </tr>
             <tr>
               <td>Socio o no</td>
-              <td>{{ currentPartner.socioono?.name || 'n/a' }}</td>
+              <td>{{ currentPartner?.socioono?.name || 'n/a' }}</td>
             </tr>
             <tr>
               <td>Ciudad residencia</td>
-              <td>{{ currentPartner.ciudadresidencia?.name || 'n/a' }}</td>
+              <td>{{ currentPartner?.ciudadresidencia?.name || 'n/a' }}</td>
             </tr>
             <tr>
               <td>Nacionalidad</td>
-              <td>{{ currentPartner.nacionalidad?.name || 'n/a' }}</td>
+              <td>{{ currentPartner?.nacionalidad?.name || 'n/a' }}</td>
             </tr>
           </tbody>
         </v-simple-table>
@@ -139,9 +139,12 @@ export default Vue.extend({
       return this.currentAttention !== null
     },
     currentPartner () {
-      console.log('PARTNEEEER ID', this.$route.params)
-      const partner = this.partners.filter(p => p._id === this.$route.params.partnerId)
-      return partner[0]
+      try {
+        const partner = this.partners.filter(p => p._id === this.$route.params.partnerId)
+        return partner[0]
+      } catch (error) {
+        return null
+      }
     },
     edadSocio () {
       if (!this.currentPartner.fechanacimiento) { return '' }
@@ -158,6 +161,9 @@ export default Vue.extend({
     }
   },
   async mounted () {
+    if (!this.currentPartner) {
+      console.log('retrieving partner...')
+    }
     await this.retrieveAttentions()
   },
   methods: {
