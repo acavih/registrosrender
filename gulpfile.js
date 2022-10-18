@@ -8,6 +8,7 @@ require('dotenv').config({
 
 const { URI_DB_MONGO_REMOTE } = process.env
 const { URI_DB_MONGO } = process.env
+console.log(URI_DB_MONGO_REMOTE, URI_DB_MONGO)
 const remoteHost = new URL(process.env.URI_DB_MONGO_REMOTE).host
 const { host: localHostDB, pathname: localNameDB } = new URL(URI_DB_MONGO)
 
@@ -31,7 +32,7 @@ async function backupDB() {
 }
 
 async function restoreDumpToLocal() {
-  await spawnCommand('mongo', [localNameDB.replace('/', ''), '--host', localHostDB, '--eval', "db.dropDatabase()"])
+  await spawnCommand('mongosh', [localNameDB.replace('/', ''), '--host', localHostDB, '--eval', "db.dropDatabase()"])
   await spawnCommand('mongorestore', [`--nsInclude`, localNameDB.replace('/', '') + `.*`, `--host`, localHostDB, '--port', 27017, dumpDir])
 }
 

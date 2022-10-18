@@ -10,6 +10,14 @@
     >
       <v-list>
         <v-list-item
+          :to="'/admin/users'"
+          router
+        >
+          <v-list-item-content>
+            <v-list-item-title v-text="'Usuarios'" />
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
           :to="'/admin/partners'"
           router
         >
@@ -51,7 +59,7 @@
     </v-app-bar>
     <v-main>
       <template v-if="$auth.loggedIn">
-        <v-container>
+        <v-container fluid>
           <Nuxt />
         </v-container>
       </template>

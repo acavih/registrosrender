@@ -7,6 +7,11 @@ import { IAuthUserService } from './IAuthUserService'
 import User, { IUser } from './User'
 
 export class IAuthUserServiceMongoImpl implements IAuthUserService {
+  async getAllusers(): Promise<IUser[]> {
+      const users = await User.find({})
+      return users as IUser[]
+  }
+
   async getUserFromToken (token?: string | undefined): Promise<IUser | null> {
     if (!token) {
       return null

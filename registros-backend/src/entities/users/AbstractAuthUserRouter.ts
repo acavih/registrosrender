@@ -15,14 +15,16 @@ export default abstract class AbstractAuthUserRouter {
     this.service = service
     const router = express.Router()
 
+    router.get('/', AbstractAuthUserRouter.authUser, this.listUsers.bind(this) as any)
     router.post('/signin', this.signin.bind(this) as any)
-    router.post('/signup', this.signup.bind(this) as any)
-    router.get('/profile', this.profile.bind(this) as any)
-    router.post('/logout', this.logout.bind(this) as any)
+    router.post('/signup', AbstractAuthUserRouter.authUser, this.signup.bind(this) as any)
+    router.get('/profile', AbstractAuthUserRouter.authUser, this.profile.bind(this) as any)
+    router.post('/logout', AbstractAuthUserRouter.authUser, this.logout.bind(this) as any)
 
     this.router = router
   }
 
+  abstract listUsers(req: Request, res: Response): any
   abstract signin(req: Request, res: Response): any
   abstract signup(req: Request, res: Response): any
   abstract profile(req: Request, res: Response): any
