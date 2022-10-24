@@ -36,20 +36,26 @@ const authService = {
     }
   },
   async authUserMiddleware(req, res, next) {
-    const error = new ForbiddenError()
-    const authHeader = req.headers['authorization']
-    if (!authHeader) {
-      return res.status(error.status).json({
-        message: error.message
-      })
+    try {
+      const error = new ForbiddenError()
+      const authHeader = req.headers['authorization']
+      console.log(authHeader)
+      if (!authHeader) {
+        return res.status(error.status).json({
+          message: error.message
+        })
+      }
+      const tokenIsValid = UserModel.tokenIsValid(authHeader)
+      if (!tokenIsValid) {
+        return res.status(error.status).json({
+          message: error.message
+        })
+      }
+      next()
+    } catch (error) {
+      console.log(error)
+      res.status(500).end('No ha sido posible comprobar el token')
     }
-    const tokenIsValid = UserModel.tokenIsValid(authHeader)
-    if (!tokenIsValid) {
-      return res.status(error.status).json({
-        message: error.message
-      })
-    }
-    next()
   },
   async getProfileFor(token) {
     return await UserModel.userFromToken(token)

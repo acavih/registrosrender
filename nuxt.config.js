@@ -64,7 +64,7 @@ const config = {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: isProd ? '/api/v1' : 'http://localhost:8080/api/v1'
+    baseURL: isProd ? '/api/v1' : 'http://localhost:8080/api'
   },
 
   auth: {
@@ -77,11 +77,11 @@ const config = {
           // type: 'Bearer'
         },
         user: {
-          property: 'payload.user._doc'
+          property: 'payload.user'
           // autoFetch: false
         },
         endpoints: {
-          login: { url: '/auth/signin', method: 'post' },
+          login: { url: '/auth/login', method: 'post' },
           logout: { url: '/auth/logout', method: 'post' },
           user: { url: '/auth/profile', method: 'get' }
         }
