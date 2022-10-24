@@ -1,4 +1,5 @@
 const ForbiddenError = require("../../errors/ForbiddenError")
+const BadCredentials = require("../../errors/BadCredentialsError")
 const UserModel = require("./User")
 
 const authService = {
@@ -39,13 +40,12 @@ const authService = {
     try {
       const error = new ForbiddenError()
       const authHeader = req.headers['authorization']
-      console.log(authHeader)
       if (!authHeader) {
         return res.status(error.status).json({
           message: error.message
         })
       }
-      const tokenIsValid = UserModel.tokenIsValid(authHeader)
+      const tokenIsValid = UserModel.tokenIsValid(authHeader.replace('Bearer ', ''))
       if (!tokenIsValid) {
         return res.status(error.status).json({
           message: error.message
@@ -58,7 +58,7 @@ const authService = {
     }
   },
   async getProfileFor(token) {
-    return await UserModel.userFromToken(token)
+    return await UserModel.userFromToken(token.replace('Bearer ', ''))
   }
 }
 

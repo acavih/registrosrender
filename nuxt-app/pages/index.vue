@@ -38,8 +38,8 @@ export default {
     async onSubmit(e) {
       try {
         this.loading = true;
-        await sleep(1000);
-        console.log(this.formData);
+        const loginReq = await this.$auth.loginWith('local', { data: this.formData })
+        console.log(loginReq);
         this.loading = false;
       } catch (error) {
         if (error.isAxiosError) {

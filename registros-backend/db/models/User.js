@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
     },
     async userFromToken(token) {
       const tokenDecoded = jsonwebtoken.decode(token)
-      console.log(token, tokenDecoded)
       const user = await UserModel.findOne({ user: tokenDecoded.sub })
       return user
     }
