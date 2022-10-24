@@ -1,5 +1,0 @@
-import AbstractAttentionCrudRouterImpl from './AbstractAttentionCrudRouterImpl'
-import IAttentionCrudServiceMongoImpl from './IAttentionCrudServiceMongoImpl'
-
-export const attentionCrudMongoServiceInstance = new IAttentionCrudServiceMongoImpl()
-export const attentionCrudRouterImplInstance = new AbstractAttentionCrudRouterImpl(attentionCrudMongoServiceInstance)
