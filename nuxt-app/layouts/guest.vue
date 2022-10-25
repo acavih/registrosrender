@@ -16,7 +16,7 @@
         <template v-if="!$auth.loggedIn">
           <Nuxt />
         </template>
-        <v-btn to="/admin/users">Ir a users</v-btn>
+        <v-btn v-else to="/admin/users">Ir a users</v-btn>
       </v-container>
     </v-main>
   </v-app>
