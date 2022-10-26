@@ -8,6 +8,9 @@ const userService = {
     return await UserModel.create({
       ...data
     })
+  },
+  async deleteUser(userId) {
+    return await UserModel.findOneAndRemove({_id: userId})
   }
 }
 
