@@ -1,6 +1,11 @@
 <template>
+<v-sheet>
   <v-card :loading="loading" :disabled="loading">
-    <v-card-title> Listado de usuarios </v-card-title>
+    <v-card-title>
+      Listado de usuarios
+      <v-spacer />
+      <v-btn color="primary" elevation="0" to="/admin/users/add">Añadir usuario</v-btn>
+    </v-card-title>
     <v-card-text>
       <v-data-table :headers="headers" :items="usersList" :loading="loading">
         <template #[`item.actions`]="{item}">
@@ -9,6 +14,8 @@
       </v-data-table>
     </v-card-text>
   </v-card>
+  <nuxt />
+</v-sheet>
 </template>
 
 <script>
