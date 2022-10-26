@@ -18,12 +18,12 @@
                   @click="editResource(item)"
                 >
                   <v-list-item-content>
-                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    <v-list-item-title>{{ item.name }} {{item.archived && '(Archivado)' || ''}}</v-list-item-title>
                     <v-list-item-subtitle>{{ item.type }}</v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action>
                     <div>
-                      <v-btn icon>
+                      <v-btn icon @click.prevent.stop="toggleArchive(item)">
                         <v-icon>
                           mdi-package-{{ item.archived ? "up" : "down" }}
                         </v-icon>
@@ -61,8 +61,8 @@
     </v-card>
     <v-dialog v-model="editingModalActive">
       <template v-if="editingModalActive">
-        <resource-editor v-if="editingResource === ''" :typeResource="activeResource" />
-        <resource-editor v-else :typeReadOnly="true" :resourceEditing="resourceEditing" />
+        <resource-editor @submit="createResource" @close="editingModalActive = false" v-if="editingResource === ''" :typeResource="activeResource" />
+        <resource-editor @submit="updateResource" @close="editingModalActive = false" v-else :typeReadOnly="true" :resourceEditing="resourceEditing" />
       </template>
     </v-dialog>
   </v-sheet>
@@ -121,7 +121,15 @@ export default {
   methods: {
     ...mapActions({
       retrieveResources: "resources/retrieveResources",
+      createResource: "resources/createResource",
+      updateResource: "resources/updateResource",
     }),
+    toggleArchive(res) {
+      this.updateResource({
+        ...res,
+        archived: !res.archived
+      })
+    },
     editResource(item) {
       console.log(item)
       this.resourceEditing = item._id

@@ -15,9 +15,10 @@ export const mutations = {
   setResources: (state, list) => state.resources = list,
   addResource: (state, resource) => state.resources = [...state.resources, resource],
   updateResource(state, resource) {
-    const resourceToUpdate = state.resources.filter(r => r._id === resource._id)
-    resource.name = resourceToUpdate.name
-    resource.archived = resourceToUpdate.archived
+    state.resources = state.resources.map(r => {
+      if (r._id === resource._id) return resource
+      return r
+    })
   }
 }
 
@@ -28,12 +29,12 @@ export const actions = {
   },
   async updateResource({ commit }, resource) {
     console.dir(this)
-    const resourceReq = await this.$axios.put('/resources/' + resources._id, resource)
+    const resourceReq = await this.$axios.put('/resources/' + resource._id, resource)
     commit('updateResource', resourceReq.data.payload)
   },
   async createResource({ commit }, resource) {
-    console.dir(this)
-    const resourceReq = await this.$axios.post('/resources/', resource)
+    const {_id, ...payload} = resource
+    const resourceReq = await this.$axios.post('/resources/', payload)
     commit('addResource', resourceReq.data.payload)
   }
 }

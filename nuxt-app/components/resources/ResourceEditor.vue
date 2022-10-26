@@ -42,6 +42,7 @@ export default {
   },
   data() {
     return {
+      configured: false,
       loading: false,
       formData: {
         _id: '',
@@ -68,6 +69,7 @@ export default {
   },
   methods: {
     setParams () {
+      if (this.configured) return
       if (this.resourceEditing !== '') {
         const resourceGot = this.getResource(this.resourceEditing)
         const resource = {...resourceGot}
@@ -78,11 +80,12 @@ export default {
         this.formData.name = ''
         this.formData.type = this.typeResource
       }
+      this.configured = true
     },
     async onSubmit(e) {
       try {
         this.loading = true;
-        await thos.$emit('submit', this.formData)
+        await this.$emit('submit', this.formData)
         this.loading = false;
         this.$emit('close')
       } catch (error) {
