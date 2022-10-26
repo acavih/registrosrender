@@ -8,7 +8,7 @@ export const getters = {
   resourcesOrdered: (state) => orderBy(state.resources, 'name'),
   typesResources: (state) => uniq(state.resources.map(r => r.type)),
   resourceType: (state, getters) => (type) => getters.resourcesOrdered.filter(r => r.type === type),
-  getResoruce: (state) => (id) => state.resources.filter(r => r._id === id)
+  getResoruce: (state) => (id) => state.resources.filter(r => r._id === id)[0]
 }
 
 export const mutations = {

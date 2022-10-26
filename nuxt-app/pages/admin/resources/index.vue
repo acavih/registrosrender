@@ -1,64 +1,86 @@
 <template>
-  <v-card :loading="loading" :disabled="loading">
-    <v-card-title> Recursos </v-card-title>
-    <v-card-text>
-      <v-row>
-        <v-col>
-          <v-text-field v-model="queryTxt" label="Buscar recurso" />
-          <v-data-iterator :items="filteredResources" v-slot="{items}">
-            <v-list>
-              <v-list-item @click="() => {}" v-for="item in items" :key="item._id">
-                <v-list-item-content>
-                  <v-list-item-title>{{ item.name }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ item.type }}</v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-action>
-                  <div>
-                    <v-btn icon>
-                      <v-icon> mdi-package-{{ item.archived ? 'up' : 'down'}} </v-icon>
-                    </v-btn>
-                    <v-btn icon color="primary">
-                      <v-icon> mdi-pencil </v-icon>
-                    </v-btn>
-                  </div>
-                </v-list-item-action>
-              </v-list-item>
-            </v-list>
-          </v-data-iterator>
-        </v-col>
-        <v-col cols="2">
-          <v-card outlined>
-            <v-card-title> Tipos de recursos </v-card-title>
-            <v-card-text class="px-0">
-              <v-list dense>
+  <v-sheet>
+    <v-card :loading="loading" :disabled="loading">
+      <v-card-title>
+        Recursos
+        <v-spacer />
+        <v-btn color="primary" elevation="0" @click="editingModalActive = true">Crear recurso</v-btn>
+      </v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-text-field v-model="queryTxt" label="Buscar recurso" />
+            <v-data-iterator :items="filteredResources" v-slot="{ items }">
+              <v-list>
                 <v-list-item
-                  :class="activeResource === item ? 'grey lighten-2' : ''"
-                  @click="activeResource = item"
-                  v-for="item in resourcesTypes"
+                  v-for="item in items"
                   :key="item._id"
+                  @click="editResource(item)"
                 >
-                  <v-list-item-content class="px-3">
-                    <v-list-item-title>{{ item }}</v-list-item-title>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ item.type }}</v-list-item-subtitle>
                   </v-list-item-content>
+                  <v-list-item-action>
+                    <div>
+                      <v-btn icon>
+                        <v-icon>
+                          mdi-package-{{ item.archived ? "up" : "down" }}
+                        </v-icon>
+                      </v-btn>
+                      <v-btn icon color="primary">
+                        <v-icon> mdi-pencil </v-icon>
+                      </v-btn>
+                    </div>
+                  </v-list-item-action>
                 </v-list-item>
               </v-list>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+            </v-data-iterator>
+          </v-col>
+          <v-col cols="2">
+            <v-card outlined>
+              <v-card-title> Tipos de recursos </v-card-title>
+              <v-card-text class="px-0">
+                <v-list dense>
+                  <v-list-item
+                    :class="activeResource === item ? 'grey lighten-2' : ''"
+                    @click="activeResource = item"
+                    v-for="item in resourcesTypes"
+                    :key="item._id"
+                  >
+                    <v-list-item-content class="px-3">
+                      <v-list-item-title>{{ item }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    <v-dialog v-model="editingModalActive">
+      <template v-if="editingModalActive">
+        <resource-editor v-if="editingResource === ''" :typeResource="activeResource" />
+        <resource-editor v-else :typeReadOnly="true" :resourceEditing="resourceEditing" />
+      </template>
+    </v-dialog>
+  </v-sheet>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import ResourceEditor from '../../../components/resources/ResourceEditor.vue';
 export default {
+  components: { ResourceEditor },
   name: "ResourcesList",
   data() {
     return {
+      editingModalActive: false,
       loading: false,
       activeResource: "",
-      queryTxt: ''
+      queryTxt: "",
+      resourceEditing: ''
     };
   },
   head() {
@@ -71,6 +93,9 @@ export default {
     this.activeResource = this.resourcesTypes[0];
   },
   computed: {
+    editingResource () {
+      return this.addingResource || this.resourceEditing
+    },
     ...mapGetters({
       resourcesTypes: "resources/typesResources",
       resourceBy: "resources/resourceType",
@@ -79,13 +104,29 @@ export default {
       return this.resourceBy(this.activeResource);
     },
     filteredResources() {
-      return this.queryTxt.length === 0 ? this.currentList : this.currentList.filter(r => new RegExp(this.queryTxt, 'i').test(r.name))
+      return this.queryTxt.length === 0
+        ? this.currentList
+        : this.currentList.filter((r) =>
+            new RegExp(this.queryTxt, "i").test(r.name)
+          );
+    },
+  },
+  watch: {
+    editingModalActive() {
+      if (!this.editingModalActive) {
+        this.resourceEditing = ''
+      }
     }
   },
   methods: {
     ...mapActions({
       retrieveResources: "resources/retrieveResources",
     }),
+    editResource(item) {
+      console.log(item)
+      this.resourceEditing = item._id
+      this.editingModalActive = true
+    },
     async retrieveData(e) {
       try {
         this.loading = true;
