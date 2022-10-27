@@ -2,9 +2,11 @@
   <v-sheet>
     <v-card :loading="loading" :disabled="loading">
       <v-card-title>
-        Recursos
+        Recursos ({{ activeResource }})
         <v-spacer />
-        <v-btn color="primary" elevation="0" @click="editingModalActive = true">Crear recurso</v-btn>
+        <v-btn color="primary" elevation="0" @click="editingModalActive = true"
+          >Crear recurso</v-btn
+        >
       </v-card-title>
       <v-card-text>
         <v-row>
@@ -18,7 +20,12 @@
                   @click="editResource(item)"
                 >
                   <v-list-item-content>
-                    <v-list-item-title>{{ item.name }} {{item.archived && '(Archivado)' || ''}}</v-list-item-title>
+                    <v-list-item-title
+                      >{{ item.name }}
+                      {{
+                        (item.archived && "(Archivado)") || ""
+                      }}</v-list-item-title
+                    >
                     <v-list-item-subtitle>{{ item.type }}</v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-action>
@@ -61,8 +68,19 @@
     </v-card>
     <v-dialog v-model="editingModalActive">
       <template v-if="editingModalActive">
-        <resource-editor @submit="createResource" @close="editingModalActive = false" v-if="editingResource === ''" :typeResource="activeResource" />
-        <resource-editor @submit="updateResource" @close="editingModalActive = false" v-else :typeReadOnly="true" :resourceEditing="resourceEditing" />
+        <resource-editor
+          @submit="createResource"
+          @close="editingModalActive = false"
+          v-if="editingResource === ''"
+          :typeResource="activeResource"
+        />
+        <resource-editor
+          @submit="updateResource"
+          @close="editingModalActive = false"
+          v-else
+          :typeReadOnly="true"
+          :resourceEditing="resourceEditing"
+        />
       </template>
     </v-dialog>
   </v-sheet>
@@ -70,7 +88,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import ResourceEditor from '../../../components/resources/ResourceEditor.vue';
+import ResourceEditor from "../../../components/resources/ResourceEditor.vue";
 export default {
   components: { ResourceEditor },
   name: "ResourcesList",
@@ -80,7 +98,7 @@ export default {
       loading: false,
       activeResource: "",
       queryTxt: "",
-      resourceEditing: ''
+      resourceEditing: "",
     };
   },
   head() {
@@ -93,8 +111,8 @@ export default {
     this.activeResource = this.resourcesTypes[0];
   },
   computed: {
-    editingResource () {
-      return this.addingResource || this.resourceEditing
+    editingResource() {
+      return this.addingResource || this.resourceEditing;
     },
     ...mapGetters({
       resourcesTypes: "resources/typesResources",
@@ -114,9 +132,9 @@ export default {
   watch: {
     editingModalActive() {
       if (!this.editingModalActive) {
-        this.resourceEditing = ''
+        this.resourceEditing = "";
       }
-    }
+    },
   },
   methods: {
     ...mapActions({
@@ -127,13 +145,13 @@ export default {
     toggleArchive(res) {
       this.updateResource({
         ...res,
-        archived: !res.archived
-      })
+        archived: !res.archived,
+      });
     },
     editResource(item) {
-      console.log(item)
-      this.resourceEditing = item._id
-      this.editingModalActive = true
+      console.log(item);
+      this.resourceEditing = item._id;
+      this.editingModalActive = true;
     },
     async retrieveData(e) {
       try {

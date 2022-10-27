@@ -1,6 +1,7 @@
-import {uniq, orderBy} from 'lodash'
+import { uniq, orderBy } from 'lodash'
 
 export const state = () => ({
+  loading: false,
   resources: []
 })
 
@@ -12,6 +13,7 @@ export const getters = {
 }
 
 export const mutations = {
+  toggleLoading: (state) => state.loading = !state.loading,
   setResources: (state, list) => state.resources = list,
   addResource: (state, resource) => state.resources = [...state.resources, resource],
   updateResource(state, resource) {
@@ -23,9 +25,11 @@ export const mutations = {
 }
 
 export const actions = {
-  async retrieveResources({commit}) {
+  async retrieveResources({ commit }) {
+    commit('toggleLoading')
     const resources = await this.$axios.get('/resources')
     commit('setResources', resources.data.payload)
+    commit('toggleLoading')
   },
   async updateResource({ commit }, resource) {
     console.dir(this)
@@ -33,9 +37,11 @@ export const actions = {
     commit('updateResource', resourceReq.data.payload)
   },
   async createResource({ commit }, resource) {
-    const {_id, ...payload} = resource
+    commit('toggleLoading')
+    const { _id, ...payload } = resource
     const resourceReq = await this.$axios.post('/resources/', payload)
     commit('addResource', resourceReq.data.payload)
+    commit('toggleLoading')
   }
 }
 
