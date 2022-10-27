@@ -10,6 +10,7 @@
       :multiple="multiple"
       :search-input.sync="query"
       :append-icon="'mdi-close'"
+      :label="label"
       v-model="value"
       @keydown.enter="createResourceIfNotResults"
       @click:append="clearValue"
@@ -36,6 +37,10 @@ export default {
     multiple: {
       type: Boolean,
       default: true,
+    },
+    label: {
+      type: String,
+      default: "Input resource",
     },
   },
   data() {

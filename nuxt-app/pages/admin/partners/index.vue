@@ -3,7 +3,6 @@
     <v-card-title> Listado de socios </v-card-title>
     <v-card-text>
       <v-data-table :headers="headers" :items="data" :loading="loading" />
-      <input-resource v-model="nacionalidades" rType="nacionalidads" />
     </v-card-text>
   </v-card>
 </template>
