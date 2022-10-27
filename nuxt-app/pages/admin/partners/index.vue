@@ -2,30 +2,44 @@
   <v-card :disabled="loading">
     <v-card-title> Listado de socios </v-card-title>
     <v-card-text>
-      <v-data-table :headers="headers" :items="data" :loading="loading" />
+      <v-data-table
+        :headers="headers"
+        :items="partners"
+        :loading="loading"
+        :options.sync="options"
+        :server-items-length="totalItems"
+      >
+        <template #[`item.actions`]="{ item }">
+          <v-btn color="secondary" small elevation="0">Ver detalles</v-btn>
+        </template>
+      </v-data-table>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import InputResource from "../../../components/resources/InputResource.vue";
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(null);
-    }, ms);
-  });
-}
 
 export default {
   components: { InputResource },
   name: "PartnerList",
   data() {
+    const { itemsPerPage = 20, page = 1 } = this.$route.query;
     return {
       loading: false,
-      data: [],
-      nacionalidades: [],
-      headers: [{ text: "Calories", value: "calories" }],
+      options: {
+        itemsPerPage: Number(itemsPerPage),
+        page: Number(page),
+      },
+      headers: [
+        { text: "Nombre", value: "nombre" },
+        { text: "Apellidos", value: "apellidos" },
+        { text: "Tarjeta sip", value: "sipcard" },
+        { text: "Correo electrónico", value: "correoelectronico" },
+        { text: "Telefono", value: "telefono" },
+        { text: "Acciones", value: "actions", align: "right" },
+      ],
     };
   },
   head() {
@@ -33,14 +47,29 @@ export default {
       title: "Listado de socios",
     };
   },
+  computed: {
+    ...mapState("partners", ["partners", "totalItems"]),
+  },
   async mounted() {
     await this.retrieveData();
   },
+  watch: {
+    options: {
+      deep: true,
+      async handler() {
+        await this.retrieveData();
+        this.$router.push({ query: this.options });
+      },
+    },
+  },
   methods: {
-    async retrieveData(e) {
+    ...mapActions({
+      retrievePartners: "partners/retrievePartners",
+    }),
+    async retrieveData() {
       try {
         this.loading = true;
-        await sleep(1000);
+        await this.retrievePartners(this.options);
         console.log(this.formData);
         this.loading = false;
       } catch (error) {
