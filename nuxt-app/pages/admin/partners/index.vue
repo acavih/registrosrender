@@ -2,6 +2,11 @@
   <v-card :disabled="loading">
     <v-card-title> Listado de socios </v-card-title>
     <v-card-text>
+      <v-text-field
+        v-model="filters.searchQuery"
+        hint="Código · Nombre · Apellidos · Teléfono · Tarjeta SIP · Correo electronico"
+        label="Buscar usuarios"
+      />
       <v-data-table
         :headers="headers"
         :items="partners"
@@ -25,12 +30,15 @@ export default {
   components: { InputResource },
   name: "PartnerList",
   data() {
-    const { itemsPerPage = 20, page = 1 } = this.$route.query;
+    const { itemsPerPage = 20, page = 1, searchQuery = "" } = this.$route.query;
     return {
       loading: false,
       options: {
         itemsPerPage: Number(itemsPerPage),
         page: Number(page),
+      },
+      filters: {
+        searchQuery,
       },
       headers: [
         { text: "Nombre", value: "nombre" },
@@ -49,16 +57,22 @@ export default {
   },
   computed: {
     ...mapState("partners", ["partners", "totalItems"]),
+    queryToSend() {
+      return {
+        ...this.options,
+        ...this.filters,
+      };
+    },
   },
   async mounted() {
     await this.retrieveData();
   },
   watch: {
-    options: {
+    queryToSend: {
       deep: true,
       async handler() {
         await this.retrieveData();
-        this.$router.push({ query: this.options });
+        this.$router.push({ query: this.queryToSend });
       },
     },
   },
@@ -69,7 +83,7 @@ export default {
     async retrieveData() {
       try {
         this.loading = true;
-        await this.retrievePartners(this.options);
+        await this.retrievePartners(this.queryToSend);
         console.log(this.formData);
         this.loading = false;
       } catch (error) {
