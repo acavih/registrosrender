@@ -7,47 +7,32 @@
         hint="Código · Nombre · Apellidos · Teléfono · Tarjeta SIP · Correo electronico"
         label="Buscar usuarios"
       />
-      <v-data-table
-        :headers="headers"
-        :items="partners"
+      <partners-table
         :loading="loading"
+        :partners="partners"
+        :totalItems="totalItems"
         :options.sync="options"
-        :server-items-length="totalItems"
-      >
-        <template #[`item.actions`]="{ item }">
-          <v-btn color="secondary" small elevation="0">Ver detalles</v-btn>
-        </template>
-      </v-data-table>
+      />
     </v-card-text>
   </v-card>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+import PartnersTable from "../../../components/partners/PartnersTable.vue";
 import InputResource from "../../../components/resources/InputResource.vue";
 
 export default {
-  components: { InputResource },
+  components: { InputResource, PartnersTable },
   name: "PartnerList",
   data() {
-    const { itemsPerPage = 20, page = 1, searchQuery = "" } = this.$route.query;
+    const { searchQuery = "" } = this.$route.query;
     return {
       loading: false,
-      options: {
-        itemsPerPage: Number(itemsPerPage),
-        page: Number(page),
-      },
+      options: {},
       filters: {
         searchQuery,
       },
-      headers: [
-        { text: "Nombre", value: "nombre" },
-        { text: "Apellidos", value: "apellidos" },
-        { text: "Tarjeta sip", value: "sipcard" },
-        { text: "Correo electrónico", value: "correoelectronico" },
-        { text: "Telefono", value: "telefono" },
-        { text: "Acciones", value: "actions", align: "right" },
-      ],
     };
   },
   head() {
