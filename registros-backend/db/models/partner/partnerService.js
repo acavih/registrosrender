@@ -1,4 +1,5 @@
 // const lookUpResourceAggregation = require("../../../utils/lookUpResourceAggregation")
+const { getOrCreateResource } = require("../resources/resourceService")
 const Partner = require("./Partner")
 
 function lookupResourceAggregation(field, single) {
@@ -36,7 +37,7 @@ const partnerService = {
     /* const partners = await Partner.find({}).limit(itemsPerPage).skip(skip)
     const totalItems = await Partner.count()*/
 
-    let pattern = (searchQuery ?? '').replace(/\s/g, '.*')
+    let pattern = (searchQuery || '').replace(/\s/g, '.*')
     const specialCharacters = ['+', '/', '(', '[', ']', ')', '^', '{', '}', '$']
     specialCharacters.forEach(char => {
       pattern = pattern.replace(new RegExp('\\' + char, 'g'), '\\' + char);
@@ -111,6 +112,18 @@ const partnerService = {
   },
   async getPartner(id) {
     const partner = await Partner.findOne({ _id: id })
+      .populate(['sexo', 'socioono', 'ciudadresidencia', 'nacionalidad'])
+    return partner
+  },
+  async createPartner(partnerData) {
+    const partner = await Partner.create({
+      ...partnerData,
+      sexo: partnerData.sexo || await getOrCreateResource('sexos', 'NS/NC'),
+      socioono: partnerData.socioono || await getOrCreateResource('socioonos', 'NS/NC'),
+      nacionalidad: partnerData.nacionalidad || await getOrCreateResource('residencias', 'NS/NC'),
+      ciudadresidencia: partnerData.ciudadresidencia || await getOrCreateResource('nacionalidads', 'NS/NC')
+    })
+    console.log(partner)
     return partner
   }
 }

@@ -14,6 +14,15 @@ const resourceService = {
       _id: idResource
     }, { $set: update }, { returnOriginal: false })
     return resource
+  },
+  async getOrCreateResource(type, name) {
+    let resource = await ResourceModel.findOne({
+      type, name
+    })
+    if (!resource) {
+      resource = await ResourceModel.create({ type, name })
+    }
+    return resource
   }
 }
 

@@ -1,5 +1,5 @@
 const express = require('express')
-const { listPartners, getPartner } = require('../../db/models/partner/partnerService')
+const { listPartners, getPartner, createPartner } = require('../../db/models/partner/partnerService')
 
 const partnersRouter = express.Router()
 
@@ -16,6 +16,14 @@ partnersRouter.get('/:id', async (req, res) => {
   res.json({
     message: 'Datos del socio',
     payload: partners
+  })
+})
+
+partnersRouter.post('/', async (req, res) => {
+  const partner = await createPartner(req.body)
+  res.json({
+    message: 'Crear socio',
+    payload: partner
   })
 })
 

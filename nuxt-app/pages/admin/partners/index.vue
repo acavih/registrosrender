@@ -1,20 +1,29 @@
 <template>
-  <v-card :disabled="loading">
-    <v-card-title> Listado de socios </v-card-title>
-    <v-card-text>
-      <v-text-field
-        v-model="filters.searchQuery"
-        hint="Código · Nombre · Apellidos · Teléfono · Tarjeta SIP · Correo electronico"
-        label="Buscar usuarios"
-      />
-      <partners-table
-        :loading="loading"
-        :partners="partners"
-        :totalItems="totalItems"
-        :options.sync="options"
-      />
-    </v-card-text>
-  </v-card>
+  <v-sheet>
+    <v-card :disabled="loading">
+      <v-card-title>
+        Listado de socios
+        <v-spacer />
+        <v-btn color="primary" elevation="0" to="/admin/partners/add">
+          Añadir socio
+        </v-btn>
+      </v-card-title>
+      <v-card-text>
+        <v-text-field
+          v-model="filters.searchQuery"
+          hint="Código · Nombre · Apellidos · Teléfono · Tarjeta SIP · Correo electronico"
+          label="Buscar usuarios"
+        />
+        <partners-table
+          :loading="loading"
+          :partners="partners"
+          :totalItems="totalItems"
+          :options.sync="options"
+        />
+      </v-card-text>
+    </v-card>
+    <nuxt />
+  </v-sheet>
 </template>
 
 <script>

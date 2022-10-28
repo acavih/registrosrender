@@ -19,6 +19,9 @@ export const actions = {
       params: query
     })
     commit('setPartners', resources.data.payload)
+  },
+  async addPartner(_ctx, partnerData) {
+    await this.$axios.post('/partners', partnerData)
   }
 }
 
