@@ -17,10 +17,15 @@ export const mutations = {
   }
 }
 
+/**
+ * @type {import('vuex').ActionTree<any, any>}
+ */
 export const actions = {
-  async retrieveUsers({commit}) {
+  async retrieveUsers({ commit }) {
     const reqUsers = await this.$axios.get('/users')
     commit('setUsers', reqUsers.data.payload)
+    console.log('disparando')
+    console.dir(this.app)
   },
   async createUser({ commit }, user) {
     const reqUsers = await this.$axios.post('/users', user)

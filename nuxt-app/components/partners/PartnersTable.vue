@@ -7,7 +7,16 @@
     :server-items-length="totalItems"
   >
     <template #[`item.actions`]="{ item }">
-      <v-btn color="secondary" small elevation="0">Ver detalles</v-btn>
+      <v-btn
+        :to="{
+          name: 'admin-partners-partnerId',
+          params: { partnerId: item._id },
+        }"
+        color="secondary"
+        small
+        elevation="0"
+        >Ver detalles</v-btn
+      >
     </template>
   </v-data-table>
 </template>

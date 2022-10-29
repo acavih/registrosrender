@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-    <v-card :loading="loading" :disabled="loading">
+    <v-card :disabled="loading">
       <v-card-title>
         Listado de usuarios
         <v-spacer />

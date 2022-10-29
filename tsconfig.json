@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "typeRoots": ["./typings"],
+    "outFile": "./justANameToMakeTSHappy.js",
+    "types": [
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "@nuxtjs/auth-next",
+      "vuetify-dialog/types",
+      "vuetify/types"
+    ]
+  }
+}
