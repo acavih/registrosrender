@@ -56,17 +56,19 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(null);
-    }, ms);
-  });
-}
+import dayjs from "dayjs";
 
 export default {
   name: "PartnerView",
+  filters: {
+    date(d) {
+      try {
+        return dayjs(d).format("DD/MM/YYYY");
+      } catch (error) {
+        return "n/a";
+      }
+    },
+  },
   data() {
     return {
       loading: false,
@@ -82,7 +84,7 @@ export default {
   async mounted() {
     // await this.retrieveData();
     if (!this.partner) {
-      await this.retrievePartner(this.$route.params.partnerId);
+      await this.retrieveData();
     }
     this.loading = false;
   },
@@ -95,16 +97,30 @@ export default {
         (p) => p._id === this.$route.params.partnerId
       )[0];
     },
+    edadSocio() {
+      if (!this.partner.fechanacimiento) {
+        return "";
+      }
+      const hoy = new Date();
+      const cumpleanos = new Date(this.partner.fechanacimiento);
+      let edad = hoy.getFullYear() - cumpleanos.getFullYear();
+      const m = hoy.getMonth() - cumpleanos.getMonth();
+
+      if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+        edad--;
+      }
+
+      return edad;
+    },
   },
   methods: {
     ...mapActions({
       retrievePartner: "partners/retrievePartner",
     }),
-    async retrieveData(e) {
+    async retrieveData() {
       try {
         this.loading = true;
-        await sleep(1000);
-        console.log(this.formData);
+        await this.retrievePartner(this.$route.params.partnerId);
         this.loading = false;
       } catch (error) {
         if (error.isAxiosError) {

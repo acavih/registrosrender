@@ -28,7 +28,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "@types/lodash": "^4.14.182",
     "core-js": "^3.19.3",
-    "dayjs": "^1.11.5",
+    "dayjs": "^1.11.6",
     "gulp": "^4.0.2",
     "highcharts": "^10.2.0",
     "lodash": "^4.17.21",
