@@ -50,6 +50,9 @@
           </tr>
         </tbody>
       </v-simple-table>
+      <v-card-text>
+        <attentions-iterator :attentions="userAttentions" />
+      </v-card-text>
     </v-card-text>
   </v-card>
 </template>
@@ -57,8 +60,10 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import dayjs from "dayjs";
+import AttentionsIterator from "../../../../components/attentions/AttentionsIterator.vue";
 
 export default {
+  components: { AttentionsIterator },
   name: "PartnerView",
   filters: {
     date(d) {
@@ -91,6 +96,7 @@ export default {
   computed: {
     ...mapState({
       partners: (s) => s.partners.partners,
+      userAttentions: (s) => s.attentions.userAttentions,
     }),
     partner() {
       return this.partners.filter(
@@ -116,11 +122,13 @@ export default {
   methods: {
     ...mapActions({
       retrievePartner: "partners/retrievePartner",
+      retrieveAttentions: "attentions/getUserAttentions",
     }),
     async retrieveData() {
       try {
         this.loading = true;
         await this.retrievePartner(this.$route.params.partnerId);
+        await this.retrieveAttentions(this.$route.params.partnerId);
         this.loading = false;
       } catch (error) {
         if (error.isAxiosError) {
