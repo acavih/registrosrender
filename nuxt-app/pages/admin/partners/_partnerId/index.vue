@@ -2,28 +2,60 @@
   <v-card :loading="loading" :disabled="loading">
     <v-card-title> Vista de socio </v-card-title>
     <v-card-text>
-      <v-list>
-        <v-list-item v-for="item in data" :key="item._id">
-          <v-list-item-avatar>
-            <v-icon class="grey lighten-1" dark> mdi-folder </v-icon>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>Título</v-list-item-title>
-            <v-list-item-subtitle>Subtitulo</v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-btn icon>
-              <v-icon color="grey lighten-1"> mdi-pencil </v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list>
+      <v-simple-table>
+        <tbody>
+          <tr>
+            <td>Tarjeta sip</td>
+            <td>{{ partner?.sipCard || "n/a" }}</td>
+          </tr>
+          <tr>
+            <td>Codigo</td>
+            <td>{{ partner?.codigo || "n/a" }}</td>
+          </tr>
+          <tr>
+            <td>Correo electrónico</td>
+            <td>{{ partner?.correoelectronico || "n/a" }}</td>
+          </tr>
+          <tr>
+            <td>Telefono</td>
+            <td>{{ partner?.telefono || "n/a" }}</td>
+          </tr>
+          <tr>
+            <td>Fecha de nacimiento</td>
+            <td>
+              <template v-if="partner?.fechanacimiento">
+                {{
+                  partner?.fechanacimiento && partner?.fechanacimiento | date
+                }}
+                ({{ edadSocio }} años)
+              </template>
+              <template v-else> N/A </template>
+            </td>
+          </tr>
+          <tr>
+            <td>Sexo</td>
+            <td>{{ partner?.sexo?.name || "n/a" }}</td>
+          </tr>
+          <tr>
+            <td>Socio o no</td>
+            <td>{{ partner?.socioono?.name || "n/a" }}</td>
+          </tr>
+          <tr>
+            <td>Ciudad residencia</td>
+            <td>{{ partner?.ciudadresidencia?.name || "n/a" }}</td>
+          </tr>
+          <tr>
+            <td>Nacionalidad</td>
+            <td>{{ partner?.nacionalidad?.name || "n/a" }}</td>
+          </tr>
+        </tbody>
+      </v-simple-table>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -48,15 +80,26 @@ export default {
     };
   },
   async mounted() {
-    await this.retrieveData();
+    // await this.retrieveData();
+    if (!this.partner) {
+      await this.retrievePartner(this.$route.params.partnerId);
+    }
+    this.loading = false;
   },
   computed: {
-    ...mapState(["partners/partners"]),
+    ...mapState({
+      partners: (s) => s.partners.partners,
+    }),
     partner() {
-      return this.partners.filter((p) => p._id === this.$route.params.id)[0];
+      return this.partners.filter(
+        (p) => p._id === this.$route.params.partnerId
+      )[0];
     },
   },
   methods: {
+    ...mapActions({
+      retrievePartner: "partners/retrievePartner",
+    }),
     async retrieveData(e) {
       try {
         this.loading = true;
