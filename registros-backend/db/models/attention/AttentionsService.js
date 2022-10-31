@@ -17,7 +17,10 @@ module.exports = {
         $gte: startDate,
         $lte: endDate
       }
-    })
+    }).populate([
+      "tipoaenciones", "Proyectos", "motivosatencion", "derivadoa",
+      "derivadode", "formacion", "voluntariado", "lugaratencion", "user"
+    ])
     return attentions
   }
 }
