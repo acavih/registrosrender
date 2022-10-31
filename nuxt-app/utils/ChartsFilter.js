@@ -1,8 +1,8 @@
-export const chartsFilters = ({ chartsFilters }) => ({
+export const chartsFilters = ({ filters }) => ({
   memberResourceFilter: (key) => (a) => {
-    if (!chartsFilters.partners[key] || chartsFilters.partners[key].length === 0) { return true }
-    for (let index = 0; index < chartsFilters.partners[key].length; index++) {
-      const resource = chartsFilters.partners[key][index]
+    if (!filters.partners[key] || filters.partners[key].length === 0) { return true }
+    for (let index = 0; index < filters.partners[key].length; index++) {
+      const resource = filters.partners[key][index]
       if (a.user[key].name === resource.name) {
         return true
       }
@@ -11,13 +11,13 @@ export const chartsFilters = ({ chartsFilters }) => ({
   },
 
   attentionLugaratencionFilter(a) {
-    if (!chartsFilters.attentions.lugaratencion) { return true }
+    if (!filters.attentions.lugaratencion) { return true }
     if (a.lugaratencion === null) { return false }
-    return a.lugaratencion.name === (chartsFilters.attentions.lugaratencion).name
+    return a.lugaratencion.name === (filters.attentions.lugaratencion).name
   },
 
   attentionResourceFilter: (key) => (a) => {
-    const arrayResource = chartsFilters.attentions[key]
+    const arrayResource = filters.attentions[key]
     if (!arrayResource || arrayResource.length === 0) { return true }
 
     const finalValue = []

@@ -6,13 +6,30 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 export default {
-  name: "index.vue",
+  name: "StatsPage",
   data() {
     return {
       loading: false,
       data: [],
+      filters: {
+        partners: {
+          sexo: [],
+          socioono: [],
+          nacionalidad: [],
+          ciudadresidencia: [],
+        },
+        attentions: {
+          tipoaenciones: [],
+          derivadoa: [],
+          derivadode: [],
+          Proyectos: [],
+          motivosatencion: [],
+          formacion: [],
+          voluntariado: [],
+        },
+      },
     };
   },
   head() {
@@ -27,6 +44,11 @@ export default {
     ...mapState({
       rangeDateAttentions: (s) => s.attentions.rangeDateAttentions,
     }),
+    filteredAttentions() {
+      return this.$store.getters["stats/filterAttentions"]({
+        filters: this.filters,
+      });
+    },
   },
   methods: {
     ...mapActions({

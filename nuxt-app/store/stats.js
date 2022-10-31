@@ -16,8 +16,9 @@ export const state = () => ({
 })
 
 export const getters = {
-  filteredAttentions: (state, getters, rootState) => ({ chartsFilters }) => {
-    const { memberResourceFilter, attentionLugaratencionFilter, attentionResourceFilter } = chartsFilters({ chartsFilters })
+  filterAttentions: (state, getters, rootState) => ({ filters }) => {
+    debugger
+    const { memberResourceFilter, attentionLugaratencionFilter, attentionResourceFilter } = chartsFilters({ filters })
 
     let filteredAttentions = [...rootState.attentions.rangeDateAttentions]
 
