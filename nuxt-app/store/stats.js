@@ -13,12 +13,15 @@ const attentionsFilters = [
 ]
 
 export const state = () => ({
+  filters: {
+    partners: {},
+    attentions: {},
+  }
 })
 
 export const getters = {
-  filterAttentions: (state, getters, rootState) => ({ filters }) => {
-    debugger
-    const { memberResourceFilter, attentionLugaratencionFilter, attentionResourceFilter } = chartsFilters({ filters })
+  filteredAttentions: (state, getters, rootState) => {
+    const { memberResourceFilter, attentionLugaratencionFilter, attentionResourceFilter } = chartsFilters({ filters: state.filters })
 
     let filteredAttentions = [...rootState.attentions.rangeDateAttentions]
 
@@ -35,6 +38,9 @@ export const getters = {
 }
 
 export const mutations = {
+  updateFilters(state, filters) {
+    state.filters = filters
+  }
 }
 
 /**

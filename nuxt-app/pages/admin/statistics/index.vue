@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   name: "StatsPage",
   data() {
@@ -45,14 +45,23 @@ export default {
       rangeDateAttentions: (s) => s.attentions.rangeDateAttentions,
     }),
     filteredAttentions() {
-      return this.$store.getters["stats/filterAttentions"]({
-        filters: this.filters,
-      });
+      return this.$store.getters["stats/filteredAttentions"];
+    },
+  },
+  watch: {
+    filters: {
+      deep: true,
+      handler() {
+        this.updateFilters(this.filters);
+      },
     },
   },
   methods: {
     ...mapActions({
       getRangeDateAttentions: "attentions/getRangeDateAttentions",
+    }),
+    ...mapMutations({
+      updateFilters: "stats/updateFilters",
     }),
     async retrieveData(e) {
       try {
