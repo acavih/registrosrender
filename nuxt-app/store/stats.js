@@ -13,6 +13,7 @@ const attentionsFilters = [
 ]*/
 
 export const state = () => ({
+  drawerActive: true,
   filters: {
     partners: {
       sexo: [],
@@ -48,13 +49,6 @@ export const getters = {
     attentionsFilters.forEach((k) => {
       filteredAttentions = [...filteredAttentions.filter(attentionResourceFilter(k))]
     })
-
-    /* for (const i of membersFilters) {
-      filteredAttentions = [...filteredAttentions.filter(memberResourceFilter(i))]
-    }
-    for (const i of attentionsFilters) {
-      filteredAttentions = [...filteredAttentions.filter(attentionResourceFilter(i))]
-    } */
     // filteredAttentions = [...filteredAttentions.filter(attentionLugaratencionFilter)]
 
     return filteredAttentions
@@ -69,6 +63,9 @@ export const getters = {
 export const mutations = {
   updateFilters(state, filters) {
     state.filters = { ...filters }
+  },
+  toggleDrawer(state) {
+    state.drawerActive = !state.drawerActive
   }
 }
 

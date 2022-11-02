@@ -1,6 +1,9 @@
 <template>
   <v-card :loading="loading" :disabled="loading">
     <v-card-title>
+      <v-btn icon @click="$store.commit('stats/toggleDrawer')">
+        <v-icon> mdi-xml </v-icon>
+      </v-btn>
       Estadísticas
       <v-spacer />
       <v-btn elevation="0" color="primary" class="mr-5">

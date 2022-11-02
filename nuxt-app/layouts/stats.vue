@@ -2,10 +2,10 @@
   <v-app v-if="loaded">
     <v-navigation-drawer
       v-if="$auth.loggedIn"
-      v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
       width="500"
+      :value="drawerActive"
       fixed
       app
     >
@@ -117,7 +117,7 @@
 <script>
 import UserMenuComponent from "~/components/auth/UserMenuComponent.vue";
 import RedirectComponent from "~/components/RedirectComponent.vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import InputResource from "../components/resources/InputResource.vue";
 
 export default {
@@ -125,14 +125,9 @@ export default {
   components: { RedirectComponent, UserMenuComponent, InputResource },
   data() {
     return {
+      title: "Estadísticas registros",
       loaded: false,
       clipped: true,
-      drawer: true,
-      fixed: false,
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: "Registros",
       filters: {
         partners: {
           sexo: [],
@@ -159,6 +154,11 @@ export default {
         this.updateFilters(this.filters);
       },
     },
+  },
+  computed: {
+    ...mapState({
+      drawerActive: (s) => s.stats.drawerActive,
+    }),
   },
   mounted() {
     setTimeout(() => {
