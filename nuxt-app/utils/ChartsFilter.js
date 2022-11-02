@@ -7,7 +7,6 @@ export const chartsFilters = ({ filters }) => ({
         return true
       }
     }
-    console.log('member no pasa')
     return false
   },
 
@@ -25,7 +24,9 @@ export const chartsFilters = ({ filters }) => ({
 
     for (let index = 0; index < arrayResource.length; index++) {
       const element = arrayResource[index]
-      finalValue.push(a[key].filter((r) => r.name === element.name).length > 0)
+      finalValue.push(a[key].filter((r) => {
+        return r._id === element
+      }).length > 0)
     }
 
     return !finalValue.includes(false)

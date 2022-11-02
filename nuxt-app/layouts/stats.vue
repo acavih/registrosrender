@@ -50,50 +50,50 @@
           <input-resource
             multiple
             :label="'Tipo atenciones'"
-            :rType="'tipoaenciones'"
-            v-model="filters.partners.tipoaenciones"
+            :rType="'tipoatenciones'"
+            v-model="filters.attentions.tipoaenciones"
           />
           <input-resource
             multiple
             :label="'Derivado a'"
             :rType="'derivaciones'"
-            v-model="filters.partners.derivadoa"
+            v-model="filters.attentions.derivadoa"
           />
           <input-resource
             multiple
             :label="'Derivado de'"
             :rType="'derivaciones'"
-            v-model="filters.partners.derivadode"
+            v-model="filters.attentions.derivadode"
           />
           <input-resource
             multiple
             :label="'Derivado de'"
             :rType="'derivaciones'"
-            v-model="filters.partners.derivadode"
+            v-model="filters.attentions.derivadode"
           />
           <input-resource
             multiple
             :label="'Proyectos'"
             :rType="'proyectos'"
-            v-model="filters.partners.Proyectos"
+            v-model="filters.attentions.Proyectos"
           />
           <input-resource
             multiple
             :label="'Motivos de atención'"
             :rType="'motivosatencions'"
-            v-model="filters.partners.motivosatencion"
+            v-model="filters.attentions.motivosatencion"
           />
           <input-resource
             multiple
             :label="'Formación'"
             :rType="'formacions'"
-            v-model="filters.partners.formacion"
+            v-model="filters.attentions.formacion"
           />
           <input-resource
             multiple
             :label="'Voluntariado'"
             :rType="'Voluntariados'"
-            v-model="filters.partners.voluntariado"
+            v-model="filters.attentions.voluntariado"
           />
         </v-card-text>
       </v-card>
