@@ -6,7 +6,7 @@ module.exports = {
       .populate([
         "tipoaenciones", "Proyectos", "motivosatencion", "derivadoa",
         "derivadode", "formacion", "voluntariado", "lugaratencion"
-      ])
+      ]).sort('-fechaatencion')
     return attentions
   },
   async getAttentionsInRangeDate({ sd, ed }) {
