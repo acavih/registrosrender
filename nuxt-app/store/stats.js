@@ -1,19 +1,9 @@
 import _ from 'lodash'
 import chartsFilters from '../utils/ChartsFilter'
 
-/*const membersFilters = ['sexo', 'socioono', 'nacionalidad', 'ciudadresidencia']
-const attentionsFilters = [
-  'tipoaenciones',
-  'derivadoa',
-  'derivadode',
-  'Proyectos',
-  'motivosatencion',
-  'formacion',
-  'voluntariado'
-]*/
-
 export const state = () => ({
   drawerActive: true,
+  loading: false,
   filters: {
     partners: {
       sexo: [],
@@ -35,7 +25,6 @@ export const state = () => ({
 
 export const getters = {
   filteredAttentions: (state, getters, rootState) => {
-    console.log('filters', state.filters)
     const { memberResourceFilter, attentionLugaratencionFilter, attentionResourceFilter } = chartsFilters({ filters: state.filters })
 
     let filteredAttentions = [...rootState.attentions.rangeDateAttentions]
@@ -54,7 +43,6 @@ export const getters = {
     return filteredAttentions
   },
   distinctUsers(_state, getters, rootState) {
-    console.log('usuarios')
     const users = [...getters.filteredAttentions].map((r) => r.user)
     return _.uniqBy(users, '_id')
   }
@@ -66,6 +54,9 @@ export const mutations = {
   },
   toggleDrawer(state) {
     state.drawerActive = !state.drawerActive
+  },
+  toggleLoading(state) {
+    state.loading = !state.loading
   }
 }
 

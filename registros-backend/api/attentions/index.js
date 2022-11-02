@@ -12,7 +12,7 @@ attentionsRouter.get('/byUser/:user', async (req, res) => {
 })
 
 attentionsRouter.get('/byRange', async (req, res) => {
-  const attentions = await getAttentionsInRangeDate()
+  const attentions = await getAttentionsInRangeDate(req.query)
   res.json({
     message: 'Attentions in range date',
     payload: attentions

@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="loading" :disabled="loading">
+  <v-card :loading="refreshingAttentions" :disabled="refreshingAttentions">
     <v-card-title>
       <v-btn icon @click="$store.commit('stats/toggleDrawer')">
         <v-icon> mdi-xml </v-icon>
@@ -45,6 +45,7 @@ export default {
   computed: {
     ...mapState({
       rangeDateAttentions: (s) => s.attentions.rangeDateAttentions,
+      refreshingAttentions: (s) => s.stats.loading,
     }),
     ...mapGetters({
       distinctUsers: "stats/distinctUsers",
@@ -60,7 +61,7 @@ export default {
     ...mapMutations({
       updateFilters: "stats/updateFilters",
     }),
-    async retrieveData(e) {
+    /* async retrieveData(e) {
       try {
         this.loading = true;
         await this.getRangeDateAttentions();
@@ -72,7 +73,7 @@ export default {
         }
         console.log(error);
       }
-    },
+    }, */
   },
 };
 </script>

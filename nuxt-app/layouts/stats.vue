@@ -2,21 +2,20 @@
   <v-app v-if="loaded">
     <v-navigation-drawer
       v-if="$auth.loggedIn"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
+      clipped
       width="500"
       :value="drawerActive"
       fixed
       app
     >
-      <v-card>
+      <v-card :disabled="refreshingAttentions">
         <v-card-title> Filtrar por fecha </v-card-title>
         <v-card-text>
           <menu-datepicker v-model="rangeDates.start" :label="'Fecha desde'" />
           <menu-datepicker v-model="rangeDates.end" :label="'Fecha hasta'" />
         </v-card-text>
       </v-card>
-      <v-card elevation="0">
+      <v-card :disabled="refreshingAttentions" elevation="0">
         <v-card-title> Filtros de socio </v-card-title>
         <v-card-text>
           <input-resource
@@ -45,7 +44,7 @@
           />
         </v-card-text>
       </v-card>
-      <v-card elevation="0">
+      <v-card :disabled="refreshingAttentions" elevation="0">
         <v-card-title> Filtros de atenciones </v-card-title>
         <v-card-text>
           <input-resource
@@ -99,7 +98,7 @@
         </v-card-text>
       </v-card>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app color="primary" dark>
+    <v-app-bar clipped-left fixed app color="primary" dark>
       <v-btn icon @click.stop="$router.go(-1)" dark>
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
@@ -127,6 +126,7 @@ import RedirectComponent from "~/components/RedirectComponent.vue";
 import { mapMutations, mapState, mapActions } from "vuex";
 import InputResource from "../components/resources/InputResource.vue";
 import MenuDatepicker from "../components/MenuDatepicker.vue";
+import dayjs from "dayjs";
 
 export default {
   name: "StatsLayout",
@@ -140,10 +140,9 @@ export default {
     return {
       title: "Estadísticas registros",
       loaded: true,
-      clipped: true,
-      // mm/dd/yyyy
+      // mm-dd-yyyy
       rangeDates: {
-        start: "02-01-2022",
+        start: "01-01-2022",
         end: "12-31-2022",
       },
       filters: {
@@ -172,15 +171,22 @@ export default {
         this.updateFilters(this.filters);
       },
     },
+    rangeDates: {
+      deep: true,
+      handler() {
+        this.refreshDataset(this.filters);
+      },
+    },
   },
   computed: {
     ...mapState({
       drawerActive: (s) => s.stats.drawerActive,
+      refreshingAttentions: (s) => s.stats.loading,
     }),
   },
-  /* async mounted() {
-    await this.refreshDataset;
-  }, */
+  async mounted() {
+    await this.refreshDataset();
+  },
   methods: {
     ...mapActions({
       getRangeDateAttentions: "attentions/getRangeDateAttentions",
@@ -189,10 +195,12 @@ export default {
       updateFilters: "stats/updateFilters",
     }),
     async refreshDataset() {
+      this.$store.commit("stats/toggleLoading");
       await this.getRangeDateAttentions({
-        sd: this.rangeDates.start,
-        ed: this.rangeDates.end,
+        sd: dayjs(this.rangeDates.start).format("MM-DD-YYYY"),
+        ed: dayjs(this.rangeDates.end).format("MM-DD-YYYY"),
       });
+      this.$store.commit("stats/toggleLoading");
     },
   },
 };

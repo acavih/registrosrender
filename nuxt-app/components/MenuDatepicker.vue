@@ -44,7 +44,7 @@ export default {
   },
   watch: {
     date(newv) {
-      console.log(newv);
+      // console.log(newv);
     },
   },
   created() {
