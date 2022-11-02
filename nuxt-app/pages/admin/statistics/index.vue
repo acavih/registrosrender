@@ -1,6 +1,6 @@
 <template>
   <v-card :loading="loading" :disabled="loading">
-    <v-card-title> Estadisticas </v-card-title>
+    <v-card-title> Estadísticas </v-card-title>
     <v-card-text> </v-card-text>
   </v-card>
 </template>
@@ -9,32 +9,16 @@
 import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   name: "StatsPage",
+  layout: "stats",
   data() {
     return {
       loading: false,
       data: [],
-      filters: {
-        partners: {
-          sexo: [],
-          socioono: [],
-          nacionalidad: [],
-          ciudadresidencia: [],
-        },
-        attentions: {
-          tipoaenciones: [],
-          derivadoa: [],
-          derivadode: [],
-          Proyectos: [],
-          motivosatencion: [],
-          formacion: [],
-          voluntariado: [],
-        },
-      },
     };
   },
   head() {
     return {
-      title: "Estadisticas",
+      title: "Estadísticas",
     };
   },
   async mounted() {
@@ -46,14 +30,6 @@ export default {
     }),
     filteredAttentions() {
       return this.$store.getters["stats/filteredAttentions"];
-    },
-  },
-  watch: {
-    filters: {
-      deep: true,
-      handler() {
-        this.updateFilters(this.filters);
-      },
     },
   },
   methods: {

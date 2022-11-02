@@ -8,36 +8,11 @@
       fixed
       app
     >
-      <v-list>
-        <v-list-item :to="'/admin/users'" router>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Usuarios'" />
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="'/admin/partners'" router>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Socios'" />
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="'/admin/attentions'" router>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Ultimas atenciones'" />
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="'/admin/statistics'" router exact>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Estadísticas'" />
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item :to="'/admin/resources'" router exact>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Recursos'" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app color="primary" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-btn icon @click.stop="$router.go(-1)" dark>
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <user-menu-component />
@@ -45,7 +20,7 @@
     <v-main>
       <template v-if="$auth.loggedIn">
         <v-container fluid>
-          <Nuxt />
+          <Nuxt> </Nuxt>
         </v-container>
       </template>
       <template v-else>
@@ -59,6 +34,7 @@
 <script>
 import UserMenuComponent from "~/components/auth/UserMenuComponent.vue";
 import RedirectComponent from "~/components/RedirectComponent.vue";
+import { mapMutations } from "vuex";
 
 export default {
   name: "DefaultLayout",
@@ -73,12 +49,42 @@ export default {
       right: true,
       rightDrawer: false,
       title: "Registros",
+      filters: {
+        partners: {
+          sexo: [],
+          socioono: [],
+          nacionalidad: [],
+          ciudadresidencia: [],
+        },
+        attentions: {
+          tipoaenciones: [],
+          derivadoa: [],
+          derivadode: [],
+          Proyectos: [],
+          motivosatencion: [],
+          formacion: [],
+          voluntariado: [],
+        },
+      },
     };
+  },
+  watch: {
+    filters: {
+      deep: true,
+      handler() {
+        this.updateFilters(this.filters);
+      },
+    },
   },
   mounted() {
     setTimeout(() => {
       this.loaded = true;
     }, 500);
+  },
+  methods: {
+    ...mapMutations({
+      updateFilters: "stats/updateFilters",
+    }),
   },
 };
 </script>
