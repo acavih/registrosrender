@@ -3,10 +3,12 @@ export const chartsFilters = ({ filters }) => ({
     if (!filters.partners[key] || filters.partners[key].length === 0) { return true }
     for (let index = 0; index < filters.partners[key].length; index++) {
       const resource = filters.partners[key][index]
-      if (a.user[key].name === resource.name) {
+      console.log(resource, a)
+      if (a.user[key] === resource) {
         return true
       }
     }
+    console.log('member no pasa')
     return false
   },
 
@@ -17,6 +19,7 @@ export const chartsFilters = ({ filters }) => ({
   },
 
   attentionResourceFilter: (key) => (a) => {
+    console.log(key)
     const arrayResource = filters.attentions[key]
     if (!arrayResource || arrayResource.length === 0) { return true }
 

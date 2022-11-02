@@ -8,6 +8,28 @@
       fixed
       app
     >
+      <v-card elevation="0">
+        <v-card-text>
+          <input-resource
+            multiple
+            :label="'Sexos usuario'"
+            :rType="'sexos'"
+            v-model="filters.partners.sexo"
+          />
+          <input-resource
+            multiple
+            :label="'Derivado a'"
+            :rType="'derivaciones'"
+            v-model="filters.partners.derivadoa"
+          />
+          <input-resource
+            multiple
+            :label="'Derivado de'"
+            :rType="'derivaciones'"
+            v-model="filters.partners.derivadode"
+          />
+        </v-card-text>
+      </v-card>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app color="primary" dark>
       <v-btn icon @click.stop="$router.go(-1)" dark>
@@ -35,10 +57,11 @@
 import UserMenuComponent from "~/components/auth/UserMenuComponent.vue";
 import RedirectComponent from "~/components/RedirectComponent.vue";
 import { mapMutations } from "vuex";
+import InputResource from "../components/resources/InputResource.vue";
 
 export default {
   name: "DefaultLayout",
-  components: { RedirectComponent, UserMenuComponent },
+  components: { RedirectComponent, UserMenuComponent, InputResource },
   data() {
     return {
       loaded: false,

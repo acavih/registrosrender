@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import chartsFilters from '../utils/ChartsFilter'
 
-const membersFilters = ['sexo', 'socioono', 'nacionalidad', 'ciudadresidencia']
+/*const membersFilters = ['sexo', 'socioono', 'nacionalidad', 'ciudadresidencia']
 const attentionsFilters = [
   'tipoaenciones',
   'derivadoa',
@@ -10,36 +10,65 @@ const attentionsFilters = [
   'motivosatencion',
   'formacion',
   'voluntariado'
-]
+]*/
 
 export const state = () => ({
   filters: {
-    partners: {},
-    attentions: {},
+    partners: {
+      sexo: [],
+      socioono: [],
+      nacionalidad: [],
+      ciudadresidencia: [],
+    },
+    attentions: {
+      tipoaenciones: [],
+      derivadoa: [],
+      derivadode: [],
+      Proyectos: [],
+      motivosatencion: [],
+      formacion: [],
+      voluntariado: [],
+    },
   }
 })
 
 export const getters = {
   filteredAttentions: (state, getters, rootState) => {
+    console.log('filters', state.filters)
     const { memberResourceFilter, attentionLugaratencionFilter, attentionResourceFilter } = chartsFilters({ filters: state.filters })
 
     let filteredAttentions = [...rootState.attentions.rangeDateAttentions]
 
-    for (const i of membersFilters) { filteredAttentions = filteredAttentions.filter(memberResourceFilter(i)) }
-    for (const i of attentionsFilters) { filteredAttentions = filteredAttentions.filter(attentionResourceFilter(i)) }
-    filteredAttentions = filteredAttentions.filter(attentionLugaratencionFilter)
+    const membersFilters = Object.keys(state.filters.partners)
+    const attentionsFilters = Object.keys(state.filters.attentions)
+
+    membersFilters.forEach((k) => {
+      filteredAttentions = [...filteredAttentions.filter(memberResourceFilter(k))]
+    })
+    attentionsFilters.forEach((k) => {
+      filteredAttentions = [...filteredAttentions.filter(attentionResourceFilter(k))]
+    })
+
+    /* for (const i of membersFilters) {
+      filteredAttentions = [...filteredAttentions.filter(memberResourceFilter(i))]
+    }
+    for (const i of attentionsFilters) {
+      filteredAttentions = [...filteredAttentions.filter(attentionResourceFilter(i))]
+    } */
+    // filteredAttentions = [...filteredAttentions.filter(attentionLugaratencionFilter)]
 
     return filteredAttentions
   },
   distinctUsers(_state, getters, rootState) {
-    const users = [...rootState.attentions.rangeDateAttentions].map((r) => r.user)
+    console.log('usuarios')
+    const users = [...getters.filteredAttentions].map((r) => r.user)
     return _.uniqBy(users, '_id')
   }
 }
 
 export const mutations = {
   updateFilters(state, filters) {
-    state.filters = filters
+    state.filters = { ...filters }
   }
 }
 
