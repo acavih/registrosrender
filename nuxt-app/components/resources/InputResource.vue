@@ -49,6 +49,9 @@ export default {
       query: "",
     };
   },
+  created() {
+    this.value = this.$attrs.value;
+  },
   computed: {
     ...mapState("resources", ["loading"]),
     ...mapGetters({

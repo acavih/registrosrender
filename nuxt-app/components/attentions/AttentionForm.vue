@@ -56,7 +56,7 @@
       <v-row>
         <v-col>
           <input-resource
-            v-model="attention.tipoaenciones"
+            v-model="attention.formacion"
             :label="'Formacion'"
             :rType="'formacions'"
             :multiple="true"
@@ -64,7 +64,7 @@
         </v-col>
         <v-col>
           <input-resource
-            v-model="attention.formacion"
+            v-model="attention.voluntariado"
             :label="'Voluntariado'"
             :rType="'voluntariados'"
             :multiple="true"

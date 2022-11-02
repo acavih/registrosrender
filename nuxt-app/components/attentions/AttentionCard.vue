@@ -63,7 +63,7 @@
         {{ attention.cosaspendientes }}
       </v-alert>
       <v-dialog v-model="editing">
-        <attention-form :attentionToEdit="attention" />
+        <attention-form v-if="editing" :attentionToEdit="attention" />
       </v-dialog>
     </v-card-text>
   </v-card>
