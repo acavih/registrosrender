@@ -16,7 +16,7 @@ export default {
     }),
     dataChart() {
       const grouped = this.users.reduce((acc, current) => {
-        const sex = current.sexo.name;
+        const sex = current.socioono.name;
         if (acc[sex]) {
           acc[sex] += 1;
         } else {
@@ -30,7 +30,7 @@ export default {
     chartOptions() {
       return createPieChartOptions({
         seriesName: "Socios",
-        titleText: "Socios agrupados por sexo",
+        titleText: "Socios agrupados por socio o no",
         data: this.dataChart,
       });
     },

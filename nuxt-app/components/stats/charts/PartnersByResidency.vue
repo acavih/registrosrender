@@ -8,7 +8,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { createPieChartOptions } from "../../../utils/charts/pie";
+import { createBarChartOptions } from "../../../utils/charts/bars";
 export default {
   computed: {
     ...mapGetters({
@@ -16,7 +16,7 @@ export default {
     }),
     dataChart() {
       const grouped = this.users.reduce((acc, current) => {
-        const sex = current.sexo.name;
+        const sex = current.ciudadresidencia.name;
         if (acc[sex]) {
           acc[sex] += 1;
         } else {
@@ -28,9 +28,9 @@ export default {
       return this.transformToArray(grouped);
     },
     chartOptions() {
-      return createPieChartOptions({
+      return createBarChartOptions({
         seriesName: "Socios",
-        titleText: "Socios agrupados por sexo",
+        titleText: "Socios agrupados por ciudad de residencia",
         data: this.dataChart,
       });
     },
