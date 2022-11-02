@@ -9,10 +9,22 @@
       app
     >
       <v-card :disabled="refreshingAttentions">
-        <v-card-title> Filtrar por fecha </v-card-title>
+        <v-card-title> Filtro de fecha </v-card-title>
         <v-card-text>
-          <menu-datepicker v-model="rangeDates.start" :label="'Fecha desde'" />
-          <menu-datepicker v-model="rangeDates.end" :label="'Fecha hasta'" />
+          <v-row>
+            <v-col cols="6">
+              <menu-datepicker
+                v-model="rangeDates.start"
+                :label="'Fecha desde'"
+              />
+            </v-col>
+            <v-col cols="6">
+              <menu-datepicker
+                v-model="rangeDates.end"
+                :label="'Fecha hasta'"
+              />
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
       <v-card :disabled="refreshingAttentions" elevation="0">
