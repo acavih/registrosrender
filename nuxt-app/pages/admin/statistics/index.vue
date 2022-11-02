@@ -40,7 +40,7 @@ export default {
     };
   },
   async mounted() {
-    await this.retrieveData();
+    // await this.retrieveData();
   },
   computed: {
     ...mapState({

@@ -9,6 +9,13 @@
       fixed
       app
     >
+      <v-card>
+        <v-card-title> Filtrar por fecha </v-card-title>
+        <v-card-text>
+          <menu-datepicker v-model="rangeDates.start" :label="'Fecha desde'" />
+          <menu-datepicker v-model="rangeDates.end" :label="'Fecha hasta'" />
+        </v-card-text>
+      </v-card>
       <v-card elevation="0">
         <v-card-title> Filtros de socio </v-card-title>
         <v-card-text>
@@ -117,17 +124,28 @@
 <script>
 import UserMenuComponent from "~/components/auth/UserMenuComponent.vue";
 import RedirectComponent from "~/components/RedirectComponent.vue";
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState, mapActions } from "vuex";
 import InputResource from "../components/resources/InputResource.vue";
+import MenuDatepicker from "../components/MenuDatepicker.vue";
 
 export default {
-  name: "DefaultLayout",
-  components: { RedirectComponent, UserMenuComponent, InputResource },
+  name: "StatsLayout",
+  components: {
+    RedirectComponent,
+    UserMenuComponent,
+    InputResource,
+    MenuDatepicker,
+  },
   data() {
     return {
       title: "Estadísticas registros",
-      loaded: false,
+      loaded: true,
       clipped: true,
+      // mm/dd/yyyy
+      rangeDates: {
+        start: "02-01-2022",
+        end: "12-31-2022",
+      },
       filters: {
         partners: {
           sexo: [],
@@ -160,15 +178,22 @@ export default {
       drawerActive: (s) => s.stats.drawerActive,
     }),
   },
-  mounted() {
-    setTimeout(() => {
-      this.loaded = true;
-    }, 500);
-  },
+  /* async mounted() {
+    await this.refreshDataset;
+  }, */
   methods: {
+    ...mapActions({
+      getRangeDateAttentions: "attentions/getRangeDateAttentions",
+    }),
     ...mapMutations({
       updateFilters: "stats/updateFilters",
     }),
+    async refreshDataset() {
+      await this.getRangeDateAttentions({
+        sd: this.rangeDates.start,
+        ed: this.rangeDates.end,
+      });
+    },
   },
 };
 </script>
