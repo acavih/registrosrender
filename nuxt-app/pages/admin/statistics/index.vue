@@ -42,7 +42,7 @@ export default {
   layout: "stats",
   data() {
     return {
-      currentTab: 0,
+      currentTab: 1,
       loading: false,
       data: [],
     };
