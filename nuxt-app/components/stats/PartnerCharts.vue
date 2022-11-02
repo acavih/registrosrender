@@ -1,11 +1,14 @@
 <template>
   <v-sheet>
-    <p>partner charts</p>
+    <partners-by-sex />
   </v-sheet>
 </template>
 
 <script>
-export default {};
+import PartnersBySex from "./charts/PartnersBySex.vue";
+export default {
+  components: { PartnersBySex },
+};
 </script>
 
 <style>

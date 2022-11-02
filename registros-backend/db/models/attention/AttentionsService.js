@@ -21,8 +21,11 @@ module.exports = {
       }
     }).populate([
       "tipoaenciones", "Proyectos", "motivosatencion", "derivadoa",
-      "derivadode", "formacion", "voluntariado", "lugaratencion", "user"
-    ])
+      "derivadode", "formacion", "voluntariado", "lugaratencion"
+    ]).populate({
+      path: 'user',
+      populate: ['sexo', 'socioono', 'nacionalidad', 'ciudadresidencia']
+    })
     return attentions
   }
 }
