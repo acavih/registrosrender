@@ -5,16 +5,47 @@
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
+      width="500"
       fixed
       app
     >
       <v-card elevation="0">
+        <v-card-title> Filtros de socio </v-card-title>
         <v-card-text>
           <input-resource
             multiple
-            :label="'Sexos usuario'"
+            :label="'Sexos'"
             :rType="'sexos'"
             v-model="filters.partners.sexo"
+          />
+          <input-resource
+            multiple
+            :label="'Estados socio o no'"
+            :rType="'sexos'"
+            v-model="filters.partners.socioono"
+          />
+          <input-resource
+            multiple
+            :label="'Nacionalidad'"
+            :rType="'nacionalidads'"
+            v-model="filters.partners.nacionalidad"
+          />
+          <input-resource
+            multiple
+            :label="'Residencia'"
+            :rType="'residencias'"
+            v-model="filters.partners.ciudadresidencia"
+          />
+        </v-card-text>
+      </v-card>
+      <v-card elevation="0">
+        <v-card-title> Filtros de atenciones </v-card-title>
+        <v-card-text>
+          <input-resource
+            multiple
+            :label="'Tipo atenciones'"
+            :rType="'tipoaenciones'"
+            v-model="filters.partners.tipoaenciones"
           />
           <input-resource
             multiple
@@ -27,6 +58,36 @@
             :label="'Derivado de'"
             :rType="'derivaciones'"
             v-model="filters.partners.derivadode"
+          />
+          <input-resource
+            multiple
+            :label="'Derivado de'"
+            :rType="'derivaciones'"
+            v-model="filters.partners.derivadode"
+          />
+          <input-resource
+            multiple
+            :label="'Proyectos'"
+            :rType="'proyectos'"
+            v-model="filters.partners.Proyectos"
+          />
+          <input-resource
+            multiple
+            :label="'Motivos de atención'"
+            :rType="'motivosatencions'"
+            v-model="filters.partners.motivosatencion"
+          />
+          <input-resource
+            multiple
+            :label="'Formación'"
+            :rType="'formacions'"
+            v-model="filters.partners.formacion"
+          />
+          <input-resource
+            multiple
+            :label="'Voluntariado'"
+            :rType="'Voluntariados'"
+            v-model="filters.partners.voluntariado"
           />
         </v-card-text>
       </v-card>
