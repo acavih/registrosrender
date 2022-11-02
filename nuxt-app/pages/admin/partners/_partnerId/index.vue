@@ -1,6 +1,15 @@
 <template>
   <v-card :loading="loading" :disabled="loading">
-    <v-card-title> Vista de socio </v-card-title>
+    <v-card-title>
+      Vista de socio
+      <v-spacer />
+      <v-btn
+        color="primary"
+        elevation="0"
+        :to="'/admin/partners/' + $route.params.partnerId + '/AddAttention'"
+        >Añadir atención</v-btn
+      >
+    </v-card-title>
     <v-card-text>
       <v-simple-table>
         <tbody>
@@ -54,6 +63,7 @@
         <attentions-iterator :attentions="userAttentions" />
       </v-card-text>
     </v-card-text>
+    <nuxt />
   </v-card>
 </template>
 

@@ -12,12 +12,7 @@
       >
         Eliminar atencion
       </v-btn>
-      <v-btn
-        small
-        elevation="0"
-        color="secondary"
-        @click="attentionEditing = attention._id"
-      >
+      <v-btn small elevation="0" color="secondary" @click="editing = true">
         Editar atencion
       </v-btn>
     </v-card-title>
@@ -67,13 +62,18 @@
         <strong>{{ attention.fechacosaspendientes | date }}</strong>
         {{ attention.cosaspendientes }}
       </v-alert>
+      <v-dialog v-model="editing">
+        <attention-form :attentionToEdit="attention" />
+      </v-dialog>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
 import dayjs from "dayjs";
+import AttentionForm from "./AttentionForm.vue";
 export default {
+  components: { AttentionForm },
   props: {
     attention: {
       type: Object,
@@ -91,8 +91,8 @@ export default {
   },
   data() {
     return {
+      editing: false,
       optionsIterator: this.options,
-      attentionEditing: "",
       resourcesKeys: [
         { value: "tipoaenciones", text: "Tipo de atenciones" },
         { value: "derivadoa", text: "Derivado a" },
