@@ -88,9 +88,7 @@ export default {
   },
   async mounted() {
     // await this.retrieveData();
-    if (!this.partner) {
-      await this.retrieveData();
-    }
+    await this.retrieveData();
     this.loading = false;
   },
   computed: {
@@ -127,7 +125,9 @@ export default {
     async retrieveData() {
       try {
         this.loading = true;
-        await this.retrievePartner(this.$route.params.partnerId);
+        if (!this.partner) {
+          await this.retrievePartner(this.$route.params.partnerId);
+        }
         await this.retrieveAttentions(this.$route.params.partnerId);
         this.loading = false;
       } catch (error) {

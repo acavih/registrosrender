@@ -18,7 +18,6 @@ export default {
       const grouped = this.attentions.reduce((acc, current) => {
         const element = current.lugaratencion;
         if (!element) return acc;
-        console.log(element);
         const itemName = element.name;
         if (acc[itemName]) {
           acc[itemName] += 1;
