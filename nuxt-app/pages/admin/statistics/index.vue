@@ -19,17 +19,30 @@
         }}</v-chip>
       </v-btn>
     </v-card-title>
-    <v-card-text> </v-card-text>
+    <v-card-text>
+      <v-tabs v-model="currentTab">
+        <v-tab>Socios</v-tab>
+        <v-tab>Atenciones</v-tab>
+      </v-tabs>
+      <v-tabs-items v-model="currentTab">
+        <v-tab-item> <partner-charts /> </v-tab-item>
+        <v-tab-item> <attention-charts /> </v-tab-item>
+      </v-tabs-items>
+    </v-card-text>
   </v-card>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState, mapMutations } from "vuex";
+import { mapGetters, mapState, mapMutations } from "vuex";
+import AttentionCharts from "../../../components/stats/AttentionCharts.vue";
+import PartnerCharts from "../../../components/stats/PartnerCharts.vue";
 export default {
+  components: { PartnerCharts, AttentionCharts },
   name: "StatsPage",
   layout: "stats",
   data() {
     return {
+      currentTab: 0,
       loading: false,
       data: [],
     };
@@ -38,9 +51,6 @@ export default {
     return {
       title: "Estadísticas",
     };
-  },
-  async mounted() {
-    // await this.retrieveData();
   },
   computed: {
     ...mapState({
@@ -55,25 +65,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      getRangeDateAttentions: "attentions/getRangeDateAttentions",
-    }),
     ...mapMutations({
       updateFilters: "stats/updateFilters",
     }),
-    /* async retrieveData(e) {
-      try {
-        this.loading = true;
-        await this.getRangeDateAttentions();
-        this.loading = false;
-      } catch (error) {
-        if (error.isAxiosError) {
-          console.dir(error);
-          return console.log("ERROR DE AXIOS");
-        }
-        console.log(error);
-      }
-    }, */
   },
 };
 </script>
