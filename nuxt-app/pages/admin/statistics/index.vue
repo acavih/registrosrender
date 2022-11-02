@@ -1,12 +1,27 @@
 <template>
   <v-card :loading="loading" :disabled="loading">
-    <v-card-title> Estadísticas </v-card-title>
+    <v-card-title>
+      Estadísticas
+      <v-spacer />
+      <v-btn elevation="0" color="primary" class="mr-5">
+        Usuarios
+        <v-chip small class="ml-2" color="secondary">
+          {{ distinctUsers.length }}
+        </v-chip>
+      </v-btn>
+      <v-btn elevation="0" color="primary">
+        Atenciones
+        <v-chip small class="ml-2" color="secondary">{{
+          filteredAttentions.length
+        }}</v-chip>
+      </v-btn>
+    </v-card-title>
     <v-card-text> </v-card-text>
   </v-card>
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapState, mapMutations } from "vuex";
 export default {
   name: "StatsPage",
   layout: "stats",
@@ -27,6 +42,9 @@ export default {
   computed: {
     ...mapState({
       rangeDateAttentions: (s) => s.attentions.rangeDateAttentions,
+    }),
+    ...mapGetters({
+      distinctUsers: "stats/distinctUsers",
     }),
     filteredAttentions() {
       return this.$store.getters["stats/filteredAttentions"];

@@ -88,9 +88,3 @@ export default {
   },
 };
 </script>
-
-<style>
-aa {
-  color: "#fff454";
-}
-</style>
