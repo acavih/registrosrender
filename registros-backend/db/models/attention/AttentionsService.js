@@ -26,6 +26,16 @@ module.exports = {
       populate: partnerFieldsToPopulate
     })
     return attentions
+  },
+  async createAttention(payload) {
+    const attention = await Attention.create(payload)
+    return attention
+  },
+  async updateAttention(id, payload) {
+    const attention = await Attention.findOneAndUpdate({
+      _id: id
+    }, { $set: payload }, { returnOriginal: false })
+    return attention
   }
 }
 

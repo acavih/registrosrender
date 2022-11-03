@@ -72,6 +72,7 @@
         </v-col>
       </v-row>
       <input-resource
+        :multiple="false"
         v-model="attention.lugaratencion"
         :label="'Lugar de atencion'"
         :rType="'lugaratencions'"
@@ -171,8 +172,7 @@ export default {
     async onSubmit(e) {
       try {
         this.loading = true;
-        await sleep(1000);
-        console.log(this.formData);
+        await this.$emit("submit", this.attention);
         this.loading = false;
       } catch (error) {
         if (error.isAxiosError) {

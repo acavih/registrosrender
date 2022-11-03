@@ -12,6 +12,9 @@ export const mutations = {
   },
   setRangeDateAttentions(state, attentions) {
     state.rangeDateAttentions = attentions
+  },
+  addAttention(state, attention) {
+    state.userAttentions = [attention, ...state.userAttentions]
   }
 }
 
@@ -28,6 +31,15 @@ export const actions = {
       params: query
     })
     commit('setRangeDateAttentions', attentions.data.payload)
+  },
+  async addAttention({ commit }, attentionPayload) {
+    const attention = await this.$axios.post('/attentions', attentionPayload)
+    commit('addAttention', attention.data.payload)
+  },
+  async updateAttention(_, { payload, id }) {
+    await this.$axios.put('/attentions/' + id, {
+      ...payload
+    })
   }
 }
 
