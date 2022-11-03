@@ -2,25 +2,7 @@
 const { getOrCreateResource } = require("../resources/resourceService")
 const Partner = require("./Partner")
 
-function lookupResourceAggregation(field, single) {
-  const aggregation = [
-    {
-      $lookup: {
-        from: 'resources', // <collection to join>,
-        localField: field, // <field from the input documents >,
-        foreignField: '_id', // <field from the documents of the "from" collection >,
-        as: field // <output array field >
-      }
-    }
-  ]
-  if (single) {
-    aggregation.push({
-      $unwind: { path: '$' + field }
-    })
-  }
-
-  return aggregation
-}
+const fieldsToPopulate = ['sexo', 'socioono', 'ciudadresidencia', 'nacionalidad']
 
 const partnerQueryFields = [
   '$codigo', ' ',
@@ -32,10 +14,9 @@ const partnerQueryFields = [
 ]
 
 const partnerService = {
+  partnerFieldsToPopulate: fieldsToPopulate,
   async listPartners({ page = 1, itemsPerPage = 20, searchQuery }) {
     const skip = (page - 1) * itemsPerPage
-    /* const partners = await Partner.find({}).limit(itemsPerPage).skip(skip)
-    const totalItems = await Partner.count()*/
 
     let pattern = (searchQuery || '').replace(/\s/g, '.*')
     const specialCharacters = ['+', '/', '(', '[', ']', ')', '^', '{', '}', '$']
@@ -112,7 +93,7 @@ const partnerService = {
   },
   async getPartner(id) {
     const partner = await Partner.findOne({ _id: id })
-      .populate(['sexo', 'socioono', 'ciudadresidencia', 'nacionalidad'])
+      .populate(fieldsToPopulate)
     return partner
   },
   async createPartner(partnerData) {

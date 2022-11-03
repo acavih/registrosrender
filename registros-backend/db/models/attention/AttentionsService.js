@@ -1,17 +1,19 @@
+const { partnerFieldsToPopulate } = require("../partner/partnerService")
 const Attention = require("./Attention")
 
+const fieldsToPopulate = [
+  "tipoaenciones", "Proyectos", "motivosatencion", "derivadoa",
+  "derivadode", "formacion", "voluntariado", "lugaratencion"
+]
+
 module.exports = {
+  attentionsFieldsToPopulate: fieldsToPopulate,
   async getUserAttentions(userId) {
     const attentions = await Attention.find({ user: userId })
-      .populate([
-        "tipoaenciones", "Proyectos", "motivosatencion", "derivadoa",
-        "derivadode", "formacion", "voluntariado", "lugaratencion"
-      ]).sort('-fechaatencion')
+      .populate(fieldsToPopulate).sort('-fechaatencion')
     return attentions
   },
   async getAttentionsInRangeDate({ sd, ed }) {
-    // const startDate = d1 || new Date('2022/01/01')
-    // const endDate = d2 || new Date('2022/01/31')
     const startDate = formatDate(sd)
     const endDate = formatDate(ed)
     const attentions = await Attention.find({
@@ -19,12 +21,9 @@ module.exports = {
         $gte: startDate,
         $lte: endDate
       }
-    }).populate([
-      "tipoaenciones", "Proyectos", "motivosatencion", "derivadoa",
-      "derivadode", "formacion", "voluntariado", "lugaratencion"
-    ]).populate({
+    }).populate(fieldsToPopulate).populate({
       path: 'user',
-      populate: ['sexo', 'socioono', 'nacionalidad', 'ciudadresidencia']
+      populate: partnerFieldsToPopulate
     })
     return attentions
   }
