@@ -98,8 +98,8 @@ export default {
         { value: "derivadoa", text: "Derivado a" },
         { value: "derivadode", text: "Derivado de" },
         { value: "Proyectos", text: "Proyectos" },
-        { value: "formacion", text: "Formacion" },
-        { value: "motivosatencion", text: "Motivos de atencion" },
+        { value: "formacion", text: "Formación" },
+        { value: "motivosatencion", text: "Motivos de atención" },
       ],
     };
   },

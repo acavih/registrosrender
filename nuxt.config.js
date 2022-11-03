@@ -9,6 +9,9 @@ console.log(isProd ? 'Modo producción' : 'Modo desarrollo')
  * @type {import('@nuxt/types').NuxtConfig}
  */
 const config = {
+  server: {
+    port: 5500
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - registrosrender',
