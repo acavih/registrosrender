@@ -3,6 +3,7 @@
     <v-data-iterator :options.sync="optionsIterator" :items="attentions">
       <template #default="props">
         <attention-card
+          @updateData="$emit('updateData')"
           :attention="attention"
           v-for="attention in props.items"
           :key="attention._id"

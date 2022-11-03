@@ -63,7 +63,11 @@
         {{ attention.cosaspendientes }}
       </v-alert>
       <v-dialog v-model="editing">
-        <attention-form v-if="editing" :attentionToEdit="attention" />
+        <attention-form
+          @submit="updateAttentions"
+          v-if="editing"
+          :attentionToEdit="attention"
+        />
       </v-dialog>
     </v-card-text>
   </v-card>
@@ -72,6 +76,7 @@
 <script>
 import dayjs from "dayjs";
 import AttentionForm from "./AttentionForm.vue";
+import { mapActions } from "vuex";
 export default {
   components: { AttentionForm },
   props: {
@@ -102,6 +107,19 @@ export default {
         { value: "motivosatencion", text: "Motivos de atención" },
       ],
     };
+  },
+  methods: {
+    ...mapActions({
+      updateAttention: "attentions/updateAttention",
+    }),
+    async updateAttentions(attention) {
+      await this.updateAttention({
+        payload: attention,
+        id: this.attention._id,
+      });
+      this.editing = false;
+      this.$emit("updateData");
+    },
   },
 };
 </script>

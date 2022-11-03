@@ -60,7 +60,10 @@
         </tbody>
       </v-simple-table>
       <v-card-text>
-        <attentions-iterator :attentions="userAttentions" />
+        <attentions-iterator
+          @updateData="refreshAttentions"
+          :attentions="userAttentions"
+        />
       </v-card-text>
     </v-card-text>
     <nuxt />
@@ -138,7 +141,7 @@ export default {
         if (!this.partner) {
           await this.retrievePartner(this.$route.params.partnerId);
         }
-        await this.retrieveAttentions(this.$route.params.partnerId);
+        await this.refreshAttentions();
         this.loading = false;
       } catch (error) {
         if (error.isAxiosError) {
@@ -147,6 +150,9 @@ export default {
         }
         console.log(error);
       }
+    },
+    async refreshAttentions() {
+      await this.retrieveAttentions(this.$route.params.partnerId);
     },
   },
 };
