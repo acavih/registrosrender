@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { Command } from 'commander'
 import dump from './scripts/dump.js'
+import restore from './scripts/restore.js'
 
 const program = new Command()
 
@@ -16,7 +17,8 @@ program.command('dump')
 
 program.command('restore')
   .description('Restaurar copia de seguridad')
-  .action(() => {
+  .action(async () => {
+    await restore()
   })
 
 program.parse()
