@@ -106,6 +106,11 @@ const partnerService = {
     })
     console.log(partner)
     return partner
+  },
+  async updatePartner(partnerId, update) {
+    await Partner.findOneAndUpdate({ _id: partnerId }, {
+      $set: update
+    })
   }
 }
 

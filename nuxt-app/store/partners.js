@@ -13,6 +13,12 @@ export const mutations = {
   },
   addPartner: (state, partner) => {
     state.partners.push(partner)
+  },
+  replacePartner: (state, partner) => {
+    state.partners = [...state.partners.map(p => {
+      if (p._id === partner._id) return partner
+      return p
+    })]
   }
 }
 
@@ -29,6 +35,10 @@ export const actions = {
   },
   async addPartner(_ctx, partnerData) {
     await this.$axios.post('/partners', partnerData)
+  },
+  async updatePartner({ commit }, partnerData) {
+    await this.$axios.put('/partners/' + partnerData._id, partnerData)
+    commit('replacePartner', partnerData)
   }
 }
 

@@ -4,6 +4,13 @@
       Vista de socio
       <v-spacer />
       <v-btn
+        color="secondary"
+        class="mr-5"
+        elevation="0"
+        :to="'/admin/partners/' + $route.params.partnerId + '/Edit'"
+        >Editar socio</v-btn
+      >
+      <v-btn
         color="primary"
         elevation="0"
         :to="'/admin/partners/' + $route.params.partnerId + '/AddAttention'"
@@ -15,7 +22,7 @@
         <tbody>
           <tr>
             <td>Tarjeta sip</td>
-            <td>{{ partner?.sipCard || "n/a" }}</td>
+            <td>{{ partner?.sipcard || "n/a" }}</td>
           </tr>
           <tr>
             <td>Codigo</td>

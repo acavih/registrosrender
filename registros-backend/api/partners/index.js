@@ -1,5 +1,5 @@
 const express = require('express')
-const { listPartners, getPartner, createPartner } = require('../../db/models/partner/partnerService')
+const { listPartners, getPartner, createPartner, updatePartner } = require('../../db/models/partner/partnerService')
 
 const partnersRouter = express.Router()
 
@@ -24,6 +24,13 @@ partnersRouter.post('/', async (req, res) => {
   res.json({
     message: 'Crear socio',
     payload: partner
+  })
+})
+
+partnersRouter.put('/:id', async (req, res) => {
+  await updatePartner(req.params.id, req.body)
+  res.json({
+    message: 'Socio actualizado'
   })
 })
 

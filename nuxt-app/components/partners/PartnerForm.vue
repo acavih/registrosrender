@@ -5,7 +5,7 @@
     tag="form"
     @submit.prevent="onSubmit"
   >
-    <v-card-title> Añadir miembro </v-card-title>
+    <v-card-title> Editor de socios </v-card-title>
     <v-card-text>
       <v-row>
         <v-col>
@@ -86,7 +86,9 @@
       </v-row>
     </v-card-text>
     <v-card-actions>
-      <v-btn type="submit" elevation="0" color="primary"> Añadir socio </v-btn>
+      <v-btn type="submit" elevation="0" color="primary">
+        Guardar cambios
+      </v-btn>
       <v-btn elevation="0" @click="$emit('cancel')"> Cancelar </v-btn>
     </v-card-actions>
   </v-card>
@@ -95,36 +97,49 @@
 <script>
 import MenuDatepicker from "../MenuDatepicker.vue";
 import InputResource from "../resources/InputResource.vue";
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(null);
-    }, ms);
-  });
-}
+
+const defaultMemberData = {
+  codigo: "",
+  nombre: "",
+  apellidos: "",
+  fechanacimiento: null,
+  sipcard: "",
+  correoelectronico: "",
+  telefono: "",
+  observaciones: "",
+  cosaspendientes: "",
+  sexo: "",
+  socioono: "",
+  nacionalidad: "",
+  ciudadresidencia: "",
+};
 
 export default {
   components: { MenuDatepicker, InputResource },
   name: "PartnerForm.vue",
+  props: {
+    partnerToEdit: {
+      type: Object,
+      default: null,
+    },
+  },
   data() {
     return {
       loading: false,
-      partnerData: {
-        codigo: "",
-        nombre: "",
-        apellidos: "",
-        fechanacimiento: null,
-        sipcard: "",
-        correoelectronico: "",
-        telefono: "",
-        observaciones: "",
-        cosaspendientes: "",
-        sexo: "",
-        socioono: "",
-        nacionalidad: "",
-        ciudadresidencia: "",
-      },
+      partnerData: {},
     };
+  },
+  created() {
+    this.partnerData =
+      this.partnerToEdit === null
+        ? { ...defaultMemberData }
+        : {
+            ...this.partnerToEdit,
+            fechanacimiento:
+              this.partnerToEdit.fechanacimiento === null
+                ? null
+                : new Date(this.partnerToEdit.fechanacimiento),
+          };
   },
   head() {
     return {

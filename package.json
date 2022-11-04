@@ -2,7 +2,6 @@
   "name": "registrosrender",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev:nuxt": "nuxt",
     "build:nuxt": "nuxt build",
