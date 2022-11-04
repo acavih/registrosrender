@@ -27,7 +27,6 @@
         {{ attention.lugaratencion?.name }}
       </v-alert>
       <v-list>
-        {{ resourcesKeys }}
         <template v-for="{ value, text } in resourcesKeys">
           <v-list-item
             v-if="attention[value] && attention[value].length > 0"

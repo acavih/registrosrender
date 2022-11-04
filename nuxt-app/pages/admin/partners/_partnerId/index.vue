@@ -64,6 +64,10 @@
             <td>Nacionalidad</td>
             <td>{{ partner?.nacionalidad?.name || "n/a" }}</td>
           </tr>
+          <tr>
+            <td>Como nos conoció</td>
+            <td>{{ partner?.howDidKnowUs?.name || "n/a" }}</td>
+          </tr>
         </tbody>
       </v-simple-table>
       <v-card-text>

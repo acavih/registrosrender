@@ -13,11 +13,15 @@
       <v-col cols="12">
         <partners-by-nationality />
       </v-col>
+      <v-col cols="12">
+        <partners-by-know-us />
+      </v-col>
     </v-row>
   </v-sheet>
 </template>
 
 <script>
+import PartnersByKnowUs from "./charts/PartnersByKnowUs.vue";
 import PartnersByNationality from "./charts/PartnersByNationality.vue";
 import PartnersByPartnerState from "./charts/PartnersByPartnerState.vue";
 import PartnersByResidency from "./charts/PartnersByResidency.vue";
@@ -28,6 +32,7 @@ export default {
     PartnersByPartnerState,
     PartnersByNationality,
     PartnersByResidency,
+    PartnersByKnowUs,
   },
 };
 </script>

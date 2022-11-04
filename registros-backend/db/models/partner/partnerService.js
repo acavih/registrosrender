@@ -2,7 +2,7 @@
 const { getOrCreateResource } = require("../resources/resourceService")
 const Partner = require("./Partner")
 
-const fieldsToPopulate = ['sexo', 'socioono', 'ciudadresidencia', 'nacionalidad']
+const fieldsToPopulate = ['sexo', 'socioono', 'ciudadresidencia', 'nacionalidad', 'howDidKnowUs']
 
 const partnerQueryFields = [
   '$codigo', ' ',
@@ -102,14 +102,22 @@ const partnerService = {
       sexo: partnerData.sexo || await getOrCreateResource('sexos', 'NS/NC'),
       socioono: partnerData.socioono || await getOrCreateResource('socioonos', 'NS/NC'),
       nacionalidad: partnerData.nacionalidad || await getOrCreateResource('residencias', 'NS/NC'),
-      ciudadresidencia: partnerData.ciudadresidencia || await getOrCreateResource('nacionalidads', 'NS/NC')
+      ciudadresidencia: partnerData.ciudadresidencia || await getOrCreateResource('nacionalidads', 'NS/NC'),
+      howDidKnowUs: partnerData.howDidKnowUs || await getOrCreateResource('nacionalidads', 'NS/NC'),
     })
     console.log(partner)
     return partner
   },
   async updatePartner(partnerId, update) {
     await Partner.findOneAndUpdate({ _id: partnerId }, {
-      $set: update
+      $set: {
+        ...update,
+        sexo: update.sexo || await getOrCreateResource('sexos', 'NS/NC'),
+        socioono: update.socioono || await getOrCreateResource('socioonos', 'NS/NC'),
+        nacionalidad: update.nacionalidad || await getOrCreateResource('residencias', 'NS/NC'),
+        ciudadresidencia: update.ciudadresidencia || await getOrCreateResource('nacionalidads', 'NS/NC'),
+        howDidKnowUs: update.howDidKnowUs || await getOrCreateResource('comoNosConoció', 'NS/NC'),
+      }
     })
   }
 }

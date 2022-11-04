@@ -83,6 +83,14 @@
             :label="'Introduzca la nacionalidad'"
           />
         </v-col>
+        <v-col cols="12">
+          <input-resource
+            v-model="partnerData.howDidKnowUs"
+            :multiple="false"
+            :rType="'comoNosConoció'"
+            :label="'Como nos conociste'"
+          />
+        </v-col>
       </v-row>
     </v-card-text>
     <v-card-actions>
@@ -112,6 +120,7 @@ const defaultMemberData = {
   socioono: "",
   nacionalidad: "",
   ciudadresidencia: "",
+  howDidKnowUs: "",
 };
 
 export default {
