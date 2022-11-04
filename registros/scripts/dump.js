@@ -2,11 +2,6 @@ import inquirer from 'inquirer'
 import path from 'path'
 import { dbDir, dbs } from "../constants.js";
 import spawnCommand from '../helpers/spawnCommand.js'
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
 
 export default async function dump() {
   const { uriDb } = await inquirer.prompt([
