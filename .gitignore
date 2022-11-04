@@ -12,7 +12,7 @@ yarn-error.log*
 dump
 copydb
 
-scripts
+/scripts
 
 public
 

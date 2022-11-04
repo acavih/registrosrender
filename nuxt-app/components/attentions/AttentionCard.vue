@@ -27,14 +27,16 @@
         {{ attention.lugaratencion?.name }}
       </v-alert>
       <v-list>
+        {{ resourcesKeys }}
         <template v-for="{ value, text } in resourcesKeys">
           <v-list-item
-            v-if="attention[value].length > 0"
+            v-if="attention[value] && attention[value].length > 0"
             :key="value + attention._id"
           >
             <v-list-item-content>
               <v-list-item-title>{{ text }}</v-list-item-title>
               <v-list-item-subtitle>
+                {{ value }}
                 <v-chip-group>
                   <v-chip
                     v-for="resource in attention[value]"
@@ -105,6 +107,7 @@ export default {
         { value: "Proyectos", text: "Proyectos" },
         { value: "formacion", text: "Formación" },
         { value: "motivosatencion", text: "Motivos de atención" },
+        { value: "voluntariado", text: "Voluntariados" },
       ],
     };
   },
