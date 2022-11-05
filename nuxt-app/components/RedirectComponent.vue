@@ -1,17 +1,33 @@
 <template>
-  <div>redirigiendo a {{ url }}</div>
+  <v-sheet>
+    <span>Redireccionando a </span>
+    <v-btn text>{{ url }}</v-btn>
+    <span>...</span>
+  </v-sheet>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-export default Vue.extend({
+<script>
+export default {
+  name: "RedirectComponent",
   props: {
-    url: { type: String, required: true },
+    url: {
+      type: String,
+      required: true,
+    },
+    ms: {
+      type: Number,
+      default: 1500,
+    },
   },
   mounted() {
     setTimeout(() => {
-      this.$router.push(this.url);
-    }, 500);
+      this.$router.push({
+        path: this.url,
+      });
+    }, this.ms);
   },
-});
+};
 </script>
+
+<style>
+</style>

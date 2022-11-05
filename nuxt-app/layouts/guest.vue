@@ -1,14 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar
-      fixed
-      app
-      color="primary"
-      dark
-    >
-      <v-toolbar-title>
-        Pagina inicial
-      </v-toolbar-title>
+    <v-app-bar fixed app color="primary" dark>
+      <v-toolbar-title> Pagina inicial </v-toolbar-title>
       <v-spacer />
     </v-app-bar>
     <v-main>
@@ -16,14 +9,16 @@
         <template v-if="!$auth.loggedIn">
           <Nuxt />
         </template>
-        <v-btn v-else to="/admin/users">Ir a users</v-btn>
+        <redirect-component v-else :url="'/admin/partners'" />
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import RedirectComponent from "../components/RedirectComponent.vue";
 export default {
-  name: 'GuestLayout'
-}
+  components: { RedirectComponent },
+  name: "GuestLayout",
+};
 </script>

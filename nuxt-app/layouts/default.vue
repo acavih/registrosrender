@@ -50,7 +50,7 @@
       </template>
       <template v-else>
         {{ $auth.loggedIn }}
-        not logged
+        <redirect-component :url="'/'" />
       </template>
     </v-main>
   </v-app>

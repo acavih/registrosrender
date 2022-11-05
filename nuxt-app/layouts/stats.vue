@@ -54,6 +54,12 @@
             :rType="'residencias'"
             v-model="filters.partners.ciudadresidencia"
           />
+          <input-resource
+            multiple
+            :label="'Como nos conocio'"
+            :rType="'comoNosConoció'"
+            v-model="filters.partners.howDidKnowUs"
+          />
         </v-card-text>
       </v-card>
       <v-card :disabled="refreshingAttentions" elevation="0">

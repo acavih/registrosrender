@@ -30,6 +30,7 @@
 import { mapActions, mapState } from "vuex";
 
 export default {
+  components: { redirect },
   name: "UsersPage",
   data() {
     return {

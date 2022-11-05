@@ -5,7 +5,7 @@ const resourceRouter = express.Router()
 
 resourceRouter.get('/', async (req, res) => {
   const resources = await listResources()
-  res.status(201).json({
+  res.status(200).json({
     message: 'Todos los recursos',
     payload: resources
   })

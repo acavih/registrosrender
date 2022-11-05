@@ -8,7 +8,11 @@
     <v-card-title> Acceder al area interna </v-card-title>
     <v-card-text>
       <v-text-field v-model="formData.user" label="Usuario" />
-      <v-text-field v-model="formData.password" type="password" label="Contraseña" />
+      <v-text-field
+        v-model="formData.password"
+        type="password"
+        label="Contraseña"
+      />
     </v-card-text>
     <v-card-actions>
       <v-btn type="submit" elevation="0" color="primary">Acceder</v-btn>
@@ -19,13 +23,13 @@
 <script>
 export default {
   name: "LoginPage",
-  layout: 'guest',
+  layout: "guest",
   data() {
     return {
       loading: false,
       formData: {
-        user: '',
-        password: ''
+        user: "",
+        password: "",
       },
     };
   },
@@ -38,7 +42,10 @@ export default {
     async onSubmit(e) {
       try {
         this.loading = true;
-        const loginReq = await this.$auth.loginWith('local', { data: this.formData })
+        const loginReq = await this.$auth.loginWith("local", {
+          data: this.formData,
+        });
+        this.$store.dispatch("resources/retrieveResources");
         console.log(loginReq);
         this.loading = false;
       } catch (error) {

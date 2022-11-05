@@ -13,7 +13,7 @@ export const getters = {
 }
 
 export const mutations = {
-  toggleLoading: (state) => state.loading = !state.loading,
+  toggleLoading: (state, value) => state.loading = value,
   setResources: (state, list) => state.resources = list,
   addResource: (state, resource) => state.resources = [...state.resources, resource],
   updateResource(state, resource) {
@@ -26,10 +26,10 @@ export const mutations = {
 
 export const actions = {
   async retrieveResources({ commit }) {
-    commit('toggleLoading')
+    commit('toggleLoading', true)
     const resources = await this.$axios.get('/resources')
     commit('setResources', resources.data.payload)
-    commit('toggleLoading')
+    commit('toggleLoading', false)
   },
   async updateResource({ commit }, resource) {
     console.dir(this)

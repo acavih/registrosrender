@@ -10,6 +10,7 @@ export const state = () => ({
       socioono: [],
       nacionalidad: [],
       ciudadresidencia: [],
+      howDidKnowUs: []
     },
     attentions: {
       tipoaenciones: [],
