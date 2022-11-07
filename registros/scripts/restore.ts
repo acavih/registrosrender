@@ -1,8 +1,8 @@
 import inquirer from 'inquirer'
 import path from 'path'
 import { readdirSync } from 'fs'
-import { dbDir, dbs } from '../constants.js'
-import spawnCommand from '../helpers/spawnCommand.js'
+import { dbDir, dbs } from '../constants'
+import spawnCommand from '../helpers/spawnCommand'
 
 export default async function restore() {
   let i = 1
@@ -35,5 +35,5 @@ export default async function restore() {
   console.log('Restaurando los datos de ' + dbDataDir + ' a ' + dbHost)
 
   await spawnCommand('mongosh', [nameDb.replace('/', ''), '--host', dbHost, '--eval', "db.dropDatabase()"])
-  await spawnCommand('mongorestore', [`--nsInclude`, nameDb.replace('/', '') + `.*`, `--host`, dbHost, '--port', 27017, dbDataDir])
+  await spawnCommand('mongorestore', [`--nsInclude`, nameDb.replace('/', '') + `.*`, `--host`, dbHost, '--port', "27017", dbDataDir])
 }

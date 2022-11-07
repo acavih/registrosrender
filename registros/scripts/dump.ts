@@ -1,7 +1,7 @@
 import inquirer from 'inquirer'
 import path from 'path'
-import { dbDir, dbs } from "../constants.js";
-import spawnCommand from '../helpers/spawnCommand.js'
+import { dbDir, dbs } from "../constants";
+import spawnCommand from '../helpers/spawnCommand'
 
 export default async function dump() {
   const { uriDb } = await inquirer.prompt([

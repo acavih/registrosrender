@@ -9,6 +9,11 @@
       "@nuxtjs/auth-next",
       "vuetify-dialog/types",
       "vuetify/types"
-    ]
-  }
+    ],
+    "paths": {
+      "@/*": [
+        "./nuxt-app/*"
+      ],
+    }
+  },
 }

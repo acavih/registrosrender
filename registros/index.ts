@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { Command } from 'commander'
-import dump from './scripts/dump.js'
-import restore from './scripts/restore.js'
+import dump from './scripts/dump'
+import restore from './scripts/restore'
 
 const program = new Command()
 

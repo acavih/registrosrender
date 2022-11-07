@@ -1,0 +1,21 @@
+{
+  "folders": [
+	{
+		"name": "nuxt-app",
+		"path": "nuxt-app"
+	},
+	{
+		"name": "registros-backend",
+		"path": "registros-backend"
+	},
+	{
+		"name": "registros",
+		"path": "registros"
+	},
+	{
+		"name": "registrosrender",
+		"path": "."
+	}
+],
+  "settings": {}
+}
