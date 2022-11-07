@@ -1,11 +1,19 @@
 export const state = () => ({
   userAttentions: [],
   rangeDateAttentions: [],
+  lastAttentions: [],
+  totalAttentions: 0
 })
 
+/**
+* @type {import('vuex').GetterTree<ReturnType<typeof state>, any>}
+*/
 export const getters = {
 }
 
+/**
+* @type {import('vuex').MutationTree<ReturnType<typeof state>>}
+*/
 export const mutations = {
   setUserAttentions(state, attentions) {
     state.userAttentions = attentions
@@ -15,6 +23,10 @@ export const mutations = {
   },
   addAttention(state, attention) {
     state.userAttentions = [attention, ...state.userAttentions]
+  },
+  setLastAttentions(state, { attentions, totalAttentions }) {
+    state.lastAttentions = attentions
+    state.totalAttentions = totalAttentions
   }
 }
 
@@ -40,6 +52,12 @@ export const actions = {
     await this.$axios.put('/attentions/' + id, {
       ...payload
     })
+  },
+  async retrieveLastAttentions({ commit }, query = {}) {
+    const attentions = await this.$axios.get('/attentions/last', {
+      params: query
+    })
+    commit('setLastAttentions', attentions.data.payload)
   }
 }
 

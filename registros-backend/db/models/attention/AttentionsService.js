@@ -13,6 +13,20 @@ module.exports = {
       .populate(fieldsToPopulate).sort('-fechaatencion')
     return attentions
   },
+  async lastAttentions({ page, pendentAttentions }) {
+    const limit = 100
+    const skip = (page - 1) * limit
+    const query = pendentAttentions === "false" ? {} : {
+      fechacosaspendientes: { $gte: new Date() }
+    }
+    console.log(query, pendentAttentions, new Boolean(pendentAttentions))
+    const attentions = await Attention.find(query)
+      .limit(limit).skip(skip)
+      .populate(fieldsToPopulate).sort('-fechaatencion')
+      .populate({ path: 'user' })
+    const totalAttentions = await Attention.find(query).countDocuments()
+    return { attentions, totalAttentions }
+  },
   async getAttentionsInRangeDate({ sd, ed }) {
     const startDate = formatDate(sd)
     const endDate = formatDate(ed)
