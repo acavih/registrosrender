@@ -14,11 +14,11 @@
     "dev": "concurrently --kill-others \"npm run dev:nuxt\" \"npm run dev --prefix registros-backend\"",
     "build:backend": "npm run build --workspace registros-backend",
     "build:frontend": "npm run generate",
-    "build": "npm run build:backend && npm run build:frontend",
-    "prod": "node registros-backend/dist/index.js",
+    "build": "npm run build:frontend",
+    "prod": "node registros-backend/index.js",
     "start": "npm run prod"
   },
-  "main": "registros-backend/dist/index.js",
+  "main": "registros-backend/index.js",
   "workspaces": [
     "registros-backend"
   ],
