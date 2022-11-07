@@ -64,7 +64,7 @@ export default {
   layout: "stats",
   data() {
     return {
-      currentTab: 1,
+      currentTab: 0,
       showingUsers: false,
       showingAttentions: false,
       loading: false,

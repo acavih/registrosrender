@@ -3,7 +3,7 @@ export const chartsFilters = ({ filters }) => ({
     if (!filters.partners[key] || filters.partners[key].length === 0) { return true }
     for (let index = 0; index < filters.partners[key].length; index++) {
       const resource = filters.partners[key][index]
-      if (a.user[key] === resource) {
+      if (a.user[key] && a.user[key]._id === resource) {
         return true
       }
     }
