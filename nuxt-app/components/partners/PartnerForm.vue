@@ -56,6 +56,7 @@
             v-model="partnerData.sexo"
             :multiple="false"
             :rType="'sexos'"
+            :hideArchived="true"
             :label="'Introduzca el sexo'"
           />
         </v-col>
@@ -63,6 +64,7 @@
           <input-resource
             v-model="partnerData.socioono"
             :multiple="false"
+            :hideArchived="true"
             :rType="'socioonos'"
             :label="'Introduzca socio o no'"
           />
@@ -71,6 +73,7 @@
           <input-resource
             v-model="partnerData.ciudadresidencia"
             :multiple="false"
+            :hideArchived="true"
             :rType="'residencias'"
             :label="'Introduzca la residencia'"
           />
@@ -79,6 +82,7 @@
           <input-resource
             v-model="partnerData.nacionalidad"
             :multiple="false"
+            :hideArchived="true"
             :rType="'nacionalidads'"
             :label="'Introduzca la nacionalidad'"
           />
@@ -87,6 +91,7 @@
           <input-resource
             v-model="partnerData.howDidKnowUs"
             :multiple="false"
+            :hideArchived="true"
             :rType="'comoNosConoció'"
             :label="'Como nos conociste'"
           />

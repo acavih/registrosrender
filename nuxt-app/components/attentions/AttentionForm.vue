@@ -17,6 +17,7 @@
             v-model="attention.tipoaenciones"
             :label="'Tipo de atenciones'"
             :rType="'tipoatenciones'"
+            :hideArchived="true"
             :multiple="true"
           />
         </v-col>
@@ -24,6 +25,7 @@
           <input-resource
             v-model="attention.motivosatencion"
             :label="'Motivos de atencion'"
+            :hideArchived="true"
             :rType="'motivosatencions'"
             :multiple="true"
           />
@@ -32,6 +34,7 @@
       <input-resource
         v-model="attention.Proyectos"
         :label="'Proyectos'"
+        :hideArchived="true"
         :rType="'proyectos'"
         :multiple="true"
       />
@@ -40,6 +43,7 @@
           <input-resource
             v-model="attention.derivadoa"
             :label="'Derivado a'"
+            :hideArchived="true"
             :rType="'derivaciones'"
             :multiple="true"
           />
@@ -48,6 +52,7 @@
           <input-resource
             v-model="attention.derivadode"
             :label="'Derivado de'"
+            :hideArchived="true"
             :rType="'derivaciones'"
             :multiple="true"
           />
@@ -58,6 +63,7 @@
           <input-resource
             v-model="attention.formacion"
             :label="'Formacion'"
+            :hideArchived="true"
             :rType="'formacions'"
             :multiple="true"
           />
@@ -66,6 +72,7 @@
           <input-resource
             v-model="attention.voluntariado"
             :label="'Voluntariado'"
+            :hideArchived="true"
             :rType="'voluntariados'"
             :multiple="true"
           />
@@ -75,6 +82,7 @@
         :multiple="false"
         v-model="attention.lugaratencion"
         :label="'Lugar de atencion'"
+        :hideArchived="true"
         :rType="'lugaratencions'"
       />
 

@@ -46,6 +46,10 @@ export default {
     readOnly: {
       type: Boolean,
       default: false
+    },
+    hideArchived: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -63,7 +67,8 @@ export default {
       resourceType: "resources/resourceType",
     }),
     items() {
-      return this.resourceType(this.rType);
+      const resources = this.resourceType(this.rType);
+      return !this.hideArchived ? resources : resources.filter((a) => !a.archived)
     },
   },
   watch: {
