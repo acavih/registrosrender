@@ -33,8 +33,6 @@ export const getters = {
     const membersFilters = Object.keys(state.filters.partners)
     const attentionsFilters = Object.keys(state.filters.attentions)
 
-    console.log(membersFilters, attentionsFilters, state.filters)
-
     membersFilters.forEach((k) => {
       filteredAttentions = [...filteredAttentions.filter(memberResourceFilter(k))]
     })

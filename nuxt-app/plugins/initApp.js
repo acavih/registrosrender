@@ -1,3 +1,9 @@
-export default function ({ store }) {
-  store.dispatch('resources/retrieveResources')
+export default function (ctx) {
+  setTimeout(() => {
+    const { app: { store }, $auth } = ctx
+    if ($auth.$state.loggedIn) {
+      console.log('recuperando recursos')
+      store.dispatch('resources/retrieveResources')
+    }
+  }, 1000);
 }
