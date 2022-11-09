@@ -18,7 +18,8 @@
       <template #no-data>
         <v-card ref="creatorContainer" class="m-0" elevation="0">
           <v-card-text>
-            <v-chip @click="addResource">Crear elemento</v-chip>
+            <v-chip v-if="!readOnly" @click="addResource">Crear elemento</v-chip>
+            <v-chip small v-else>No hay datos</v-chip>
           </v-card-text>
         </v-card>
       </template>
@@ -42,6 +43,10 @@ export default {
       type: String,
       default: "Input resource",
     },
+    readOnly: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -74,7 +79,7 @@ export default {
       this.value = this.multiple ? [] : "";
     },
     createResourceIfNotResults() {
-      debugger;
+      if (this.readOnly) return;
       if (!this.$refs.creatorContainer) return;
       this.addResource();
     },

@@ -34,30 +34,35 @@
             multiple
             :label="'Sexos'"
             :rType="'sexos'"
+            :readOnly="true"
             v-model="filters.partners.sexo"
           />
           <input-resource
             multiple
             :label="'Estados socio o no'"
             :rType="'sexos'"
+            :readOnly="true"
             v-model="filters.partners.socioono"
           />
           <input-resource
             multiple
             :label="'Nacionalidad'"
             :rType="'nacionalidads'"
+            :readOnly="true"
             v-model="filters.partners.nacionalidad"
           />
           <input-resource
             multiple
             :label="'Residencia'"
             :rType="'residencias'"
+            :readOnly="true"
             v-model="filters.partners.ciudadresidencia"
           />
           <input-resource
             multiple
             :label="'Como nos conocio'"
             :rType="'comoNosConoció'"
+            :readOnly="true"
             v-model="filters.partners.howDidKnowUs"
           />
         </v-card-text>
@@ -69,48 +74,56 @@
             multiple
             :label="'Tipo atenciones'"
             :rType="'tipoatenciones'"
+            :readOnly="true"
             v-model="filters.attentions.tipoaenciones"
           />
           <input-resource
             multiple
             :label="'Derivado a'"
             :rType="'derivaciones'"
+            :readOnly="true"
             v-model="filters.attentions.derivadoa"
           />
           <input-resource
             multiple
             :label="'Derivado de'"
             :rType="'derivaciones'"
+            :readOnly="true"
             v-model="filters.attentions.derivadode"
           />
           <input-resource
             multiple
             :label="'Derivado de'"
             :rType="'derivaciones'"
+            :readOnly="true"
             v-model="filters.attentions.derivadode"
           />
           <input-resource
             multiple
             :label="'Proyectos'"
             :rType="'proyectos'"
+            :readOnly="true"
             v-model="filters.attentions.Proyectos"
           />
           <input-resource
             multiple
             :label="'Motivos de atención'"
             :rType="'motivosatencions'"
+            :readOnly="true"
             v-model="filters.attentions.motivosatencion"
           />
           <input-resource
             multiple
             :label="'Formación'"
             :rType="'formacions'"
+            :readOnly="true"
             v-model="filters.attentions.formacion"
           />
           <input-resource
             multiple
             :label="'Voluntariado'"
             :rType="'Voluntariados'"
+            :readOnly="true"
             v-model="filters.attentions.voluntariado"
           />
         </v-card-text>
