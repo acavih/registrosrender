@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function hashPassword() {
+  console.log('hola desde el pre save')
   this.set('password', await bcryptjs.hash(this.get('password'), 8))
 })
 

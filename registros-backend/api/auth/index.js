@@ -1,6 +1,6 @@
 const CustomErrorBase = require("../../errors/CustomErrorBase")
 const express = require('express')
-const { authUser, getProfileFor, authUserMiddleware } = require('../../db/models/authService')
+const { authUser, getProfileFor, authUserMiddleware, changePassword } = require('../../db/models/authService')
 
 const authRouter = express.Router()
 
@@ -24,6 +24,11 @@ authRouter.post('/login', async (req, res) => {
   }
 })
 
+authRouter.put('/changePassword', async (req, res) => {
+  const { status, ...payload } = await changePassword(req.body)
+  res.status(status).json(payload)
+})
+
 authRouter.get('/profile', authUserMiddleware, async (req, res) => {
   try {
     res.json({
@@ -45,7 +50,7 @@ authRouter.get('/profile', authUserMiddleware, async (req, res) => {
 
 authRouter.post('/logout', authUserMiddleware, async (req, res) => {
   try {
-    res.json({message: 'logout'})
+    res.json({ message: 'logout' })
   } catch (error) {
     if (error instanceof CustomErrorBase) {
       return res.status(error.status).json({

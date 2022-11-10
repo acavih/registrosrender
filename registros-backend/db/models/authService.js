@@ -1,8 +1,37 @@
 const ForbiddenError = require("../../errors/ForbiddenError")
 const BadCredentials = require("../../errors/BadCredentialsError")
 const UserModel = require("./User")
+const bcryptjs = require('bcryptjs')
 
 const authService = {
+  async changePassword(payload) {
+    const existingUser = await UserModel.findOne({ user: payload.user })
+    if (!existingUser) {
+      return {
+        status: 404,
+        message: 'El usuario no existe'
+      }
+    }
+
+    const equalPasswords = await UserModel.checkPassword(payload.currentPassword, existingUser.password)
+    if (!equalPasswords) {
+      return {
+        status: 401,
+        message: 'Las contraseñas no son iguales'
+      }
+    }
+
+    const hashPassword = await bcryptjs.hash(payload.newPassword, 8)
+
+    await UserModel.updateOne({ user: payload.user }, {
+      $set: { password: hashPassword }
+    })
+
+    return {
+      status: 200,
+      message: 'Contraseña cambiada correctamente'
+    }
+  },
   async createUser(payload) {
     const existingUser = await UserModel.findOne({
       user: payload.user

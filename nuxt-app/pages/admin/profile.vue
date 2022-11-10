@@ -59,6 +59,34 @@ export default {
           text: "Las contraseñas no son iguales",
         });
       }
+      const payload = {
+        currentPassword: this.data.currentPassword,
+        newPassword: this.data.newPassword,
+        user: this.$auth.user,
+      };
+
+      try {
+        const response = await this.$axios.put("/auth/changePassword", payload);
+        this.data.newPassword = "";
+        this.data.confirmNewPassword = "";
+        this.data.currentPassword = "";
+        return this.$dialog.info({
+          title: "Resultado:",
+          text: response.data.message,
+        });
+      } catch (error) {
+        if (error.isAxiosError) {
+          return this.$dialog.error({
+            title: "Atención",
+            text: error.response.data.message,
+          });
+        }
+        console.dir(error);
+        return this.$dialog.error({
+          title: "Atención",
+          text: "Error desconocido",
+        });
+      }
     },
   },
 };
