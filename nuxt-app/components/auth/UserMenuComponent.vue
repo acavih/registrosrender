@@ -38,6 +38,9 @@
             </v-icon>
           </v-btn>
           <v-spacer />
+          <v-btn elevation="0" text to="/admin/profile">
+            Página de perfil
+          </v-btn>
           <v-btn color="error" text elevation="0" dark @click="logout">
             Logout
           </v-btn>
