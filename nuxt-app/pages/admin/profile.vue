@@ -1,10 +1,10 @@
 <template>
   <v-sheet>
-    <v-card>
+    <v-card elevation="0" color="transparent">
       <v-card-title> Página de perfil </v-card-title>
       <v-card-text>
         <p>Tu usuario es: {{ $auth.user }}</p>
-        <v-card outlined tag="form" @submit.prevent="changePassword">
+        <v-card tag="form" @submit.prevent="changePassword">
           <v-card-title> Cambiar la contraseña </v-card-title>
           <v-card-text>
             <v-text-field
@@ -24,7 +24,7 @@
             />
           </v-card-text>
           <v-card-actions>
-            <v-btn color="primary" type="submit">Enviar</v-btn>
+            <v-btn elevation="0" color="primary" type="submit">Enviar</v-btn>
           </v-card-actions>
         </v-card>
       </v-card-text>
