@@ -1,8 +1,8 @@
 <template>
   <v-sheet>
-    <v-card elevation="0" color="transparent">
+    <v-card class="mb-5" elevation="0" color="transparent">
       <v-card-title> Página de perfil </v-card-title>
-      <v-card-text>
+      <v-card-text style="padding: 0px">
         <p>Tu usuario es: {{ $auth.user }}</p>
         <v-card tag="form" @submit.prevent="changePassword">
           <v-card-title> Cambiar la contraseña </v-card-title>
@@ -28,13 +28,15 @@
           </v-card-actions>
         </v-card>
       </v-card-text>
-      <v-card-actions> </v-card-actions>
     </v-card>
+    <list-users />
   </v-sheet>
 </template>
 
 <script>
+import ListUsers from "@/components/users/ListUsers.vue";
 export default {
+  components: { ListUsers },
   name: "profile.vue",
   head() {
     return {
