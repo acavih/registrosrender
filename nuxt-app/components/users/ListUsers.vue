@@ -65,7 +65,27 @@ export default {
     }),
     async restorePassword(userId) {
       const result = await this.$tryAuth();
-      alert(result);
+      if (!result) return;
+      const newPassword = await this.$dialog.prompt({
+        text: "¿Cuál quieres que sea la nueva contraseña del usuario?",
+        textField: {
+          placeholder: "acavih",
+          type: "password",
+        },
+      });
+
+      if (newPassword === false) return;
+
+      const payload = {
+        newPassword: newPassword,
+        user: userId,
+      };
+
+      const response = await this.$axios.put("/auth/restorePassword", payload);
+      return this.$dialog.info({
+        title: "Resultado:",
+        text: response.data.message,
+      });
     },
     async removeUser(userId) {
       const result = await this.$tryAuth();

@@ -32,6 +32,28 @@ const authService = {
       message: 'Contraseña cambiada correctamente'
     }
   },
+  async restorePassword(payload) {
+    console.log(payload)
+
+    const existingUser = await UserModel.findOne({ _id: payload.user })
+    if (!existingUser) {
+      return {
+        status: 404,
+        message: 'El usuario no existe'
+      }
+    }
+
+    const hashPassword = await bcryptjs.hash(payload.newPassword || 'acavih', 8)
+
+    await UserModel.updateOne({ _id: payload.user }, {
+      $set: { password: hashPassword }
+    })
+
+    return {
+      status: 200,
+      message: 'Contraseña restablecida correctamente'
+    }
+  },
   async createUser(payload) {
     const existingUser = await UserModel.findOne({
       user: payload.user
