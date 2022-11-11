@@ -1,23 +1,28 @@
 <template>
-  <v-card
-    :loading="loading"
-    :disabled="loading"
-    tag="form"
-    @submit.prevent="onSubmit"
-  >
-    <v-card-title> Acceder al area interna </v-card-title>
-    <v-card-text>
-      <v-text-field v-model="formData.user" label="Usuario" />
-      <v-text-field
-        v-model="formData.password"
-        type="password"
-        label="Contraseña"
-      />
-    </v-card-text>
-    <v-card-actions>
-      <v-btn type="submit" elevation="0" color="primary">Acceder</v-btn>
-    </v-card-actions>
-  </v-card>
+  <v-sheet>
+    <v-alert color="error" dark v-if="msg">
+      {{ msg }}
+    </v-alert>
+    <v-card
+      :loading="loading"
+      :disabled="loading"
+      tag="form"
+      @submit.prevent="onSubmit"
+    >
+      <v-card-title> Acceder al area interna </v-card-title>
+      <v-card-text>
+        <v-text-field v-model="formData.user" label="Usuario" />
+        <v-text-field
+          v-model="formData.password"
+          type="password"
+          label="Contraseña"
+        />
+      </v-card-text>
+      <v-card-actions>
+        <v-btn type="submit" elevation="0" color="primary">Acceder</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-sheet>
 </template>
 
 <script>
@@ -27,6 +32,7 @@ export default {
   data() {
     return {
       loading: false,
+      msg: "",
       formData: {
         user: "",
         password: "",
@@ -47,13 +53,16 @@ export default {
         });
         this.$store.dispatch("resources/retrieveResources");
         console.log(loginReq);
-        this.loading = false;
       } catch (error) {
         if (error.isAxiosError) {
           console.dir(error);
-          return console.log("ERROR DE AXIOS");
+          console.log("ERROR DE AXIOS");
+          this.msg = error.response.data.message;
+        } else {
+          console.log(error);
         }
-        console.log(error);
+      } finally {
+        this.loading = false;
       }
     },
   },
