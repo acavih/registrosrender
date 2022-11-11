@@ -17,10 +17,10 @@
         <attentions-by-formation />
       </v-col>
       <v-col cols="12">
-        <attentions-by-lugar-atencion />
+        <attentions-by-voluntariado />
       </v-col>
       <v-col cols="12">
-        <attentions-by-voluntariado />
+        <attentions-by-lugar-atencion />
       </v-col>
     </v-row>
   </v-sheet>

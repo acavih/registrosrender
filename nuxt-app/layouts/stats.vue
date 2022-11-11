@@ -126,6 +126,13 @@
             :readOnly="true"
             v-model="filters.attentions.voluntariado"
           />
+          <input-resource
+            multiple
+            :label="'Lugar atencion'"
+            :rType="'lugaratencions'"
+            :readOnly="true"
+            v-model="filters.attentions.lugaratencion"
+          />
         </v-card-text>
       </v-card>
     </v-navigation-drawer>
@@ -191,6 +198,7 @@ export default {
           motivosatencion: [],
           formacion: [],
           voluntariado: [],
+          lugaratencion: [],
         },
       },
     };

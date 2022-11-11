@@ -37,9 +37,12 @@ export const getters = {
       filteredAttentions = [...filteredAttentions.filter(memberResourceFilter(k))]
     })
     attentionsFilters.forEach((k) => {
-      filteredAttentions = [...filteredAttentions.filter(attentionResourceFilter(k))]
+      if (k !== 'lugaratencion') {
+        filteredAttentions = [...filteredAttentions.filter(attentionResourceFilter(k))]
+      }
     })
-    // filteredAttentions = [...filteredAttentions.filter(attentionLugaratencionFilter)]
+
+    filteredAttentions = [...filteredAttentions.filter(attentionLugaratencionFilter)]
 
     return filteredAttentions
   },

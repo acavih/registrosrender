@@ -2,7 +2,11 @@
   <v-card :loading="refreshingAttentions" :disabled="refreshingAttentions">
     <v-card-title>
       <v-btn icon @click="$store.commit('stats/toggleDrawer')">
-        <v-icon> mdi-xml </v-icon>
+        <v-icon>
+          mdi-unfold-{{
+            $store.state.stats.drawerActive ? "more" : "less"
+          }}-vertical
+        </v-icon>
       </v-btn>
       Estadísticas
       <v-spacer />

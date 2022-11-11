@@ -11,9 +11,13 @@ export const chartsFilters = ({ filters }) => ({
   },
 
   attentionLugaratencionFilter(a) {
-    if (!filters.attentions.lugaratencion) { return true }
+    // console.log(!filters.attentions.lugaratencion.length, filters.attentions.lugaratencion, a.lugaratencion)
+    if (!filters.attentions.lugaratencion.length) { return true }
     if (a.lugaratencion === null) { return false }
-    return a.lugaratencion.name === (filters.attentions.lugaratencion).name
+    return filters.attentions.lugaratencion.filter(b => {
+      console.log(b, a.lugaratencion)
+      return a.lugaratencion._id === b
+    }).length > 0
   },
 
   attentionResourceFilter: (key) => (a) => {
