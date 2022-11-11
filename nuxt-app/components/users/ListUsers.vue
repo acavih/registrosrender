@@ -63,37 +63,13 @@ export default {
       retrieveUsers: "users/retrieveUsers",
       deleteUser: "users/deleteUser",
     }),
-    async tryAuth(maxIntentos = 3, intentos = 1) {
-      const helperText =
-        intentos > 1 ? " (" + intentos + "/" + maxIntentos + ")" : "";
-      const res = await this.$dialog.prompt({
-        text: "¿Cual es tu contraseña?" + helperText,
-        textField: {
-          type: "password",
-        },
-      });
-      if (!res) {
-        return;
-      }
-      try {
-        const result = await this.$axios.post("/auth/login", {
-          user: this.$auth.user,
-          password: res,
-        });
-        return result.status < 400;
-      } catch (error) {
-        await this.$dialog.error({
-          title: "Error",
-          text: "No te has autenticado correctamente",
-        });
-        return intentos < 3 ? this.tryAuth(maxIntentos, intentos + 1) : false;
-      }
-    },
     async restorePassword(userId) {
-      const result = await this.tryAuth();
+      const result = await this.$tryAuth();
       alert(result);
     },
     async removeUser(userId) {
+      const result = await this.$tryAuth();
+      if (!result) return;
       const res = await this.$dialog.confirm({
         text: "¿De verdad quieres eliminar este usuario?",
       });
