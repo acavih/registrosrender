@@ -26,6 +26,16 @@
             </v-col>
           </v-row>
         </v-card-text>
+        <v-card-actions>
+          <v-chip
+            class="mr-4"
+            v-for="election in dateElections"
+            :key="election.label"
+            @click="changeDateTo(election)"
+          >
+            {{ election.label }}
+          </v-chip>
+        </v-card-actions>
       </v-card>
       <v-card :disabled="refreshingAttentions" elevation="0">
         <v-card-title> Filtros de socio </v-card-title>
@@ -166,6 +176,10 @@ import InputResource from "../components/resources/InputResource.vue";
 import MenuDatepicker from "../components/MenuDatepicker.vue";
 import dayjs from "dayjs";
 
+const date = new Date();
+const year = date.getFullYear();
+const month = date.getMonth();
+
 export default {
   name: "StatsLayout",
   components: {
@@ -183,6 +197,22 @@ export default {
         start: "01-01-2022",
         end: "12-31-2022",
       },
+      dateElections: [
+        {
+          label: "Este año",
+          value: {
+            start: "01-01-" + year,
+            end: "12-31-" + year,
+          },
+        },
+        {
+          label: "Este mes",
+          value: {
+            start: month + 1 + "-01-" + year,
+            end: month + 1 + "-30-" + year,
+          },
+        },
+      ],
       filters: {
         partners: {
           sexo: [],
@@ -233,6 +263,10 @@ export default {
     ...mapMutations({
       updateFilters: "stats/updateFilters",
     }),
+    changeDateTo(election) {
+      this.rangeDates.start = election.value.start;
+      this.rangeDates.end = election.value.end;
+    },
     async refreshDataset() {
       this.$store.commit("stats/toggleLoading");
       await this.getRangeDateAttentions({
