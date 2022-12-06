@@ -4,11 +4,11 @@ const apiRouter = require('./api')
 const path = require('path')
 const connectTODB = require('./db/connectDB')
 
-connectTODB().then(() => {
+/* connectTODB().then(() => {
   console.log('Se pudo conectar a la base de datos')
 }).catch(() => {
   console.log('NO se pudo conectar')
-})
+})*/
 
 const app = express()
 app.use(cors())
