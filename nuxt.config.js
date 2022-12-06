@@ -37,6 +37,10 @@ const config = {
   css: [
   ],
 
+  serverMiddleware: [
+    {path: '/api', handler: require('./registros-backend/app.js')}
+  ],
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/initApp.js', ssr: false }
@@ -68,7 +72,7 @@ const config = {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: isProd ? '/api' : 'http://localhost:8080/api'
+    baseURL: '/api'
   },
 
   auth: {
