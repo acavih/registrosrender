@@ -4,7 +4,22 @@
   "engines": {
     "node": "16.18.0"
   },
-  "scripts": {},
+  "scripts": {
+    "dev:nuxt": "nuxt",
+    "build:nuxt": "nuxt build",
+    "start:nuxt": "nuxt start",
+    "generate": "nuxt generate",
+    "lint:js": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
+    "lint": "npm run lint:js",
+    "lintfix": "npm run lint:js -- --fix",
+    "restoreToLocal": "gulp restoreToLocal",
+    "dev": "concurrently --kill-others \"npm run dev:nuxt\" \"npm run dev --prefix registros-backend\"",
+    "build:backend": "npm run build --workspace registros-backend",
+    "build:frontend": "npm run generate",
+    "build": "npm run build:frontend",
+    "prod": "node registros-backend/index.js",
+    "start": "npm run prod"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
