@@ -18,6 +18,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => res.end('hola'))
 
-app.use(apiRouter)
+app.use('/api', apiRouter)
 
 module.exports = app
