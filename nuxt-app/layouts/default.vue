@@ -33,7 +33,7 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app color="primary" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title style="cursor: pointer;" @click="$router.push('/admin/dashboard')" v-text="title" />
       <v-spacer />
       <user-menu-component />
     </v-app-bar>

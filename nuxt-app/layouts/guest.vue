@@ -9,7 +9,7 @@
         <template v-if="!$auth.loggedIn">
           <Nuxt />
         </template>
-        <redirect-component v-else :url="'/admin/partners'" />
+        <redirect-component v-else :url="'/admin/dashboard'" />
       </v-container>
     </v-main>
   </v-app>
