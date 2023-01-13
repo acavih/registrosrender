@@ -10,7 +10,13 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
-
+  mounted() {
+    this.retrievePartners()
+  },
+  methods: {
+    ...mapActions('partners', ['retrievePartners'])
+  }
 }
 </script>
