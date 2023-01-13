@@ -14,7 +14,7 @@ const config = {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - registrosrender',
+    titleTemplate: '%s - Registros',
     title: 'registrosrender',
     meta: [
       { charset: 'utf-8' },
