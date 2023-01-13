@@ -13,11 +13,17 @@
 </template>
 <script>
 export default {
+  props: {
+    initialValue: {
+      type: Object,
+      default: () => ({
+        name: ''
+      })
+    }
+  },
   data() {
     return {
-      resourceData: {
-        name: ''
-      }
+      resourceData: {...this.initialValue}
     }
   }
 }

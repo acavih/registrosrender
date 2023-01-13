@@ -16,6 +16,9 @@
                     {{ resource.name }}
                   </v-list-item-title>
                 </v-list-item-content>
+                <v-list-item-action>
+                  <edit-resource-button :resource="resource" :activeType="activeResource" />
+                </v-list-item-action>
               </v-list-item>
             </v-list>
           </v-card-text>
@@ -46,8 +49,9 @@
 <script>
 import AddResourceButton from '@/components/resources/AddResourceButton.vue';
 import { mapGetters } from "vuex";
+import EditResourceButton from '@/components/resources/EditResourceButton.vue';
 export default {
-  components: { AddResourceButton },
+  components: { AddResourceButton, EditResourceButton },
   data() {
     return {
       activeResource: ''

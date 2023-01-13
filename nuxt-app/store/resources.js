@@ -25,6 +25,12 @@ export const mutations = {
   },
   resource (state, resource) {
     state.resourceList.push(resource)
+  },
+  resourceUpdate (state, resource) {
+    state.resourceList = [
+      ...state.resourceList.filter(r => r._id !== resource._id),
+      resource
+    ]
   }
 }
 
@@ -39,6 +45,10 @@ export const actions = {
   async createResource(ctx, resourceData) {
     const itemCreated = await this.$axios.post('/resources', resourceData)
     ctx.commit('resource', itemCreated.data.payload)
+  },
+  async editResource(ctx, resourceData) {
+    const itemCreated = await this.$axios.put('/resources/' + resourceData._id, resourceData)
+    ctx.commit('resourceUpdate', itemCreated.data.payload)
   }
 }
 
