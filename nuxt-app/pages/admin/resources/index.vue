@@ -5,6 +5,8 @@
         <v-card>
           <v-card-title>
             Listado de recursos
+            <v-spacer />
+            <add-resource-button :disabled="activeResource.length === 0" :activeType="activeResource" />
           </v-card-title>
           <v-card-text>
             <v-list>
@@ -42,8 +44,10 @@
 </template>
 
 <script>
+import AddResourceButton from '@/components/resources/AddResourceButton.vue';
 import { mapGetters } from "vuex";
 export default {
+  components: { AddResourceButton },
   data() {
     return {
       activeResource: ''
