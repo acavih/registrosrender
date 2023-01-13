@@ -22,6 +22,9 @@ export const getters = {
 export const mutations = {
   resourceList (state, list) {
     state.resourceList = list
+  },
+  resource (state, resource) {
+    state.resourceList.push(resource)
   }
 }
 
@@ -32,6 +35,10 @@ export const actions = {
   async retrieveResources(ctx) {
     const items = await this.$axios.get('/resources')
     ctx.commit('resourceList', items.data.payload)
+  },
+  async createResource(ctx, resourceData) {
+    const itemCreated = await this.$axios.post('/resources', resourceData)
+    ctx.commit('resource', itemCreated.data.payload)
   }
 }
 

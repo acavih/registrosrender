@@ -6,12 +6,13 @@
       </v-btn>
     </template>
 
-    <resource-editor v-if="dialog" @submit="createResource" />
+    <resource-editor v-if="dialog" @submit="doCreateResource" />
   </v-dialog>
 </template>
 
 <script>
 import ResourceEditor from "./ResourceEditor.vue";
+import { mapActions } from "vuex";
 export default {
   components: { ResourceEditor },
   props: {
@@ -30,12 +31,13 @@ export default {
     };
   },
   methods: {
-    createResource(resourceInfo) {
+    ...mapActions('resources', ['createResource']),
+    async doCreateResource(resourceInfo) {
       const payload = {
         name: resourceInfo.name,
         type: this.activeType
       }
-      console.log(payload)
+      await this.createResource(payload)
       this.dialog = false
     }
   }
