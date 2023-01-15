@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 // Connect MongoDB at default port 27017.
 const connectTODB = () => new Promise((resolve, reject) => {
-  const urlDB = process.env.URL_DB || 'mongodb://localhost/acavih'
+  const urlDB = process.env.URL_DB || 'mongodb://localhost/registros'
   const uri = new url.URL(urlDB)
   console.log('Conectando a la base de datos de ' + uri.host)
   mongoose.connect(urlDB, {

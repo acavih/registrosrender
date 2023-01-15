@@ -24,6 +24,7 @@ export const mutations = {
 */
 export const actions = {
   async retrievePartners(ctx, query) {
+    console.log('recuperando socios..')
     const list = await this.$axios.get('/partners', {params: query})
     ctx.commit('partnersList', list.data.payload)
   }

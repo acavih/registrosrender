@@ -56,8 +56,8 @@ export default {
       searchQuery: this.$route.query.searchQuery || '',
       expanded: [],
       options: {
-        page: Number(this.$route.query.page),
-        itemsPerPage: Number(this.$route.query.itemsPerPage)
+        page: Number(this.$route.query.page || 1),
+        itemsPerPage: Number(this.$route.query.itemsPerPage || 20)
       },
       headers: [
         { text: '', value: 'data-table-expand' },
