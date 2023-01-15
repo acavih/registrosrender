@@ -13,7 +13,7 @@
             <v-text-field label="Nombre" v-model="partner.nombre" />
           </v-col>
           <v-col :cols="5">
-            <v-text-field label="Apellidos" v-model="partner.apelldios" />
+            <v-text-field label="Apellidos" v-model="partner.apellidos" />
           </v-col>
 
           <v-col :cols="6">
@@ -30,21 +30,28 @@
             <menu-datepicker v-model="partner.fechanacimiento" :label="'Fecha de nacimiento'" />
           </v-col>
 
+          <v-col :cols="12">
+            <v-textarea label="Cosas pendientes" v-model="partner.cosaspendientes" />
+          </v-col>
+          <v-col :cols="12">
+            <v-textarea label="Observaciones" v-model="partner.observaciones" />
+          </v-col>
+
           <v-col :cols="3">
-            <input-resource :label="'Sexos'" v-model="partner.sexo" />
+            <input-resource :label="'Sexos'" :resourceType="'sexos'" v-model="partner.sexo" />
           </v-col>
           <v-col :cols="3">
-            <input-resource :label="'Socio o no'" v-model="partner.socioono" />
+            <input-resource :label="'Socio o no'" :resourceType="'socioonos'" v-model="partner.socioono" />
           </v-col>
           <v-col :cols="3">
-            <input-resource :label="'Ciudad residencia'" v-model="partner.ciudadresidencia" />
+            <input-resource :label="'Ciudad residencia'" :resourceType="'residencias'" v-model="partner.ciudadresidencia" />
           </v-col>
           <v-col :cols="3">
-            <input-resource :label="'Nacionalidad'" v-model="partner.nacionalidad" />
+            <input-resource :label="'Nacionalidad'" :resourceType="'nacionalidads'" v-model="partner.nacionalidad" />
           </v-col>
 
           <v-col :cols="12">
-            <input-resource :label="'Como nos conoció'" v-model="partner.howDidKnowUs" />
+            <input-resource :label="'Como nos conoció'" :resourceType="'comoNosConoció'" v-model="partner.howDidKnowUs" />
           </v-col>
         </v-row>
       </v-card-text>

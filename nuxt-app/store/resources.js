@@ -12,7 +12,9 @@ export const getters = {
     return _.uniq(state.resourceList.map(r => r.type))
   },
   resourcesOfType: (state) => (type) => {
-    return _.sortBy(state.resourceList.filter(r => r.type === type), ['name'])
+    return _.sortBy(state.resourceList.filter(r => {
+      return r.type === type
+    }), ['name'])
   }
 }
 
