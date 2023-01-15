@@ -1,5 +1,6 @@
 export const state = () => ({
   partnersList: [],
+  currentPartner: undefined,
   totalItems: 0
 })
 
@@ -7,6 +8,9 @@ export const state = () => ({
 * @type {import('vuex').GetterTree<ReturnType<typeof state>>, any>}
 */
 export const getters = {
+  getPartnerById: (state) => (id) => {
+    return state.partnersList.filter(p => p._id === id)[0]
+  }
 }
 
 /**
@@ -16,6 +20,9 @@ export const mutations = {
   partnersList(state, {partners, totalItems}) {
     state.partnersList = partners
     state.totalItems = totalItems
+  },
+  partner(state, partner) {
+    state.currentPartner = partner
   }
 }
 
@@ -30,6 +37,10 @@ export const actions = {
   },
   async createPartner(ctx, partnerData) {
     await this.$axios.post('/partners', partnerData)
+  },
+  async fetchPartner(ctx, id) {
+    const partnerReq = await this.$axios.get('/partners/' + id)
+    ctx.commit('partner', partnerReq.data.payload)
   }
 }
 
