@@ -4,9 +4,10 @@
       <v-card-title>
         Socios
         <v-spacer />
-        <v-btn color="primary" elevation="0" @click="toggleExpandAll">
+        <v-btn color="secondary" style="margin-right: 10px;" elevation="0" @click="toggleExpandAll">
           {{ isAllExpanded ? 'Contraer todo' : 'Expandir todo'}}
         </v-btn>
+        <add-partner-button :disabled="false" />
       </v-card-title>
       <v-card-text>
         <v-text-field label="Buscar socio" v-model="searchQuery" />
@@ -44,8 +45,10 @@
 </template>
 
 <script>
+import AddPartnerButton from '@/components/partners/AddPartnerButton.vue';
 import { mapActions, mapState } from "vuex";
 export default {
+  components: { AddPartnerButton },
   head() {
     return {
       title: 'Listado de socios'

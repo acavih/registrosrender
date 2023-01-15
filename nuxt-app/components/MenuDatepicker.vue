@@ -1,71 +1,57 @@
 <template>
   <v-menu
+    ref="menu"
     v-model="menu"
+    :close-on-content-click="false"
+    :return-value.sync="date"
+    transition="scale-transition"
     offset-y
     min-width="auto"
-    :close-on-content-click="false"
-    max-width="290px"
   >
-    <template #activator="{ on, attrs }">
+    <template v-slot:activator="{ on, attrs }">
       <v-text-field
-        v-model="formattedDate"
-        :label="label"
+        v-model="date"
+        label="Picker in menu"
+        prepend-icon="mdi-calendar"
+        readonly
         v-bind="attrs"
-        persistent-hint
-        hint="DD-MM-YYYY"
-        @input="menu = true"
-        @change="updateDate"
         v-on="on"
-      />
+      ></v-text-field>
     </template>
-    <v-date-picker v-model="date" no-title @change="updateTxt" />
+    <v-date-picker
+      v-model="date"
+      no-title
+      scrollable
+    >
+      <v-spacer></v-spacer>
+      <v-btn
+        text
+        color="primary"
+        @click="menu = false"
+      >
+        Cancel
+      </v-btn>
+      <v-btn
+        text
+        color="primary"
+        @click="$refs.menu.save(date)"
+      >
+        OK
+      </v-btn>
+    </v-date-picker>
   </v-menu>
 </template>
 
 <script>
-import dayjs from "dayjs";
-export default {
-  props: {
-    label: {
-      type: String,
-      default: "Introduzca una fecha",
-    },
-    $value: {
-      type: Date,
-      required: false,
-    },
-  },
-  data() {
-    return {
-      date: null, // string YYYY-MM-DD
-      formattedDate: "",
-      menu: false,
-    };
-  },
-  watch: {
-    date(newv) {
-      // console.log(newv);
-    },
-  },
-  created() {
-    const date = this.$attrs.value;
-    if (date !== null) {
-      this.date = dayjs(date).format("YYYY-MM-DD");
-      this.updateTxt();
+  export default {
+    data: () => ({
+      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      menu: false
+    }),
+    watch: {
+      date() {
+        this.$emit('input', this.date)
+      }
     }
-  },
-  methods: {
-    updateTxt() {
-      this.formattedDate = dayjs(new Date(this.date)).format("DD-MM-YYYY");
-      this.$emit("input", new Date(this.date));
-    },
-    updateDate() {
-      const [day, month, year] = this.formattedDate.split("-");
-      const newDate = new Date([year, month, day].join("/"));
-      this.date = dayjs(newDate).format("YYYY-MM-DD");
-      this.menu = false;
-      this.$emit("input", newDate);
-    },
-  },
-};
+  }
 </script>

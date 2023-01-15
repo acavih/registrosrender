@@ -27,6 +27,9 @@ export const actions = {
     console.log('recuperando socios..')
     const list = await this.$axios.get('/partners', {params: query})
     ctx.commit('partnersList', list.data.payload)
+  },
+  async createPartner(ctx, partnerData) {
+    await this.$axios.post('/partners', partnerData)
   }
 }
 
