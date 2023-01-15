@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-    <v-card>
+    <v-card tag="form" @submit.prevent="$emit('submit', partner)">
       <v-card-title>
         Editor de socios
       </v-card-title>

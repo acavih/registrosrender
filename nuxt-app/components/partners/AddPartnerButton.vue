@@ -29,8 +29,14 @@ export default {
   methods: {
     ...mapActions('partners', ['createPartner']),
     async doCreatePartner(partnerInfo) {
-      await this.createPartner(partnerInfo)
-      this.dialog = false
+      try {
+        await this.createPartner(partnerInfo)
+        this.dialog = false
+        this.$dialog.notify.success('El socio se creó con éxito')
+      } catch (error) {
+        console.error(error)
+        this.$dialog.notify.error('Hubo un problema al crear el socio...')
+      }
     }
   }
 };
