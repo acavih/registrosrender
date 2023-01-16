@@ -58,21 +58,29 @@
               </tr>
             </tbody>
           </v-simple-table>
-          <v-alert color="primary" dark>
+          <v-alert color="primary" dark v-if="currentPartner.observaciones">
             <strong>Observaciones</strong>: {{currentPartner.observaciones}}
           </v-alert>
-          <v-alert color="primary" dark>
+          <v-alert color="primary" dark v-if="currentPartner.cosaspendientes">
             <strong>Cosas pendientes</strong>: {{currentPartner.cosaspendientes}}
           </v-alert>
         </template>
+      </v-card-text>
+    </v-card>
+    <v-card style="margin-top: 10px;">
+      <v-card-title>Listado de atenciones</v-card-title>
+      <v-card-text>
+        <attention-iterator :attentions="attentions" />
       </v-card-text>
     </v-card>
   </v-sheet>
 </template>
 
 <script>
+import AttentionIterator from '@/components/attentions/AttentionIterator.vue';
 import { mapGetters, mapActions, mapState } from "vuex";
 export default {
+  components: { AttentionIterator },
   head() {
     return {
       title: 'Página de socio'
@@ -80,16 +88,19 @@ export default {
   },
   computed: {
     ...mapGetters('partners', ['getPartnerById']),
-    ...mapState('partners', ['currentPartner'])
+    ...mapState('partners', ['currentPartner']),
+    ...mapState('attentions', ['attentions'])
   },
-  mounted() {
-    console.log(this.currentPartner?._id, this.$route.params.partnerId)
-    if (this.currentPartner?._id !== this.$route.params.partnerId) {
-      this.fetchPartner(this.$route.params.partnerId)
+  async mounted() {
+    const { partnerId } = this.$route.params
+    if (this.currentPartner?._id !== partnerId) {
+      await this.fetchPartner(partnerId)
     }
+    await this.getUserAttentions(partnerId)
   },
   methods: {
-    ...mapActions('partners', ['fetchPartner'])
+    ...mapActions('partners', ['fetchPartner']),
+    ...mapActions('attentions', ['getUserAttentions'])
   }
 }
 </script>
