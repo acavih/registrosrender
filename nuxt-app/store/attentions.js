@@ -25,7 +25,8 @@ export const actions = {
     const attentionsReq = await this.$axios.get('/attentions/byUser/' + userId)
 
     ctx.commit('attentions', attentionsReq.data.payload)
-  }
+  },
+  async createAttention(ctx, attentionData) {}
 }
 
 export const strict = false

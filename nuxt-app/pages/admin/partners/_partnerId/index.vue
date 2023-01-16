@@ -68,7 +68,11 @@
       </v-card-text>
     </v-card>
     <v-card style="margin-top: 10px;">
-      <v-card-title>Listado de atenciones</v-card-title>
+      <v-card-title>
+        Listado de atenciones
+        <v-spacer />
+        <add-attention-button />
+      </v-card-title>
       <v-card-text>
         <attention-iterator :attentions="attentions" />
       </v-card-text>
@@ -81,8 +85,9 @@ import AttentionIterator from '@/components/attentions/AttentionIterator.vue';
 import { mapGetters, mapActions, mapState } from "vuex";
 import globalMixin from '@/mixins/global'
 import calculateAge from '@/utils/calculateAge'
+import AddAttentionButton from '@/components/attentions/AddAttentionButton.vue';
 export default {
-  components: { AttentionIterator },
+  components: { AttentionIterator, AddAttentionButton },
   mixins: [globalMixin],
   head() {
     return {

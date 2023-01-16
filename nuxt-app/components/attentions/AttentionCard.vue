@@ -25,12 +25,17 @@
         Cosas pendientes {{attention.fechacosaspendientes}}: {{attention.cosaspendientes}}
       </v-alert>
     </v-card-text>
+    <v-card-actions>
+
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
 import globalMixin from '@/mixins/global'
+import AddAttentionButton from './AddAttentionButton.vue'
 export default {
+  components: { AddAttentionButton },
   mixins: [globalMixin],
   filters: {
     nameResources(v) {
