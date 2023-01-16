@@ -11,7 +11,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
         v-model="date"
-        label="Picker in menu"
+        :label="label"
         prepend-icon="mdi-calendar"
         readonly
         v-bind="attrs"
@@ -44,10 +44,20 @@
 
 <script>
   export default {
+    props: {
+      label: {
+        type: String,
+        default: 'Picker in menu'
+      }
+    },
     data: () => ({
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menu: false
     }),
+    mounted() {
+      console.log(this.$attrs.value)
+      this.date = this.$attrs.value
+    },
     watch: {
       date() {
         this.$emit('input', this.date)
