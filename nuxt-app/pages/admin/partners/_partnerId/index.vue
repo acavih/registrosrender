@@ -34,7 +34,7 @@
               </tr>
               <tr>
                 <td>Fecha de nacimiento</td>
-                <td>{{currentPartner.fechanacimiento}}</td>
+                <td>{{currentPartner.fechanacimiento | dateFilter}} ({{currentPartner.fechanacimiento | age}} años)</td>
               </tr>
               <tr>
                 <td>Socio o no</td>
@@ -79,11 +79,20 @@
 <script>
 import AttentionIterator from '@/components/attentions/AttentionIterator.vue';
 import { mapGetters, mapActions, mapState } from "vuex";
+import globalMixin from '@/mixins/global'
+import calculateAge from '@/utils/calculateAge'
 export default {
   components: { AttentionIterator },
+  mixins: [globalMixin],
   head() {
     return {
       title: 'Página de socio'
+    }
+  },
+  filters: {
+    age(v) {
+      if (!v) return 'n/a'
+      return calculateAge(new Date(v))
     }
   },
   computed: {
