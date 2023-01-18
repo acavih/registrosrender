@@ -30,7 +30,8 @@ partnersRouter.post('/', async (req, res) => {
 partnersRouter.put('/:id', async (req, res) => {
   await updatePartner(req.params.id, req.body)
   res.json({
-    message: 'Socio actualizado'
+    message: 'Socio actualizado',
+    payload: await getPartner(req.params.id)
   })
 })
 

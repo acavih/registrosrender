@@ -67,26 +67,35 @@
 <script>
 import MenuDatepicker from '../MenuDatepicker.vue'
 import InputResource from '../resources/InputResource.vue'
+
+const initialPartnerData = {
+  nombre: '',
+  codigo: '',
+  apellidos: '',
+  fechanacimiento: '',
+  sipcard: '',
+  correoelectronico: '',
+  telefono: '',
+  observaciones: '',
+  cosaspendientes: '',
+  sexo: '',
+  socioono: '',
+  nacionalidad: '',
+  ciudadresidencia: '',
+  howDidKnowUs: ''
+}
+
 export default {
   components: { MenuDatepicker, InputResource },
+  props: {
+    initialPartnerData: {
+      type: Object,
+      default: () => initialPartnerData
+    }
+  },
   data () {
     return {
-      partner: {
-        nombre: '',
-        codigo: '',
-        apellidos: '',
-        fechanacimiento: '',
-        sipcard: '',
-        correoelectronico: '',
-        telefono: '',
-        observaciones: '',
-        cosaspendientes: '',
-        sexo: '',
-        socioono: '',
-        nacionalidad: '',
-        ciudadresidencia: '',
-        howDidKnowUs: ''
-      }
+      partner: {...this.initialPartnerData}
     }
   }
 }

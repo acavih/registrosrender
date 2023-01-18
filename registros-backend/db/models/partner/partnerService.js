@@ -92,9 +92,11 @@ const partnerService = {
     return { partners: partnersList, totalItems: totalDocs }
   },
   async getPartner(id) {
+    console.log('recuperando id ' + id)
     const partner = await Partner.findOne({ _id: id })
       .populate(fieldsToPopulate)
-    return partner
+    console.dir(JSON.parse(JSON.stringify(partner)))
+    return JSON.parse(JSON.stringify(partner))
   },
   async createPartner(partnerData) {
     const partner = await Partner.create({

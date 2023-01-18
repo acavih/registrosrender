@@ -4,6 +4,8 @@
       <v-card-title>
         <template v-if="currentPartner">
           {{currentPartner.nombre}} {{currentPartner.apellidos}}
+          <v-spacer />
+          <edit-partner-button :initialPartnerData="currentPartner" />
         </template>
         <template v-else>
           Pagina de socio
@@ -86,8 +88,9 @@ import { mapGetters, mapActions, mapState } from "vuex";
 import globalMixin from '@/mixins/global'
 import calculateAge from '@/utils/calculateAge'
 import AddAttentionButton from '@/components/attentions/AddAttentionButton.vue';
+import EditPartnerButton from '@/components/partners/EditPartnerButton.vue';
 export default {
-  components: { AttentionIterator, AddAttentionButton },
+  components: { AttentionIterator, AddAttentionButton, EditPartnerButton },
   mixins: [globalMixin],
   head() {
     return {

@@ -35,6 +35,7 @@
           </template>
           <template v-slot:expanded-item="{ headers, item }">
             <td :colspan="headers.length">
+              <!-- TODO: Poner información de la fila expandida -->
               More info about {{ item.nombre }}
             </td>
           </template>

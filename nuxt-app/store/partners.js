@@ -41,6 +41,11 @@ export const actions = {
   async fetchPartner(ctx, id) {
     const partnerReq = await this.$axios.get('/partners/' + id)
     ctx.commit('partner', partnerReq.data.payload)
+  },
+  async updatePartner(ctx, partnerInfo) {
+    const result = await this.$axios.put('/partners/' + partnerInfo._id, partnerInfo)
+    ctx.commit('partner', result.data.payload)
+
   }
 }
 
