@@ -13,6 +13,9 @@ module.exports = {
       .populate(fieldsToPopulate).sort('-fechaatencion')
     return attentions
   },
+  async removeAttention(attentionId) {
+    await Attention.findOneAndRemove({_id: attentionId})
+  },
   async lastAttentions({ page, pendentAttentions }) {
     const limit = 100
     const skip = (page - 1) * limit

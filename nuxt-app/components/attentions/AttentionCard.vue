@@ -8,6 +8,10 @@
         {{attention.lugaratencion.name}}
       </v-alert>
 
+      <v-alert color="warning darken-3" v-if="attention.cosaspendientes || attention.fechacosaspendientes" dark style="margin-top: 10px; margin-bottom: 0px;">
+        <strong>Cosas pendientes {{attention.fechacosaspendientes | dateFilter}}</strong>: {{attention.cosaspendientes}}
+      </v-alert>
+
       <v-simple-table>
         <tbody>
           <tr v-for="{key, value} in resourcesKey" :key="key">
@@ -20,13 +24,12 @@
       <v-alert color="primary" dark style="margin-bottom: 0px;">
         {{attention.comentario}}
       </v-alert>
-
-      <v-alert color="error" v-if="attention.cosaspendientes || attention.fechacosaspendientes">
-        Cosas pendientes {{attention.fechacosaspendientes}}: {{attention.cosaspendientes}}
-      </v-alert>
     </v-card-text>
+    <v-divider />
     <v-card-actions>
-
+      <v-spacer />
+      <edit-attention-button :initialDataAttention="attention" />
+      <remove-attention-button :attention="attention" />
     </v-card-actions>
   </v-card>
 </template>
@@ -34,8 +37,10 @@
 <script>
 import globalMixin from '@/mixins/global'
 import AddAttentionButton from './AddAttentionButton.vue'
+import EditAttentionButton from './EditAttentionButton.vue'
+import RemoveAttentionButton from './RemoveAttentionButton.vue'
 export default {
-  components: { AddAttentionButton },
+  components: { AddAttentionButton, EditAttentionButton, RemoveAttentionButton },
   mixins: [globalMixin],
   filters: {
     nameResources(v) {

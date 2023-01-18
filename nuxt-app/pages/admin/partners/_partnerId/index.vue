@@ -71,7 +71,7 @@
       <v-card-title>
         Listado de atenciones
         <v-spacer />
-        <add-attention-button />
+        <add-attention-button @reload="getUserAttentions($route.params.partnerId)" />
       </v-card-title>
       <v-card-text>
         <attention-iterator :attentions="attentions" />

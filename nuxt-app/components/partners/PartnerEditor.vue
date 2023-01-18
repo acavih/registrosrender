@@ -38,20 +38,20 @@
           </v-col>
 
           <v-col :cols="3">
-            <input-resource :label="'Sexos'" :resourceType="'sexos'" v-model="partner.sexo" />
+            <input-resource :multiple="false" :label="'Sexos'" :resourceType="'sexos'" v-model="partner.sexo" />
           </v-col>
           <v-col :cols="3">
-            <input-resource :label="'Socio o no'" :resourceType="'socioonos'" v-model="partner.socioono" />
+            <input-resource :multiple="false" :label="'Socio o no'" :resourceType="'socioonos'" v-model="partner.socioono" />
           </v-col>
           <v-col :cols="3">
-            <input-resource :label="'Ciudad residencia'" :resourceType="'residencias'" v-model="partner.ciudadresidencia" />
+            <input-resource :multiple="false" :label="'Ciudad residencia'" :resourceType="'residencias'" v-model="partner.ciudadresidencia" />
           </v-col>
           <v-col :cols="3">
-            <input-resource :label="'Nacionalidad'" :resourceType="'nacionalidads'" v-model="partner.nacionalidad" />
+            <input-resource :multiple="false" :label="'Nacionalidad'" :resourceType="'nacionalidads'" v-model="partner.nacionalidad" />
           </v-col>
 
           <v-col :cols="12">
-            <input-resource :label="'Como nos conoció'" :resourceType="'comoNosConoció'" v-model="partner.howDidKnowUs" />
+            <input-resource :multiple="false" :label="'Como nos conoció'" :resourceType="'comoNosConoció'" v-model="partner.howDidKnowUs" />
           </v-col>
         </v-row>
       </v-card-text>

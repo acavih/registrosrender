@@ -1,5 +1,5 @@
 <template>
-  <v-card tag="form" @submit.prevent="$emit('submit', resourceData)">
+  <v-card tag="form" @submit.prevent="$emit('submit', attentionData)">
     <v-card-title>
       Editor de recursos
     </v-card-title>
@@ -30,7 +30,7 @@
           <input-resource :resourceType="'voluntariados'" :label="'Voluntariado'" v-model="attentionData.voluntariado" />
         </v-col>
         <v-col cols="12">
-          <input-resource :resourceType="'lugaratencions'" :label="'Lugar de atención'" v-model="attentionData.lugaratencion" />
+          <input-resource :multiple="false" :resourceType="'lugaratencions'" :label="'Lugar de atención'" v-model="attentionData.lugaratencion" />
         </v-col>
         <v-col cols="12">
           <v-textarea label="Comentario" v-model="attentionData.comentario" />
@@ -62,7 +62,7 @@ const initialData = {
   formacion: [],
   voluntariado: [],
   diagnosticos: [],
-  lugaratencion: '',
+  lugaratencion: null,
   cosaspendientes: '',
   fechacosaspendientes: null
 }
@@ -78,6 +78,12 @@ export default {
   data() {
     return {
       attentionData: {...this.initialValue}
+    }
+  },
+  methods: {
+    reset() {
+      console.log('resetendo...')
+      this.attentionData = {...initialData}
     }
   }
 }

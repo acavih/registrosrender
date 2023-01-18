@@ -1,5 +1,5 @@
 const express = require('express')
-const { getUserAttentions, getAttentionsInRangeDate, createAttention, updateAttention, lastAttentions } = require('../../db/models/attention/AttentionsService')
+const { getUserAttentions, getAttentionsInRangeDate, createAttention, updateAttention, lastAttentions, removeAttention } = require('../../db/models/attention/AttentionsService')
 
 const attentionsRouter = express.Router()
 
@@ -40,6 +40,13 @@ attentionsRouter.get('/last', async (req, res) => {
   res.json({
     message: 'Últimas atenciones',
     payload: attentions
+  })
+})
+
+attentionsRouter.delete('/:id', async (req, res) => {
+  await removeAttention(req.params.id)
+  res.status(200).json({
+    message: 'Atención eliminada'
   })
 })
 

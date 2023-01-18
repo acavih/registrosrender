@@ -1,5 +1,5 @@
 <template>
-  <v-autocomplete v-model="inputValue" :items="resourceItems" item-value="_id" item-text="name" :label="label" />
+  <v-autocomplete v-model="inputValue" :multiple="multiple" :chips="multiple" :items="resourceItems" item-value="_id" item-text="name" :label="label" />
 </template>
 
 <script>
@@ -13,11 +13,15 @@ export default {
     resourceType: {
       type: String,
       required: true
+    },
+    multiple: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
-      inputValue: ''
+      inputValue: this.$attrs.value
     }
   },
   watch: {

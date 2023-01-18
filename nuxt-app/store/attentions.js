@@ -14,6 +14,12 @@ export const getters = {
 export const mutations = {
   attentions(state, attentions) {
     state.attentions = attentions
+  },
+  attention(state, attention) {
+    state.attentions = [attention, ...state.attentions]
+  },
+  attentionDeletion(state, attentionId) {
+    state.attentions = state.attentions.filter(a => a._id !== attentionId)
   }
 }
 
@@ -26,7 +32,18 @@ export const actions = {
 
     ctx.commit('attentions', attentionsReq.data.payload)
   },
-  async createAttention(ctx, attentionData) {}
+  async createAttention(ctx, attentionData) {
+    /*const attentionsReq = */await this.$axios.post('/attentions', attentionData)
+
+    // ctx.commit('attention', attentionsReq.data.payload)
+  },
+  async updateAttention(ctx, attentionData) {
+    await this.$axios.put('/attentions/' + attentionData._id, attentionData)
+  },
+  async removeAttention(ctx, attentionId) {
+    await this.$axios.delete('/attentions/' + attentionId)
+    ctx.commit('attentionDeletion', attentionId)
+  }
 }
 
 export const strict = false

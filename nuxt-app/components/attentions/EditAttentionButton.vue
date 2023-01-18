@@ -2,11 +2,11 @@
   <v-dialog v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
       <v-btn elevation="0" color="primary" dark v-bind="attrs" v-on="on">
-        Añadir atención
+        Editar atención
       </v-btn>
     </template>
 
-    <attention-editor v-if="dialog" ref="form" @submit="doCreateAttention" />
+    <attention-editor :initialValue="initialDataAttention" v-if="dialog" ref="form" @submit="doUpdateAttention" />
   </v-dialog>
 </template>
 
@@ -16,6 +16,10 @@ import { mapActions } from "vuex";
 export default {
   components: { AttentionEditor },
   props: {
+    initialDataAttention: {
+      type: Object,
+      required: true
+    }
   },
   data() {
     return {
@@ -23,17 +27,17 @@ export default {
     };
   },
   methods: {
-    ...mapActions('attentions', ['createAttention']),
-    async doCreateAttention(attentionInfo) {
+    ...mapActions('attentions', ['updateAttention']),
+    async doUpdateAttention(attentionInfo) {
       const payload = {
         ...attentionInfo,
         user: this.$route.params.partnerId
       }
-      await this.createAttention(payload)
+      await this.updateAttention(payload)
       this.dialog = false
       // TODO: Evitar tener que recuperar todas la atenciones...
-      this.$emit('reload')
-      this.$dialog.notify.success('La atención fue añadida')
+      this.$store.dispatch('attentions/getUserAttentions', this.$route.params.partnerId)
+      this.$dialog.notify.success('La atención fue actualizada')
     }
   }
 };
