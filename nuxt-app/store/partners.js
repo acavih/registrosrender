@@ -45,7 +45,9 @@ export const actions = {
   async updatePartner(ctx, partnerInfo) {
     const result = await this.$axios.put('/partners/' + partnerInfo._id, partnerInfo)
     ctx.commit('partner', result.data.payload)
-
+  },
+  async removePartner(ctx, partnerId) {
+    await this.$axios.delete('/partners/' + partnerId)
   }
 }
 

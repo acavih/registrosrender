@@ -1,5 +1,5 @@
 const express = require('express')
-const { listPartners, getPartner, createPartner, updatePartner } = require('../../db/models/partner/partnerService')
+const { listPartners, getPartner, createPartner, updatePartner, deletePartner } = require('../../db/models/partner/partnerService')
 
 const partnersRouter = express.Router()
 
@@ -32,6 +32,13 @@ partnersRouter.put('/:id', async (req, res) => {
   res.json({
     message: 'Socio actualizado',
     payload: await getPartner(req.params.id)
+  })
+})
+
+partnersRouter.delete('/:id', async (req, res) => {
+  await deletePartner(req.params.id)
+  res.status(200).json({
+    message: 'El socio se eliminó con éxito'
   })
 })
 

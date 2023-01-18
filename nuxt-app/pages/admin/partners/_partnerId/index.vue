@@ -6,6 +6,7 @@
           {{currentPartner.nombre}} {{currentPartner.apellidos}}
           <v-spacer />
           <edit-partner-button :initialPartnerData="currentPartner" />
+          <remove-partner-button />
         </template>
         <template v-else>
           Pagina de socio
@@ -89,8 +90,9 @@ import globalMixin from '@/mixins/global'
 import calculateAge from '@/utils/calculateAge'
 import AddAttentionButton from '@/components/attentions/AddAttentionButton.vue';
 import EditPartnerButton from '@/components/partners/EditPartnerButton.vue';
+import RemovePartnerButton from '@/components/partners/RemovePartnerButton.vue';
 export default {
-  components: { AttentionIterator, AddAttentionButton, EditPartnerButton },
+  components: { AttentionIterator, AddAttentionButton, EditPartnerButton, RemovePartnerButton },
   mixins: [globalMixin],
   head() {
     return {

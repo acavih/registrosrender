@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn elevation="0" :disabled="disabled" color="primary" dark v-bind="attrs" v-on="on">
+      <v-btn elevation="0" color="primary" dark v-bind="attrs" v-on="on">
         Añadir socio
       </v-btn>
     </template>

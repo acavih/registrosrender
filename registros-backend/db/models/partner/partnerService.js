@@ -1,4 +1,5 @@
 // const lookUpResourceAggregation = require("../../../utils/lookUpResourceAggregation")
+const Attention = require("../attention/Attention")
 const { getOrCreateResource } = require("../resources/resourceService")
 const Partner = require("./Partner")
 
@@ -121,6 +122,13 @@ const partnerService = {
         howDidKnowUs: update.howDidKnowUs || await getOrCreateResource('comoNosConoció', 'NS/NC'),
       }
     })
+  },
+  async deletePartner(partnerId) {
+    const removed = await Attention.deleteMany({
+      user: partnerId
+    })
+    console.dir(removed)
+    await Partner.findOneAndRemove({_id: partnerId})
   }
 }
 
