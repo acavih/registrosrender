@@ -34,6 +34,10 @@ export default {
     typeChart: {
       type: String,
       required: true
+    },
+    chartOptionsAttrs: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -47,7 +51,8 @@ export default {
     }),
     dataChart() {
       const grouped = this.users.reduce((acc, current) => {
-        const sex = current.sexo.name;
+        if (!current[this.attribute]) return acc
+        const sex = current[this.attribute].name;
         if (acc[sex]) {
           acc[sex] += 1;
         } else {
@@ -59,9 +64,8 @@ export default {
     },
     chartOptions() {
       return typeCharts[this.typeChart]({
-        seriesName: "Socios",
-        titleText: "Socios agrupados por sexo",
-        data: this.dataChart,
+        ...this.chartOptionsAttrs,
+        data: this.dataChart
       });
     },
   },

@@ -22,7 +22,36 @@ import { uniqBy } from "lodash";
  */
 
 export const state = () => ({
-  filters: {}
+  filters: {},
+  chartsToDraw: {
+    partners: [
+      {
+        attribute: 'sexo',
+        typeChart: 'pie',
+        chartOptionsAttrs: {seriesName: 'Socios', titleText: 'Socios agrupados por sexo'}
+      },
+      {
+        attribute: 'socioono',
+        typeChart: 'columnBar',
+        chartOptionsAttrs: {seriesName: 'Socios', titleText: 'Socios agrupados por socio o no'}
+      },
+      {
+        attribute: 'nacionalidad',
+        typeChart: 'barChart',
+        chartOptionsAttrs: {seriesName: 'Socios', titleText: 'Socios agrupados por nacionalidad'}
+      },
+      {
+        attribute: 'ciudadresidencia',
+        typeChart: 'barChart',
+        chartOptionsAttrs: {seriesName: 'Socios', titleText: 'Socios agrupados por residencia'}
+      },
+      {
+        attribute: 'howDidKnowUs',
+        typeChart: 'columnBar',
+        chartOptionsAttrs: {seriesName: 'Socios', titleText: 'Socios agrupados por como nos conoció'}
+      }
+    ]
+  }
 })
 
 /**

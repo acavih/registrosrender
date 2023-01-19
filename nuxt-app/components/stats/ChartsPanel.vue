@@ -11,11 +11,9 @@
       </v-btn>
     </v-card-title>
     <v-card-text>
-      <partner-chart :attribute="'sex'" :typeChart="'pie'" />
-      <partner-chart :attribute="'socioono'" :typeChart="'columnBar'" />
-      <partner-chart :attribute="'nacionalidad'" :typeChart="'columnBar'" />
-      <partner-chart :attribute="'ciudadresidencia'" :typeChart="'columnBar'" />
-      <partner-chart :attribute="'howDidKnowUs'" :typeChart="'columnBar'" />
+      <template v-for="chart in chartsToDraw.partners">
+        <partner-chart v-bind="chart" />
+      </template>
     </v-card-text>
   </v-card>
 </template>
@@ -23,10 +21,12 @@
 <script>
 import { mapGetters } from "vuex";
 import PartnerChart from './charts/PartnerChart.vue';
+import {mapState} from 'vuex'
 export default {
   components: { PartnerChart },
   computed: {
-    ...mapGetters('stats', ['attentionsFiltered', 'uniqUsers'])
+    ...mapGetters('stats', ['attentionsFiltered', 'uniqUsers']),
+    ...mapState('stats', ['chartsToDraw'])
   }
 }
 </script>
