@@ -57,6 +57,6 @@ module.exports = {
 }
 
 function formatDate(date) {
-  const [month, day, year] = date.split('-')
+  const [year, month, day] = date.split('-')
   return `${year}/${month}/${day}`
 }

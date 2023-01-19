@@ -43,6 +43,12 @@ export const actions = {
   async removeAttention(ctx, attentionId) {
     await this.$axios.delete('/attentions/' + attentionId)
     ctx.commit('attentionDeletion', attentionId)
+  },
+  async retrieveRangeDate(ctx, range) {
+    const attentionsReq = await this.$axios.get('/attentions/byRange', {
+      params: range
+    })
+    ctx.commit('attentions', attentionsReq.data.payload)
   }
 }
 

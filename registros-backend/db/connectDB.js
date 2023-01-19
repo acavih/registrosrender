@@ -8,7 +8,6 @@ const connectTODB = () => new Promise((resolve, reject) => {
   const urlDB = process.env.URL_DB || 'mongodb://localhost/registros'
   const uri = new url.URL(urlDB)
   console.log('Conectando a la base de datos de ' + uri.host)
-  console.log(urlDB)
   mongoose.connect(urlDB, {
     useNewUrlParser: true
   }, (err) => {
