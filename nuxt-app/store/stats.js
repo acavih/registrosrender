@@ -1,3 +1,4 @@
+import chartsFilters from "@/utils/charts/chartsFilter";
 import { uniqBy } from "lodash";
 
 /**
@@ -22,7 +23,24 @@ import { uniqBy } from "lodash";
  */
 
 export const state = () => ({
-  filters: {},
+  filters: {
+      partners: {
+        sexo: [],
+        socioono: [],
+        nacionalidad: [],
+        ciudadresidencia: [],
+        howDidKnowUs: [],
+      },
+      attentions: {
+        tipoaenciones: [],
+        derivadoa: [],
+        derivadode: [],
+        Proyectos: [],
+        motivosatencion: [],
+        formacion: [],
+        voluntariado: [],
+      }
+  },
   chartsToDraw: {
     partners: [
       {
@@ -102,7 +120,25 @@ export const state = () => ({
 */
 export const getters = {
   attentionsFiltered(state, getters, rootState) {
-    return rootState.attentions.attentions
+    const { memberResourceFilter, attentionLugaratencionFilter, attentionResourceFilter } = chartsFilters({ filters: state.filters })
+
+    let filteredAttentions = [...rootState.attentions.attentions]
+
+    const membersFilters = Object.keys(state.filters.partners)
+    const attentionsFilters = Object.keys(state.filters.attentions)
+
+    membersFilters.forEach((k) => {
+      filteredAttentions = [...filteredAttentions.filter(memberResourceFilter(k))]
+    })
+    attentionsFilters.forEach((k) => {
+      if (k !== 'lugaratencion') {
+        filteredAttentions = [...filteredAttentions.filter(attentionResourceFilter(k))]
+      }
+    })
+
+    filteredAttentions = [...filteredAttentions.filter(attentionLugaratencionFilter)]
+
+    return filteredAttentions
   },
   uniqUsers(state, getters) {
     const users = [...getters.attentionsFiltered].map(a => a.user)
