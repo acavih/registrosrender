@@ -1,10 +1,11 @@
 <template>
   <v-card tag="form" @submit.prevent="$emit('submit', attentionData)">
     <v-card-title>
-      Editor de recursos
+      Editor de atenciones
     </v-card-title>
     <v-card-text>
-      <v-row>
+      <partner-details :readOnly="true" :currentPartner="currentPartner" />
+      <v-row style="margin-top: 20px;">
         <v-col cols="12">
           <menu-datepicker :label="'Fecha de atención'" v-model="attentionData.fechaatencion" />
         </v-col>
@@ -51,6 +52,9 @@
 <script>
 import MenuDatepicker from '../MenuDatepicker.vue'
 import InputResource from '../resources/InputResource.vue'
+import { mapState } from "vuex";
+import PartnerDetails from '../partners/PartnerDetails.vue';
+
 const initialData = {
   comentario: '',
   fechaatencion: null,
@@ -68,7 +72,7 @@ const initialData = {
 }
 
 export default {
-  components: { MenuDatepicker, InputResource },
+  components: { MenuDatepicker, InputResource, PartnerDetails },
   props: {
     initialValue: {
       type: Object,
@@ -79,6 +83,9 @@ export default {
     return {
       attentionData: {...this.initialValue}
     }
+  },
+  computed: {
+    ...mapState('partners', ['currentPartner'])
   },
   methods: {
     reset() {

@@ -15,8 +15,6 @@ import AttentionEditor from "./AttentionEditor.vue";
 import { mapActions } from "vuex";
 export default {
   components: { AttentionEditor },
-  props: {
-  },
   data() {
     return {
       dialog: false,

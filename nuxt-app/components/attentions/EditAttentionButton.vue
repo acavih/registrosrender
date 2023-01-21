@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import AttentionEditor from "./AttentionEditor.vue";
 import { mapActions } from "vuex";
+import AttentionEditor from './AttentionEditor.vue';
 export default {
   components: { AttentionEditor },
   props: {

@@ -4,8 +4,13 @@
       <v-card-title>
         Socios
         <v-spacer />
-        <v-btn color="secondary" style="margin-right: 10px;" elevation="0" @click="toggleExpandAll">
-          {{ isAllExpanded ? 'Contraer todo' : 'Expandir todo'}}
+        <v-btn
+          color="secondary"
+          style="margin-right: 10px"
+          elevation="0"
+          @click="toggleExpandAll"
+        >
+          {{ isAllExpanded ? "Contraer todo" : "Expandir todo" }}
         </v-btn>
         <add-partner-button :disabled="false" />
       </v-card-title>
@@ -21,22 +26,53 @@
           :expanded.sync="expanded"
           item-key="_id"
         >
-          <template #[`item.actions`]="{item}">
-            <v-btn color="primary" small elevation="0" :to="'/admin/partners/' + item._id">Ver detalles</v-btn>
+          <template #[`item.actions`]="{ item }">
+            <v-btn
+              color="primary"
+              small
+              elevation="0"
+              :to="'/admin/partners/' + item._id"
+              >Ver detalles</v-btn
+            >
           </template>
-          <template #[`item.data-table-expand`]="{item, expand, isExpanded}">
-            <v-badge :color="item.cosaspendientes ? 'blue' : 'transparent'" overlap dot>
-              <v-btn @click="expand(!isExpanded)" color="primary" icon small elevation="0">
+          <template #[`item.data-table-expand`]="{ item, expand, isExpanded }">
+            <v-badge
+              :color="item.cosaspendientes ? 'blue' : 'transparent'"
+              overlap
+              dot
+            >
+              <v-btn
+                @click="expand(!isExpanded)"
+                color="primary"
+                icon
+                small
+                elevation="0"
+              >
                 <v-icon>
-                  {{isExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down'}}
+                  {{ isExpanded ? "mdi-chevron-up" : "mdi-chevron-down" }}
                 </v-icon>
               </v-btn>
             </v-badge>
           </template>
           <template v-slot:expanded-item="{ headers, item }">
             <td :colspan="headers.length">
-              <!-- TODO: Poner información de la fila expandida -->
-              More info about {{ item.nombre }}
+              <v-card outlined style="margin: 10px 0px">
+                <v-card-text>
+                  <v-alert style="margin-bottom: 0px !important;" color="primary" dark v-if="item.observaciones">
+                    <strong>Observaciones</strong>:
+                    {{ item.observaciones }}
+                  </v-alert>
+                  <v-alert
+                    color="primary"
+                    dark
+                    style="margin-bottom: 0px !important;"
+                    v-if="item.cosaspendientes"
+                  >
+                    <strong>Cosas pendientes</strong>:
+                    {{ item.cosaspendientes }}
+                  </v-alert>
+                </v-card-text>
+              </v-card>
             </td>
           </template>
         </v-data-table>
@@ -46,66 +82,68 @@
 </template>
 
 <script>
-import AddPartnerButton from '@/components/partners/AddPartnerButton.vue';
+import AddPartnerButton from "@/components/partners/AddPartnerButton.vue";
 import { mapActions, mapState } from "vuex";
 export default {
   components: { AddPartnerButton },
   head() {
     return {
-      title: 'Listado de socios'
-    }
+      title: "Listado de socios",
+    };
   },
-  data () {
+  data() {
     return {
-      searchQuery: this.$route.query.searchQuery || '',
+      searchQuery: this.$route.query.searchQuery || "",
       expanded: [],
       options: {
         page: Number(this.$route.query.page || 1),
-        itemsPerPage: Number(this.$route.query.itemsPerPage || 20)
+        itemsPerPage: Number(this.$route.query.itemsPerPage || 20),
       },
       headers: [
-        { text: '', value: 'data-table-expand' },
-        { text: 'Nombre', value: 'nombre' },
-        { text: 'Apellidos', value: 'apellidos' },
-        { text: 'Email', value: 'correoelectronico' },
-        { text: 'Telefono', value: 'telefono' },
-        { text: 'Acciones', value: 'actions' },
+        { text: "", value: "data-table-expand" },
+        { text: "Nombre", value: "nombre" },
+        { text: "Apellidos", value: "apellidos" },
+        { text: "Email", value: "correoelectronico" },
+        { text: "Telefono", value: "telefono" },
+        { text: "Acciones", value: "actions" },
       ],
-    }
+    };
   },
   mounted() {
-    this.retrievePartners(this.query)
+    this.retrievePartners(this.query);
   },
   computed: {
-    ...mapState('partners', ['partnersList', 'totalItems']),
+    ...mapState("partners", ["partnersList", "totalItems"]),
     query() {
       return {
         ...this.options,
-        searchQuery: this.searchQuery
-      }
+        searchQuery: this.searchQuery,
+      };
     },
     isAllExpanded() {
-      return this.partnersList.length === this.expanded.length
-    }
+      return this.partnersList.length === this.expanded.length;
+    },
   },
   watch: {
     query() {
-      this.$router.push({query: this.query})
-      this.retrievePartners(this.query)
-    }
+      this.$router.push({ query: this.query });
+      this.retrievePartners(this.query);
+    },
   },
   methods: {
-    ...mapActions('partners', ['retrievePartners']),
-    toggleExpandAll () {
-      this.expanded = this.isAllExpanded ? [] : this.partnersList
-    }
-  }
-}
+    ...mapActions("partners", ["retrievePartners"]),
+    toggleExpandAll() {
+      this.expanded = this.isAllExpanded ? [] : this.partnersList;
+    },
+  },
+};
 </script>
 
 <style>
-.v-data-table > .v-data-table__wrapper tbody tr.v-data-table__expanded__content
-{
+.v-data-table
+  > .v-data-table__wrapper
+  tbody
+  tr.v-data-table__expanded__content {
   box-shadow: none !important;
 }
 </style>
