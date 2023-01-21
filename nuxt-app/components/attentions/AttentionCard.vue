@@ -1,7 +1,10 @@
 <template>
   <v-card outlined style="margin: 10px 0px;" >
     <v-card-title class="primary white--text" style="padding: 5px; margin-bottom: 10px; padding-left: 15px;">
-      {{attention.fechaatencion | dateFilter}} ({{attention.tipoaenciones | nameResources}})
+      {{attention.fechaatencion | dateFilter}}
+      <template v-if="attention.tipoaenciones.length > 0">
+        ({{attention.tipoaenciones | nameResources}})
+      </template>
     </v-card-title>
     <v-card-text>
       <v-alert v-if="attention.lugaratencion">

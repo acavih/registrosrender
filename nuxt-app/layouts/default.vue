@@ -6,6 +6,7 @@
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
+      :width="$route.path.includes('/admin/statistics') ? 500 : 300"
       app
     >
       <v-list>
@@ -30,6 +31,10 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <template v-if="$route.path.includes('/admin/statistics')">
+        <v-divider />
+        <stats-filter />
+      </template>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app color="primary" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />

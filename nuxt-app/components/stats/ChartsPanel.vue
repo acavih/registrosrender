@@ -3,12 +3,8 @@
     <v-card-title>
       Graficos
       <v-spacer />
-      <v-btn color="primary" elevation="0">
-        Atenciones ({{attentionsFiltered.length}})
-      </v-btn>
-      <v-btn color="primary" elevation="0" style="margin-left: 10px;">
-        Usuarios ({{uniqUsers.length}})
-      </v-btn>
+      <view-attentions-button :disabled="attentionsFiltered.length === 0" />
+      <view-users-button :disabled="uniqUsers.length === 0" />
     </v-card-title>
     <v-card-text>
       <v-tabs v-model="currentTab">
@@ -36,8 +32,10 @@ import { mapGetters } from "vuex";
 import PartnerChart from './charts/PartnerChart.vue';
 import {mapState} from 'vuex'
 import AttentionChart from './charts/AttentionChart.vue';
+import ViewAttentionsButton from './dataset/ViewAttentionsButton.vue';
+import ViewUsersButton from './dataset/ViewUsersButton.vue';
 export default {
-  components: { PartnerChart, AttentionChart },
+  components: { PartnerChart, AttentionChart, ViewAttentionsButton, ViewUsersButton },
   data () {
     return {
       currentTab: 0
