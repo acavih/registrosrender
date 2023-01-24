@@ -1,5 +1,6 @@
 <template>
   <v-app v-if="loaded">
+    <client-only>
     <v-navigation-drawer
       v-if="$auth.loggedIn"
       v-model="drawer"
@@ -53,6 +54,7 @@
         <redirect-component :url="'/'" />
       </template>
     </v-main>
+    <client-only>
   </v-app>
 </template>
 

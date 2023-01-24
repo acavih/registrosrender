@@ -5,12 +5,14 @@
       <v-spacer />
     </v-app-bar>
     <v-main>
-      <v-container>
-        <template v-if="!$auth.loggedIn">
-          <Nuxt />
-        </template>
-        <redirect-component v-else :url="'/admin/dashboard'" />
-      </v-container>
+      <client-only>
+        <v-container>
+          <template v-if="!$auth.loggedIn">
+            <Nuxt />
+          </template>
+          <redirect-component v-else :url="'/admin/dashboard'" />
+        </v-container>
+      </client-only>
     </v-main>
   </v-app>
 </template>
