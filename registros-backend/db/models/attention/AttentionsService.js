@@ -16,7 +16,19 @@ module.exports = {
   async removeAttention(attentionId) {
     await Attention.findOneAndRemove({_id: attentionId})
   },
-  async lastAttentions({ page, pendentAttentions }) {
+  async lastAttentions({page = 1, itemsPerPage = 20}) {
+    const query = {}
+    const skip = (page - 1) * itemsPerPage
+
+    const attentions = await Attention.find(query).limit(itemsPerPage).skip(skip).sort('-fechaatencion')
+      .populate(fieldsToPopulate).sort('-fechaatencion')
+      .populate({ path: 'user' })
+
+    const totalAttentions = await Attention.find(query).countDocuments()
+
+    return {attentions, totalAttentions}
+  },
+  async pendentAttentions({ page, pendentAttentions }) {
     const limit = 100
     const skip = (page - 1) * limit
     const query = pendentAttentions === "false" ? {} : {
