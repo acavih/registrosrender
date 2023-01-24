@@ -9,6 +9,7 @@ console.log(isProd ? 'Modo producción' : 'Modo desarrollo')
  * @type {import('@nuxt/types').NuxtConfig}
  */
 const config = {
+  target: 'static',
   server: {
     port: 5500
   },
