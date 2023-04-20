@@ -15,7 +15,8 @@ const partnerSchema = new mongoose.Schema({
   socioono: { type: mongoose.Types.ObjectId, ref: 'resources' },
   nacionalidad: { type: mongoose.Types.ObjectId, ref: 'resources' },
   ciudadresidencia: { type: mongoose.Types.ObjectId, ref: 'resources' },
-  howDidKnowUs: { type: mongoose.Types.ObjectId, ref: 'resources' }
+  howDidKnowUs: { type: mongoose.Types.ObjectId, ref: 'resources' },
+  yearDidKnowus: { type: mongoose.Types.ObjectId, ref: 'resources' }
 })
 
 partnerSchema.virtual('edad')

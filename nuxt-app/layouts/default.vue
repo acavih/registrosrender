@@ -54,7 +54,7 @@
         <redirect-component :url="'/'" />
       </template>
     </v-main>
-    <client-only>
+  </client-only>
   </v-app>
 </template>
 

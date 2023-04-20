@@ -67,6 +67,11 @@ export const state = () => ({
         attribute: 'howDidKnowUs',
         typeChart: 'columnBar',
         chartOptionsAttrs: {seriesName: 'Socios', titleText: 'Socios agrupados por como nos conoció'}
+      },
+      {
+        attribute: 'yearDidKnowus',
+        typeChart: 'columnBar',
+        chartOptionsAttrs: {seriesName: 'Socios', titleText: 'Socios agrupados por año en que nos conocio'}
       }
     ],
     attentions: [

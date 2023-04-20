@@ -50,8 +50,11 @@
             <input-resource :multiple="false" :label="'Nacionalidad'" :resourceType="'nacionalidads'" v-model="partner.nacionalidad" />
           </v-col>
 
-          <v-col :cols="12">
+          <v-col :cols="6">
             <input-resource :multiple="false" :label="'Como nos conoció'" :resourceType="'comoNosConoció'" v-model="partner.howDidKnowUs" />
+          </v-col>
+          <v-col :cols="6">
+            <input-resource :multiple="false" :label="'Año en que nos conocio'" :resourceType="'anioConocio'" v-model="partner.yearDidKnowus" />
           </v-col>
         </v-row>
       </v-card-text>
@@ -82,7 +85,8 @@ const initialPartnerData = {
   socioono: '',
   nacionalidad: '',
   ciudadresidencia: '',
-  howDidKnowUs: ''
+  howDidKnowUs: '',
+  yearDidKnowus: ''
 }
 
 export default {
